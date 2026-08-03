@@ -210,7 +210,7 @@ form {
     width: 100%;
     border-radius: var(--rv-radius-button);
     font-size: var(--rv-font-size-md);
-    font-family: inherit;
+    font-family: var(--rv-font-family-default) !important;
     outline: none;
     transition: all .2s;
     background: var(--rv-neutral-500);
@@ -271,6 +271,11 @@ form {
     cursor: pointer;
     appearance: none;
     padding-right: 2.5em;
+    font-family: var(--rv-font-family-default) !important;
+}
+
+.rv-formSelect option {
+    font-family: var(--rv-font-family-default) !important;
 }
 
 .rv-selectWrapper {
