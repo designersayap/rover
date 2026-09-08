@@ -1,10 +1,11 @@
 {
   "name": "rover",
-  "version": "1.0.1",
-  "description": "Core CSS library for the Rover interface.",
+  "version": "1.1.0",
+  "description": "Multi-brand tokenized core CSS library for the Rover interface.",
   "main": "src/index.css",
   "exports": {
     ".": "./src/index.css",
+    "./tokens/*": "./src/tokens/*.css",
     "./src/*": "./src/*.css",
     "./package.json": "./package.json"
   },
@@ -13,6 +14,8 @@
   ],
   "keywords": [
     "css",
+    "design-tokens",
+    "multi-brand",
     "lunar",
     "page-builder",
     "styles",

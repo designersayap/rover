@@ -14,20 +14,6 @@
     overflow: hidden;
 }
 
-.rv-sidebarShell.rv-isRailOnly {
-    width: var(--rv-w-sidebar-rail);
-}
-
-.rv-sidebarCollapsed {
-    width: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    opacity: 0 !important;
-    overflow: hidden !important;
-    border: none !important;
-    pointer-events: none;
-}
-
 .rv-sidebarRailOnly {
     width: var(--rv-w-sidebar-rail) !important;
 }
@@ -40,6 +26,16 @@
     display: none !important;
     opacity: 0 !important;
     pointer-events: none !important;
+}
+
+.rv-sidebarCollapsed {
+    width: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    border: none !important;
+    pointer-events: none;
 }
 
 .rv-sidebar {
@@ -149,7 +145,7 @@
     transform: translateX(-50%);
     width: 24px;
     height: 3px;
-    background: var(--rv-lunar-300);
+    background: var(--rv-brand-primary);
     border-radius: 4px 4px 0 0;
 }
 
@@ -206,6 +202,15 @@
 
 .rv-treeRowActive {
     background: var(--rv-neutral-400);
+}
+
+.rv-treeGroup {
+    position: relative;
+    width: 100%;
+}
+
+.rv-treeRowNested {
+    font-size: var(--rv-font-size-sm);
 }
 
 .rv-treeChildren {
@@ -290,7 +295,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--rv-lunar-300);
+    background: var(--rv-brand-primary);
     z-index: 10;
 }
 
@@ -393,6 +398,44 @@
     opacity: 1;
     pointer-events: auto;
 }
+
+/* ==========================================================================
+   PURPOSE: Generic Sidebar Panels & Sections
+   Reusable content layout within sidebar tabs.
+   ========================================================================== */
+
+.rv-sidebarPanel {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: var(--rv-space-md) var(--rv-space-md) var(--rv-space-lg);
+}
+
+.rv-sidebarSection {
+    gap: var(--rv-space-xs);
+    margin: var(--rv-space-sm) 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.rv-sidebarRow {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rv-space-xs);
+}
+
+.rv-sidebarRowHeader {
+    gap: var(--rv-space-xs);
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--rv-space-xs);
+}
+
+.rv-accordionBody {
+    padding: var(--rv-space-sm) 0;
+}
+
 
 @media (max-width: 1023px) {
     .rv-sidebarShell:not(.rv-mobileSidebar) {

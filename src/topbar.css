@@ -3,7 +3,7 @@
    Global top-bar container and logic.
    ========================================================================== */
 
-.rv-topBar {
+.rv-topbar {
     background: var(--rv-neutral-500);
     display: flex;
     justify-content: space-between;
@@ -17,13 +17,13 @@
    Alignment and grouping helpers for Left (Logo/Toggle) and Right (Actions).
    ========================================================================== */
 
-.rv-topBarLeft {
+.rv-topbarLeft {
     display: flex;
     align-items: center;
     padding: 0 var(--rv-space-lg);
 }
 
-.rv-topBarRight {
+.rv-topbarRight {
     display: flex;
     align-items: center;
     gap: var(--rv-space-sm);
@@ -36,21 +36,25 @@
 }
 
 /* Ensure buttons don't shrink (Tooltip wrapper uses display: contents, so we target .rv-btn directly) */
-.rv-topBarRight .rv-btn,
-.rv-topBarRight a {
+.rv-topbarRight .rv-btn,
+.rv-topbarRight a {
     flex-shrink: 0;
 }
 
 /* Hide scrollbar for Chrome/Safari/Edge */
-.rv-topBarRight::-webkit-scrollbar {
+.rv-topbarRight::-webkit-scrollbar {
     display: none;
 }
 
-.rv-logo {
+.rv-topbarLogo {
     padding: 0;
     color: var(--rv-white);
     font-weight: var(--rv-font-weight-bold);
     font-size: var(--rv-font-size-md);
+}
+
+.rv-sidebarToggle {
+    margin-right: var(--rv-space-sm);
 }
 
 @media (max-width: 1023px) {

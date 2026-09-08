@@ -9,7 +9,7 @@
     justify-content: center;
     cursor: pointer;
     border: none;
-    border-radius: var(--rv-radius-button);
+    border-radius: var(--rv-brand-radius-button, var(--rv-radius-button));
     transition: all 0.2s;
     font-family: var(--rv-font-family-default);
     font-size: var(--rv-font-size-md);
@@ -43,18 +43,35 @@
     transform: translateY(1px);
 }
 
+.rv-btnSecondary {
+    background-color: var(--rv-neutral-400);
+    border: 1px solid var(--rv-bdr);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.rv-btnSecondary:hover:not(:disabled) {
+    background-color: var(--rv-neutral-300);
+}
+
+.rv-btnSecondary:active:not(:disabled),
+.rv-btnSecondaryActive {
+    background-color: var(--rv-neutral-500);
+    box-shadow: var(--rv-shd-active);
+    transform: translateY(1px);
+}
+
 .rv-btnBrand {
-    background-color: var(--rv-lunar-300);
+    background-color: var(--rv-brand-primary);
     box-shadow: 0 2px var(--rv-space-xs) rgba(0, 0, 100, .2);
 }
 
 .rv-btnBrand:hover:not(:disabled) {
-    background-color: var(--rv-lunar-400);
+    background-color: var(--rv-brand-primary-hover);
 }
 
 .rv-btnBrand:active:not(:disabled),
 .rv-btnBrandActive {
-    background-color: var(--rv-lunar-500);
+    background-color: var(--rv-brand-primary-active);
     box-shadow: var(--rv-shd-active);
     transform: translateY(1px);
 }
@@ -261,10 +278,10 @@ form {
 }
 
 .rv-formTextarea {
-    resize: none;
+    resize: vertical;
     font-family: inherit;
     padding: var(--rv-space-sm) var(--rv-space-md);
-    height: 100px;
+    min-height: 80px;
 }
 
 .rv-formSelect {
@@ -324,13 +341,13 @@ form {
     width: 20px;
     left: 2px;
     bottom: 2px;
-    background: white;
+    background: var(--rv-white);
     transition: .4s;
     border-radius: var(--rv-radius-round);
 }
 
 .rv-toggleInput:checked+.rv-toggleSlider {
-    background: var(--rv-lunar-300);
+    background: var(--rv-brand-primary);
 }
 
 .rv-toggleInput:checked+.rv-toggleSlider:before {
@@ -361,6 +378,27 @@ form {
 .rv-radioOptionSelected {
     background: var(--rv-neutral-400);
     border-color: var(--rv-neutral-300);
+}
+
+.rv-radioOption input,
+.rv-radioOptionInput {
+    accent-color: var(--rv-brand-primary);
+}
+
+.rv-btnCompact {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--rv-neutral-400);
+    border: 1px solid var(--rv-bdr);
+    border-radius: var(--rv-radius-xs);
+    color: var(--rv-white);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.rv-btnCompact:hover {
+    background: var(--rv-neutral-300);
 }
 
 
@@ -499,241 +537,9 @@ form {
 
 
 /* ==========================================================================
-   PURPOSE: Canvas & Editor
-   Classes used within the workspace/canvas area for builder interactions.
-   ========================================================================== */
-
-.rv-emptyState {
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--rv-white);
-}
-
-.rv-emptyStateText {
-    text-align: center;
-}
-
-.rv-canvasBackgroundRoot {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.rv-componentWrapper {
-    position: relative;
-    background: transparent;
-    transition: border-color .2s;
-    z-index: 1;
-}
-
-.rv-componentSelected {
-    outline: 1px solid var(--rv-lunar-300);
-    background-color: var(--rv-lunar-50);
-}
-
-/* Drag & Drop Visuals */
-.rv-dragImageContainer {
-    height: 60px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--rv-neutral-500);
-    border-radius: var(--rv-radius-sm);
-    border: 1px solid var(--rv-bdr);
-    overflow: hidden;
-}
-
-.rv-dragImageText {
-    font-size: var(--rv-font-size-sm);
-    font-weight: var(--rv-font-weight-bold);
-    color: var(--rv-white);
-}
-
-.rv-customDragImage {
-    position: absolute;
-    top: -1000px;
-    left: -1000px;
-    background: var(--rv-neutral-300);
-    padding: var(--rv-space-xs);
-    border-radius: var(--rv-radius-md);
-    box-shadow: 0 var(--rv-space-xs) var(--rv-space-md) rgba(0, 0, 0, .1);
-    border: 1px solid var(--rv-bdr);
-    align-items: center;
-    gap: var(--rv-space-xs);
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-}
-
-.rv-resolutionIndicator {
-    font-size: 11px;
-    font-weight: 500;
-    position: sticky;
-    bottom: var(--rv-space-lg);
-    margin: var(--rv-space-xl) auto 0;
-    background: var(--rv-neutral-400);
-    color: var(--rv-white);
-    padding: var(--rv-space-xs) var(--rv-space-md);
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    gap: var(--rv-space-xs);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    width: fit-content;
-    z-index: 10;
-}
-
-/* Builder Interaction Overlays */
-.rv-activeWrapper {
-    position: relative;
-}
-
-.rv-activeOverlay {
-    position: absolute;
-    top: -var(--rv-space-xl);
-    z-index: 20;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--rv-lunar-300);
-    color: white;
-    border-radius: var(--rv-radius-sm);
-    font-size: var(--rv-space-md);
-    line-height: 1;
-    height: 20px;
-    white-space: nowrap;
-    border: 1px solid #fff3;
-    min-width: 100px;
-    box-shadow: var(--rv-shadow-md)
-}
-
-.rv-activeBorderOutline {
-    position: absolute;
-    inset: 0;
-    border: 2px solid var(--rv-lunar-300);
-    border-radius: 1px;
-    pointer-events: none;
-}
-
-.rv-overlayLabel {
-    gap: var(--rv-space-xs);
-    padding: 0 var(--rv-space-sm);
-    height: 100%;
-    font-family: var(--rv-font-family-default);
-    font-size: 10px;
-    line-height: var(--rv-lh-md);
-    font-weight: var(--rv-font-weight-regular);
-    border-right: 1px solid rgba(255, 255, 255, .2);
-    flex-grow: 1;
-    min-width: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.rv-overlayIdText {
-    color: white;
-    font-family: var(--rv-font-family-mono);
-    font-size: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.rv-overlayIcon {
-    width: var(--rv-space-md);
-    height: var(--rv-space-md);
-}
-
-.rv-overlayButton {
-    background: transparent;
-    border: none;
-    color: var(--rv-white);
-    width: 20px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    flex-shrink: 0;
-    opacity: 0.8;
-}
-
-.rv-overlayButton:hover {
-    background: rgba(255, 255, 255, 0.15);
-    opacity: 1;
-}
-
-.rv-overlayButtonActive {
-    background: rgba(255, 255, 255, 0.25);
-    opacity: 1;
-}
-
-
-/* Misc Canvas Utilities */
-.rv-canvasWrapper {
-    position: relative;
-    width: 200px;
-    height: 150px;
-    margin: 0 auto;
-    margin-bottom: var(--rv-space-xl);
-}
-
-.rv-canvasText {
-    color: var(--rv-neutral-100);
-    font-family: var(--rv-font-family-body);
-    font-size: var(--rv-font-md);
-}
-
-.rv-scrollGroupOverlay {
-    position: absolute;
-    inset: 0;
-    background-color: var(--rv-white);
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0;
-}
-
-
-/* ==========================================================================
    PURPOSE: Molecules & Decorators
-   Specialized complex components like analytics, and accordions.
+   Specialized complex components like accordions, badges, and dividers.
    ========================================================================== */
-
-/* Analytics Modules */
-.rv-analyticsContainer {
-    flex: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    padding: var(--rv-space-md) var(--rv-space-md) var(--rv-space-lg);
-}
-
-.rv-analyticsSection {
-    gap: var(--rv-space-xs);
-    margin: var(--rv-space-sm) 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.rv-analyticsHeader {
-    gap: var(--rv-space-xs);
-    display: flex;
-    align-items: center;
-    margin-bottom: var(--rv-space-xs);
-}
 
 /* Accordion System */
 .rv-accordionContent {
@@ -753,8 +559,8 @@ form {
 }
 
 .rv-countBadge {
-    background-color: var(--rv-lunar-300);
-    color: white;
+    background-color: var(--rv-brand-primary);
+    color: var(--rv-white);
     font-size: var(--rv-font-size-sm);
     padding: 1px 5px;
     border-radius: var(--rv-radius-round);
@@ -795,55 +601,4 @@ form {
     font-size: var(--rv-font-size-md);
     color: var(--rv-neutral-100);
     line-height: var(--rv-lh-loose);
-}
-
-/* ==========================================================================
-   PURPOSE: Toolbars & Contextual Menus
-   Floating toolbars used for editor interactions and text formatting.
-   ========================================================================== */
-
-.rv-toolbar {
-    display: flex;
-    align-items: center;
-    background: rgba(30, 30, 30, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--rv-radius-md);
-    padding: var(--rv-space-xs);
-    gap: 2px;
-    box-shadow: var(--rv-shd-lg);
-    z-index: 10000;
-    pointer-events: auto;
-    user-select: none;
-    animation: fadeIn 0.2s ease-out;
-}
-
-
-.rv-toolbarDivider {
-    width: 1px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 0 var(--rv-space-xs);
-}
-
-
-
-.rv-colorSwatch {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: transform 0.1s;
-}
-
-.rv-colorSwatch:hover {
-    transform: scale(1.2);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.rv-colorSwatchActive {
-    border-color: var(--rv-white);
-    transform: scale(1.1);
 }

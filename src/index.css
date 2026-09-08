@@ -1,4 +1,5 @@
-@import './variables.css';
+@import './tokens/lunar.css';
+@import './tokens/apollo.css';
 @import './base.css';
 @import './shell.css';
 @import './sidebar.css';

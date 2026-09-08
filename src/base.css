@@ -1,16 +1,42 @@
 /* ==========================================================================
+   PURPOSE: Primitive Spacing & Dimensions
+   Standard gap, padding, margin, and shell dimensions.
+   ========================================================================== */
+
+:root {
+    /* Spacing Scale */
+    --rv-space-xs: 4px;
+    --rv-space-sm: 8px;
+    --rv-space-md: 12px;
+    --rv-space-lg: 16px;
+    --rv-space-xl: 24px;
+
+    /* Base Layout Dimensions */
+    --rv-h-btn: 36px;
+    --rv-h-topbar: 64px;
+    --rv-w-sidebar: 360px;
+    --rv-w-sidebar-rail: 108px;
+    --rv-w-pop: 362px;
+}
+
+
+/* ==========================================================================
    PURPOSE: Layout Primitives
    Core flexbox and grid helpers for structural arrangement.
    ========================================================================== */
 
+/* Flexbox */
 .rv-flex { display: flex; }
 .rv-flexCol { display: flex; flex-direction: column; }
 .rv-flex1 { flex: 1; }
 .rv-flexShrink0 { flex-shrink: 0; }
+.rv-flexWrap { flex-wrap: wrap; }
+.rv-flexNowrap { flex-wrap: nowrap; }
 
+/* Grid */
 .rv-grid { display: grid; }
-.rv-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.rv-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.rv-cols2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.rv-cols3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 /* Alignment Hooks */
 .rv-itemsCenter { align-items: center; }
@@ -38,6 +64,10 @@
 .rv-overflowAuto { overflow: auto; }
 .rv-overflowVisible { overflow: visible; }
 
+.rv-pointerEventsNone { pointer-events: none; }
+.rv-pointerEventsAuto { pointer-events: auto; }
+.rv-cursorPointer { cursor: pointer; }
+
 
 /* ==========================================================================
    PURPOSE: Positioning & Layers
@@ -54,6 +84,19 @@
 .rv-right0 { right: 0; }
 .rv-bottom0 { bottom: 0; }
 
+/* Z-Index Scale */
+.rv-z0 { z-index: 0; }
+.rv-zSticky { z-index: 100; }
+.rv-zOverlay { z-index: 1000; }
+.rv-zModal { z-index: 10000; }
+
+.rv-overlayFixed {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+
 /* ==========================================================================
    PURPOSE: Sizing Primitives
    Helpers for common dimensions and constraints.
@@ -63,18 +106,6 @@
 .rv-hFull { height: 100%; }
 .rv-minW0 { min-width: 0; }
 .rv-hScreen { height: 100vh; }
-
-.rv-overlayFixed {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-}
-
-/* Z-Index Scale */
-.rv-z0 { z-index: 0; }
-.rv-zSticky { z-index: 100; }
-.rv-zOverlay { z-index: 1000; }
-.rv-zModal { z-index: 10000; }
 
 
 /* ==========================================================================
@@ -129,6 +160,19 @@
 .rv-mrAuto { margin-right: auto; }
 .rv-mxAuto { margin-left: auto; margin-right: auto; }
 
+/* Margin - Symmetric */
+.rv-mxXs { margin-left: var(--rv-space-xs); margin-right: var(--rv-space-xs); }
+.rv-mxSm { margin-left: var(--rv-space-sm); margin-right: var(--rv-space-sm); }
+.rv-mxMd { margin-left: var(--rv-space-md); margin-right: var(--rv-space-md); }
+.rv-mxLg { margin-left: var(--rv-space-lg); margin-right: var(--rv-space-lg); }
+.rv-mxXl { margin-left: var(--rv-space-xl); margin-right: var(--rv-space-xl); }
+
+.rv-myXs { margin-top: var(--rv-space-xs); margin-bottom: var(--rv-space-xs); }
+.rv-mySm { margin-top: var(--rv-space-sm); margin-bottom: var(--rv-space-sm); }
+.rv-myMd { margin-top: var(--rv-space-md); margin-bottom: var(--rv-space-md); }
+.rv-myLg { margin-top: var(--rv-space-lg); margin-bottom: var(--rv-space-lg); }
+.rv-myXl { margin-top: var(--rv-space-xl); margin-bottom: var(--rv-space-xl); }
+
 /* Padding - General */
 .rv-p0 { padding: 0; }
 .rv-pXs { padding: var(--rv-space-xs); }
@@ -163,11 +207,18 @@
 .rv-prLg { padding-right: var(--rv-space-lg); }
 .rv-prXl { padding-right: var(--rv-space-xl); }
 
+/* Padding - Symmetric */
 .rv-pxXs { padding-left: var(--rv-space-xs); padding-right: var(--rv-space-xs); }
 .rv-pxSm { padding-left: var(--rv-space-sm); padding-right: var(--rv-space-sm); }
 .rv-pxMd { padding-left: var(--rv-space-md); padding-right: var(--rv-space-md); }
 .rv-pxLg { padding-left: var(--rv-space-lg); padding-right: var(--rv-space-lg); }
 .rv-pxXl { padding-left: var(--rv-space-xl); padding-right: var(--rv-space-xl); }
+
+.rv-pyXs { padding-top: var(--rv-space-xs); padding-bottom: var(--rv-space-xs); }
+.rv-pySm { padding-top: var(--rv-space-sm); padding-bottom: var(--rv-space-sm); }
+.rv-pyMd { padding-top: var(--rv-space-md); padding-bottom: var(--rv-space-md); }
+.rv-pyLg { padding-top: var(--rv-space-lg); padding-bottom: var(--rv-space-lg); }
+.rv-pyXl { padding-top: var(--rv-space-xl); padding-bottom: var(--rv-space-xl); }
 
 
 /* ==========================================================================
@@ -175,16 +226,18 @@
    Helpers for standard text sizing and font weights.
    ========================================================================== */
 
-.rv-textXs { font-size: 10px; }
+.rv-textXs { font-size: var(--rv-font-size-xs); }
 .rv-textSm { font-size: var(--rv-font-size-sm); }
 .rv-textMd { font-size: var(--rv-font-size-md); }
 .rv-textLg { font-size: var(--rv-font-size-lg); }
-.rv-textXl { font-size: 20px; }
+.rv-textXl { font-size: var(--rv-font-size-xl); }
 
 .rv-fontRegular { font-weight: var(--rv-font-weight-regular); }
+.rv-fontMedium { font-weight: var(--rv-font-weight-medium); }
 .rv-fontBold { font-weight: var(--rv-font-weight-bold); }
 .rv-fontMono { font-family: var(--rv-font-family-mono); }
 
+.rv-lhTight { line-height: var(--rv-lh-tight); }
 .rv-lhMd { line-height: var(--rv-lh-md); }
 .rv-lhLoose { line-height: var(--rv-lh-loose); }
 
@@ -192,11 +245,17 @@
 .rv-textCenter { text-align: center; }
 .rv-textRight { text-align: right; }
 
+.rv-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* Text Colors */
-.rv-textDefault { color: var(--rv-white); }
+.rv-textDefault { color: var(--rv-text-default); }
 .rv-textSubtle { color: var(--rv-neutral-100); }
 .rv-textMuted { color: var(--rv-neutral-200); }
-.rv-textBrand { color: var(--rv-lunar-300); }
+.rv-textBrand { color: var(--rv-brand-primary); }
 .rv-textSuccess { color: var(--rv-success); }
 .rv-textDanger { color: var(--rv-danger); }
 
@@ -206,17 +265,35 @@
    Border radius, shadows, and content visibility adjustments.
    ========================================================================== */
 
+.rv-radiusXs { border-radius: var(--rv-radius-xs); }
 .rv-radiusSm { border-radius: var(--rv-radius-sm); }
 .rv-radiusMd { border-radius: var(--rv-radius-md); }
 .rv-radiusLg { border-radius: var(--rv-radius-lg); }
 .rv-radiusRound { border-radius: var(--rv-radius-round); }
 
+.rv-shadowSm { box-shadow: var(--rv-shd-btn); }
 .rv-shadowMd { box-shadow: var(--rv-shadow-md); }
-.rv-shadowBtn { box-shadow: var(--rv-shd-btn); }
 
 .rv-opacity70 { opacity: 0.7; }
 .rv-opacity50 { opacity: 0.5; }
 .rv-userSelectNone { user-select: none; }
+
+/* Borders */
+.rv-border { border: 1px solid var(--rv-bdr); }
+.rv-borderTop { border-top: 1px solid var(--rv-bdr); }
+.rv-borderBottom { border-bottom: 1px solid var(--rv-bdr); }
+.rv-borderLeft { border-left: 1px solid var(--rv-bdr); }
+.rv-borderRight { border-right: 1px solid var(--rv-bdr); }
+
+/* Animations */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.rv-animateSpin {
+    animation: spin 1s linear infinite;
+}
 
 
 /* ==========================================================================
@@ -240,7 +317,7 @@
 
 *::-webkit-scrollbar-thumb {
     background-color: var(--rv-neutral-300);
-    border-radius: 10px;
+    border-radius: var(--rv-radius-round);
     border: 1px solid transparent;
 }
 

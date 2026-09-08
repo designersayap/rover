@@ -18,19 +18,19 @@
 /* The Unified Card Component */
 .rv-notificationCard {
     position: relative;
-    background: #1e1e1e;
+    background: var(--rv-neutral-400);
     /* Solid background to prevent see-through */
     border: 1px solid var(--rv-neutral-300);
     border-radius: var(--rv-radius-lg);
-    padding: var(--rv-space-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--rv-space-xs);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    z-index: 10;
-    /* Definitely above background layers */
-    opacity: 1;
+    padding: var(--rv-space-lg);
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rv-notificationSingle {
+    position: relative;
+    width: 100%;
 }
 
 /* Unread Indicator */
@@ -39,13 +39,39 @@
     height: 6px;
     background-color: var(--rv-danger);
     border-radius: var(--rv-radius-round);
-    box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 0 4px rgba(239, 68, 68, 0.4);
     flex-shrink: 0;
 }
 
-.rv-notificationCard:hover {
-    background: #252525;
-    transform: translateY(-1px);
+/* Unread State for Any Card */
+.rv-notificationCardUnread {
+    border-color: var(--rv-neutral-200);
+    background: var(--rv-neutral-300);
+}
+
+/* When Stack is Expanded */
+.rv-notificationStack--expanded .rv-notificationCard {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.rv-notificationStack--expanded .rv-notificationCard:first-child {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.rv-notificationStack--expanded .rv-notificationCard:not(:first-child) {
+    border-top: none;
+    border-radius: 0;
+}
+
+.rv-notificationStack--expanded .rv-notificationCard:last-child {
+    border-bottom-left-radius: var(--rv-radius-lg);
+    border-bottom-right-radius: var(--rv-radius-lg);
+}
+
+/* Stack Container Hover */
+.rv-notificationStack:hover .rv-notificationCard {
+    border-color: var(--rv-neutral-200);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
@@ -60,7 +86,7 @@
     /* Peaking at bottom */
     left: 8px;
     right: 8px;
-    background: #1a1a1a;
+    background: var(--rv-neutral-500);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: var(--rv-radius-lg);
     z-index: -1;
@@ -88,7 +114,7 @@
 }
 
 .rv-notificationStack:not(.rv-notificationStack--expanded):hover::after {
-    bottom: -24px;
+    bottom: -20px;
 }
 
 .rv-notificationCardHeader {
@@ -190,17 +216,17 @@
 
 /* Card Content */
 .rv-notificationCardTitle {
-    font-size: 12px;
-    font-weight: 600;
+    font-size: var(--rv-font-size-sm);
+    font-weight: var(--rv-font-weight-bold);
     color: var(--rv-white);
-    margin: 8px 0 2px 0;
+    margin: var(--rv-space-sm) 0 var(--rv-space-xs) 0;
 }
 
 .rv-notificationCardBody {
     font-size: var(--rv-font-size-md);
     color: var(--rv-neutral-75);
     margin: 0;
-    line-height: 1.4;
+    line-height: var(--rv-lh-md);
     opacity: 0.8;
 }
 
@@ -229,7 +255,7 @@
 
 /* Global Actions */
 
-.rv-notificationMarkAllBtn {
+.rv-notificationHeaderAction {
     background: none;
     border: none;
     color: var(--rv-neutral-100);
@@ -239,7 +265,7 @@
     transition: color 0.2s;
 }
 
-.rv-notificationMarkAllBtn:hover {
+.rv-notificationHeaderAction:hover {
     color: var(--rv-neutral-50);
     text-decoration: underline;
 }

@@ -8,9 +8,6 @@
     inset: 0;
 }
 
-
-
-
 /* ==========================================================================
    PURPOSE: Tooltips & Small Popovers
    Contextual floating tips and small temporary windows.
@@ -178,4 +175,188 @@
         opacity: 1;
         transform: translate(-50%, 0);
     }
+}
+
+
+/* ==========================================================================
+   PURPOSE: Builder Interaction Overlays
+   Canvas element selection badge, active boundary outlines, and controls.
+   ========================================================================== */
+
+.rv-activeWrapper {
+    position: relative;
+}
+
+.rv-activeOverlay {
+    position: absolute;
+    top: -var(--rv-space-xl);
+    z-index: 20;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--rv-brand-primary);
+    color: var(--rv-white);
+    border-radius: var(--rv-radius-sm);
+    font-size: var(--rv-font-size-sm);
+    line-height: 1;
+    height: 20px;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 100px;
+    box-shadow: var(--rv-shadow-md);
+}
+
+.rv-activeBorderOutline {
+    position: absolute;
+    inset: 0;
+    border: 2px solid var(--rv-brand-primary);
+    border-radius: 1px;
+    pointer-events: none;
+}
+
+.rv-overlayLabel,
+.rv-activeOverlayLabel {
+    gap: var(--rv-space-xs);
+    padding: 0 var(--rv-space-sm);
+    height: 100%;
+    font-family: var(--rv-font-family-default);
+    font-size: var(--rv-font-size-xs);
+    line-height: var(--rv-lh-md);
+    font-weight: var(--rv-font-weight-regular);
+    border-right: 1px solid rgba(255, 255, 255, .2);
+    flex-grow: 1;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rv-overlayText {
+    color: var(--rv-white);
+    font-family: var(--rv-font-family-mono);
+    font-size: var(--rv-font-size-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rv-overlayIcon {
+    width: var(--rv-space-md);
+    height: var(--rv-space-md);
+}
+
+.rv-overlayButton {
+    background: transparent;
+    border: none;
+    color: var(--rv-white);
+    width: 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    opacity: 0.8;
+}
+
+.rv-overlayButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+    opacity: 1;
+}
+
+.rv-overlayButtonActive {
+    background: rgba(255, 255, 255, 0.25);
+    opacity: 1;
+}
+
+
+/* ==========================================================================
+   PURPOSE: Toolbars & Contextual Menus
+   Floating toolbars used for editor interactions and text formatting.
+   ========================================================================== */
+
+.rv-toolbar {
+    display: flex;
+    align-items: center;
+    background: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--rv-radius-md);
+    padding: var(--rv-space-xs);
+    gap: 2px;
+    box-shadow: var(--rv-shd-lg);
+    z-index: 10000;
+    pointer-events: auto;
+    user-select: none;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.rv-toolbarDivider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 var(--rv-space-xs);
+}
+
+.rv-colorSwatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.1s;
+}
+
+.rv-colorSwatch:hover {
+    transform: scale(1.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.rv-colorSwatchActive {
+    border-color: var(--rv-white);
+    transform: scale(1.1);
+}
+
+/* Floating Pill Container */
+.rv-floatingPill {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999999;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    padding: 6px 12px;
+    border-radius: var(--rv-radius-round);
+    display: flex;
+    gap: var(--rv-space-sm);
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Form Field Group */
+.rv-formFieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rv-space-xs);
+    width: 100%;
+}
+
+/* Media & Image Preview Box */
+.rv-mediaPreview {
+    width: 100%;
+    max-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--rv-radius-sm);
+    border: 1px solid var(--rv-bdr);
+    background: var(--rv-neutral-500);
 }

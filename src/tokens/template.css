@@ -1,0 +1,93 @@
+/* ==========================================================================
+   PURPOSE: Brand - Blueprint Template
+   Copy this file to create a completely new brand visual identity.
+   Replace "your-brand-id" with your unique identifier (e.g. acme, client-a).
+   ========================================================================== */
+
+[data-rv-brand="your-brand-id"] {
+    /* --------------------------------------------------------------------------
+       1. BRAND ACCENT COLORS
+       Main accents, action buttons, and active states.
+       -------------------------------------------------------------------------- */
+    --rv-brand-primary:        #0066cc;  /* Main action color */
+    --rv-brand-primary-hover:  #0052a3;  /* Hover state */
+    --rv-brand-primary-active: #003d7a;  /* Active / pressed state */
+    --rv-brand-primary-light:  #99ccff;  /* Light accent border */
+    --rv-brand-primary-subtle: #e6f0fa;  /* Soft background highlight */
+
+    /* --------------------------------------------------------------------------
+       2. BRAND NEUTRAL PALETTE
+       Dark theme tone: pure neutral, cool slate, or warm stone.
+       -------------------------------------------------------------------------- */
+    --rv-white:                #ffffff;
+    --rv-black:                #000000;
+    --rv-neutral-50:           #ffffff;
+    --rv-neutral-75:           #d1d1d1;
+    --rv-neutral-100:          #a0a0a0;
+    --rv-neutral-200:          #404040;
+    --rv-neutral-300:          #2b2b2b;
+    --rv-neutral-400:          #1e1e1e;
+    --rv-neutral-500:          #121212;
+
+    /* --------------------------------------------------------------------------
+       3. BRAND STATUS SIGNALS
+       -------------------------------------------------------------------------- */
+    --rv-danger:               #ef4444;
+    --rv-success:              #22c55e;
+    --rv-warning:              #f59e0b;
+
+    /* --------------------------------------------------------------------------
+       4. BRAND TYPOGRAPHY
+       Font families for body text and monospaced code.
+       -------------------------------------------------------------------------- */
+    --rv-font-family-default:  'Inter', sans-serif;
+    --rv-font-family-mono:     'Ui-Monospace', monospace;
+    --rv-brand-font:           var(--rv-font-family-default);
+    --rv-font-family-body:     var(--rv-font-family-default);
+
+    --rv-font-weight-regular:  400;
+    --rv-font-weight-medium:   500;
+    --rv-font-weight-bold:     700;
+
+    --rv-font-size-xs:         10px;
+    --rv-font-size-sm:         12px;
+    --rv-font-size-md:         14px;
+    --rv-font-size-lg:         16px;
+    --rv-font-size-xl:         20px;
+    --rv-font-md:              var(--rv-font-size-md);
+
+    --rv-lh-tight:             1.2;
+    --rv-lh-md:                1.4;
+    --rv-lh-loose:             1.6;
+
+    /* --------------------------------------------------------------------------
+       5. BRAND GEOMETRY & RADII
+       Defines corner roundness (e.g. 0px brutalist, 4px sharp, 16px soft, 9999px pill).
+       -------------------------------------------------------------------------- */
+    --rv-radius-xs:            4px;
+    --rv-radius-sm:            8px;
+    --rv-radius-md:            12px;
+    --rv-radius-lg:            20px;
+    --rv-radius-button:        12px;
+    --rv-radius-round:         9999px;
+    --rv-brand-radius-button:  var(--rv-radius-button);
+
+    /* --------------------------------------------------------------------------
+       6. BRAND ELEVATION & SHADOWS
+       -------------------------------------------------------------------------- */
+    --rv-shd-btn:              0 2px 4px rgba(0, 0, 0, .1);
+    --rv-shd-active:           inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    --rv-shd-input:            inset 0 2px 4px rgba(0, 0, 0, .1);
+    --rv-shd-pop:              0 12px 60px 8px rgba(0, 0, 0, 0.9);
+    --rv-shadow-md:            0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --rv-shd-lg:               var(--rv-shd-pop);
+
+    /* --------------------------------------------------------------------------
+       7. SYSTEM & COMPONENT ALIASES
+       -------------------------------------------------------------------------- */
+    --rv-bdr:                  var(--rv-neutral-400);
+    --rv-border-color:         var(--rv-bdr);
+    --rv-text-default:         var(--rv-white);
+    --rv-color-primary:        var(--rv-brand-primary);
+    --rv-button-bg-secondary:  var(--rv-neutral-400);
+}

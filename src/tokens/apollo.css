@@ -1,0 +1,74 @@
+/* ==========================================================================
+   PURPOSE: Brand - Apollo (Secondary Brand Demo)
+   Complete brand identity: Purple palette, Slate Neutrals, Inter, sharp radii.
+   ========================================================================== */
+
+[data-rv-brand="apollo"] {
+    /* 1. BRAND ACCENT COLORS */
+    --rv-brand-primary: #9333ea;
+    --rv-brand-primary-hover: #7e22ce;
+    --rv-brand-primary-active: #6b21a8;
+    --rv-brand-primary-light: #d8b4fe;
+    --rv-brand-primary-subtle: #f3e8ff;
+
+    /* 2. BRAND NEUTRAL PALETTE (Cool Slate Dark Tone) */
+    --rv-white: #ffffff;
+    --rv-black: #000000;
+    --rv-neutral-50: #f8fafc;
+    --rv-neutral-75: #cbd5e1;
+    --rv-neutral-100: #94a3b8;
+    --rv-neutral-200: #475569;
+    --rv-neutral-300: #334155;
+    --rv-neutral-400: #1e293b;
+    --rv-neutral-500: #0f172a;
+
+    /* 3. BRAND STATUS SIGNALS */
+    --rv-danger: #f43f5e;
+    --rv-success: #10b981;
+    --rv-warning: #eab308;
+
+    /* 4. BRAND TYPOGRAPHY */
+    --rv-font-family-default: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --rv-font-family-mono: 'SF Mono', 'Menlo', monospace;
+    --rv-brand-font: var(--rv-font-family-default);
+    --rv-font-family-body: var(--rv-font-family-default);
+
+    --rv-font-weight-regular: 400;
+    --rv-font-weight-medium: 500;
+    --rv-font-weight-bold: 700;
+
+    --rv-font-size-xs: 10px;
+    --rv-font-size-sm: 12px;
+    --rv-font-size-md: 14px;
+    --rv-font-size-lg: 16px;
+    --rv-font-size-xl: 20px;
+    --rv-font-md: var(--rv-font-size-md);
+
+    --rv-lh-tight: 1.2;
+    --rv-lh-md: 1.4;
+    --rv-lh-loose: 1.6;
+
+    /* 5. BRAND GEOMETRY & RADII (Sharp, tech-forward aesthetic) */
+    --rv-radius-xs: 2px;
+    --rv-radius-sm: 4px;
+    --rv-radius-md: 6px;
+    --rv-radius-lg: 8px;
+    --rv-radius-button: 6px;
+    --rv-radius-round: 9999px;
+    --rv-brand-radius-button: var(--rv-radius-button);
+
+    /* 6. BRAND ELEVATION & SHADOWS (Subtle, crisp shadows) */
+    --rv-shd-btn: 0 1px 2px rgba(0, 0, 0, .2);
+    --rv-shd-active: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    --rv-shd-input: inset 0 1px 2px rgba(0, 0, 0, .2);
+    --rv-shd-pop: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    --rv-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --rv-shd-lg: var(--rv-shd-pop);
+
+    /* 7. SYSTEM & COMPONENT ALIASES */
+    --rv-bdr: var(--rv-neutral-400);
+    --rv-border-color: var(--rv-bdr);
+    --rv-text-default: var(--rv-white);
+    --rv-color-primary: var(--rv-brand-primary);
+    --rv-button-bg-secondary: var(--rv-neutral-400);
+}

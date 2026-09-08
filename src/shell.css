@@ -90,6 +90,119 @@
     max-width: none;
 }
 
+/* Canvas Elements & Interactions */
+.rv-emptyState {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--rv-white);
+}
+
+.rv-emptyStateText {
+    text-align: center;
+}
+
+.rv-canvasBackgroundRoot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.rv-componentWrapper {
+    position: relative;
+    background: transparent;
+    transition: border-color .2s;
+    z-index: 1;
+}
+
+.rv-componentSelected {
+    outline: 1px solid var(--rv-brand-primary);
+    background-color: var(--rv-brand-primary-subtle);
+}
+
+/* Drag & Drop Visuals */
+.rv-dragImageContainer {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--rv-neutral-500);
+    border-radius: var(--rv-radius-sm);
+    border: 1px solid var(--rv-bdr);
+    overflow: hidden;
+}
+
+.rv-dragImageText {
+    font-size: var(--rv-font-size-sm);
+    font-weight: var(--rv-font-weight-bold);
+    color: var(--rv-white);
+}
+
+.rv-customDragImage {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+    background: var(--rv-neutral-300);
+    padding: var(--rv-space-xs);
+    border-radius: var(--rv-radius-md);
+    box-shadow: 0 var(--rv-space-xs) var(--rv-space-md) rgba(0, 0, 0, .1);
+    border: 1px solid var(--rv-bdr);
+    align-items: center;
+    gap: var(--rv-space-xs);
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rv-canvasBadge {
+    font-size: var(--rv-font-size-xs);
+    font-weight: var(--rv-font-weight-medium);
+    position: sticky;
+    bottom: var(--rv-space-lg);
+    margin: var(--rv-space-xl) auto 0;
+    background: var(--rv-neutral-400);
+    color: var(--rv-white);
+    padding: var(--rv-space-xs) var(--rv-space-md);
+    border-radius: var(--rv-radius-round);
+    display: flex;
+    align-items: center;
+    gap: var(--rv-space-xs);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: fit-content;
+    z-index: 10;
+}
+
+/* Misc Canvas Utilities */
+.rv-canvasWrapper {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    margin: 0 auto;
+    margin-bottom: var(--rv-space-xl);
+}
+
+.rv-canvasText {
+    color: var(--rv-neutral-100);
+    font-family: var(--rv-font-family-body);
+    font-size: var(--rv-font-md);
+}
+
+.rv-blendOverlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--rv-white);
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0;
+}
+
 
 /* ==========================================================================
    PURPOSE: Mobile Layers
@@ -131,4 +244,30 @@
 
 .rv-mobileSidebarSheetOpen {
     transform: translateY(0);
+}
+
+/* Parallax and Scroll Groups */
+.rv-parallaxGroup {
+    position: relative;
+    width: 100%;
+}
+
+.rv-parallaxContent {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+/* Component Error State */
+.rv-componentError {
+    padding: var(--rv-space-xl);
+    background: rgba(239, 68, 68, 0.1);
+    border: 2px dashed var(--rv-danger);
+    color: var(--rv-danger);
+    text-align: center;
+    border-radius: var(--rv-radius-md);
+    margin: var(--rv-space-lg);
 }
