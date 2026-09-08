@@ -54,20 +54,6 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-.rv-notificationStack--expanded .rv-notificationCard:first-child {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.rv-notificationStack--expanded .rv-notificationCard:not(:first-child) {
-    border-top: none;
-    border-radius: 0;
-}
-
-.rv-notificationStack--expanded .rv-notificationCard:last-child {
-    border-bottom-left-radius: var(--rv-radius-lg);
-    border-bottom-right-radius: var(--rv-radius-lg);
-}
 
 /* Stack Container Hover */
 .rv-notificationStack:hover .rv-notificationCard {
