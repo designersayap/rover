@@ -1,18 +1,36 @@
 {
   "name": "rover",
   "version": "1.1.0",
-  "description": "Multi-brand tokenized core CSS library for the Rover interface.",
-  "main": "src/index.css",
+  "description": "Multi-brand tokenized core UI and CSS library for the Rover interface.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "style": "./src/styles/index.css",
   "exports": {
-    ".": "./src/index.css",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./src/styles/index.css"
+    },
+    "./styles": "./src/styles/index.css",
+    "./styles/*": "./src/styles/*",
     "./tokens/*": "./src/tokens/*.css",
-    "./src/*": "./src/*.css",
+    "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
   "files": [
+    "dist",
     "src"
   ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
   "keywords": [
+    "react",
+    "components",
     "css",
     "design-tokens",
     "multi-brand",
@@ -22,5 +40,23 @@
     "rover"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
 }

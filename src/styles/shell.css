@@ -191,7 +191,7 @@
 .rv-canvasText {
     color: var(--rv-neutral-100);
     font-family: var(--rv-font-family-body);
-    font-size: var(--rv-font-md);
+    font-size: var(--rv-font-size-md);
 }
 
 .rv-blendOverlay {

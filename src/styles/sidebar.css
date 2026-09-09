@@ -15,7 +15,7 @@
 }
 
 .rv-sidebarRailOnly {
-    width: var(--rv-w-sidebar-rail) !important;
+    width: calc(var(--rv-w-sidebar-rail) + var(--rv-space-md)) !important;
 }
 
 .rv-sidebarRailOnly .rv-sidebarRail {
@@ -85,7 +85,7 @@
    ========================================================================== */
 
 .rv-sidebarRail {
-    width: 92px;
+    width: var(--rv-w-sidebar-rail);
     background: transparent;
     border-right: .5px solid var(--rv-bdr);
     display: flex;

@@ -1,6 +1,6 @@
-# Rover CSS Library
+# Rover UI & CSS Library
 
-Multi-brand tokenized core CSS library for the Rover interface and Lunar page builder.
+Multi-brand tokenized core UI and CSS library for the Rover interface and Lunar page builder.
 
 ## Installation
 
@@ -12,20 +12,50 @@ npm install github:designersayap/rover
 
 ## Usage
 
-Import the main bundle into your project:
+### 1. React Components (with TypeScript & Next.js App Router support)
+
+```tsx
+import { AppShell, MainContent, Sidebar, SidebarRail, Canvas } from 'rover';
+
+export default function PageBuilder() {
+  return (
+    <AppShell brand="lunar">
+      <Sidebar>
+        <SidebarRail
+          items={[
+            { id: 'elements', label: 'Layers', icon: <LayersIcon /> },
+            { id: 'seo', label: 'SEO', icon: <SearchIcon /> },
+          ]}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        />
+      </Sidebar>
+      <MainContent>
+        <Canvas>...</Canvas>
+      </MainContent>
+    </AppShell>
+  );
+}
+```
+
+### 2. Standalone CSS Tokens & Styling
+
+Import the styles directly if using custom markup:
 
 ```javascript
 import 'rover';
 // or
-import 'rover/src/index.css';
+import 'rover/styles';
+// or specific token brand
+import 'rover/tokens/apollo.css';
 ```
 
 ## Multi-Brand Architecture
 
 Rover provides a modular token architecture:
 
-1. **Base Foundations (`src/base.css`)**: Layout grid primitives, spacing scale (`--rv-space-*`), shell dimensions, and utility classes.
-2. **Brand Themes (`src/tokens/`)**: Brand identity mappings (default: `lunar.css`, demo: `apollo.css`, blueprint: `template.css`).
+1. **Base Foundations (`src/base.css`)**: Layout grid primitives, flexbox/grid helpers, and atomic utility classes.
+2. **Brand Themes (`src/tokens/`)**: Brand identity mappings, spacing scale (`--rv-space-*`), layout dimensions, and component aliases.
 
 ### Switching Brands
 
@@ -66,8 +96,8 @@ If no `data-rv-brand` attribute is specified, Rover automatically defaults to th
 
 ## Project Structure
 
-- `src/tokens/`: Brand identity definitions (`lunar.css`, `apollo.css`, `template.css`) including component aliases.
-- `src/base.css`: Primitive spacing scale, layout dimensions, layout primitives, and atomic utility classes.
+- `src/tokens/`: Brand identity definitions (`lunar.css`, `apollo.css`, `template.css`) including spacing scale, layout dimensions, and component aliases.
+- `src/base.css`: Layout primitives, flex/grid helpers, and atomic utility classes.
 - `src/shell.css`: App containers, canvas viewport, and workspace interaction states.
 - `src/sidebar.css`: Floating sidebar, rails, tree layers, and tab modules.
 - `src/topbar.css`: Main navigation topbar.

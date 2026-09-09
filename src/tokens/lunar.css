@@ -43,7 +43,6 @@
     --rv-font-size-md: 14px;
     --rv-font-size-lg: 16px;
     --rv-font-size-xl: 20px;
-    --rv-font-md: var(--rv-font-size-md);
 
     --rv-lh-tight: 1.2;
     --rv-lh-md: 1.4;
@@ -72,4 +71,17 @@
     --rv-text-default: var(--rv-white);
     --rv-color-primary: var(--rv-brand-primary);
     --rv-button-bg-secondary: var(--rv-neutral-400);
+
+    /* 8. SPACING SCALE & LAYOUT DIMENSIONS */
+    --rv-space-xs: 4px;
+    --rv-space-sm: 8px;
+    --rv-space-md: 12px;
+    --rv-space-lg: 16px;
+    --rv-space-xl: 24px;
+
+    --rv-h-btn: 36px;
+    --rv-h-topbar: 64px;
+    --rv-w-sidebar: 360px;
+    --rv-w-sidebar-rail: 92px;
+    --rv-w-pop: 362px;
 }

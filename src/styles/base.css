@@ -1,26 +1,4 @@
 /* ==========================================================================
-   PURPOSE: Primitive Spacing & Dimensions
-   Standard gap, padding, margin, and shell dimensions.
-   ========================================================================== */
-
-:root {
-    /* Spacing Scale */
-    --rv-space-xs: 4px;
-    --rv-space-sm: 8px;
-    --rv-space-md: 12px;
-    --rv-space-lg: 16px;
-    --rv-space-xl: 24px;
-
-    /* Base Layout Dimensions */
-    --rv-h-btn: 36px;
-    --rv-h-topbar: 64px;
-    --rv-w-sidebar: 360px;
-    --rv-w-sidebar-rail: 108px;
-    --rv-w-pop: 362px;
-}
-
-
-/* ==========================================================================
    PURPOSE: Layout Primitives
    Core flexbox and grid helpers for structural arrangement.
    ========================================================================== */
