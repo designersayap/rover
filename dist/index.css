@@ -1842,6 +1842,14 @@ form {
 .rv-toggleInput:checked + .rv-toggleSlider:before {
   transform: translateX(20px);
 }
+.rv-toggleText {
+  font-size: var(--rv-font-size-md);
+  font-weight: var(--rv-font-weight-medium);
+  color: var(--rv-neutral-100);
+  margin-bottom: 0;
+  user-select: none;
+  cursor: pointer;
+}
 .rv-radioOption {
   display: flex;
   align-items: center;
