@@ -224,7 +224,7 @@ form {
 
 .rv-formInputTitle {
     color: var(--rv-neutral-100);
-    font-size: var(--rv-font-size-md);
+    font-size: var(--rv-font-size-sm);
     font-weight: var(--rv-font-weight-regular);
     margin-bottom: var(--rv-space-xs);
     display: block;
@@ -243,6 +243,7 @@ form {
     box-shadow: none;
     padding: 0 var(--rv-space-md);
     height: var(--rv-h-btn);
+    line-height: var(--rv-lh-loose);
 }
 
 .rv-formInput:focus,
@@ -288,7 +289,7 @@ form {
     resize: vertical;
     font-family: inherit;
     padding: var(--rv-space-sm) var(--rv-space-md);
-    min-height: 80px;
+    min-height: 120px;
 }
 
 .rv-formSelect {
