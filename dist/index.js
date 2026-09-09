@@ -49,119 +49,146 @@ __export(index_exports, {
 module.exports = __toCommonJS(index_exports);
 
 // src/components/shell/AppShell.tsx
+var import_react = __toESM(require("react"));
 var import_jsx_runtime = require("react/jsx-runtime");
-var AppShell = ({
-  children,
-  className = "",
-  brand,
-  style
-}) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-    "div",
-    {
-      className: `rv-container ${className}`.trim(),
-      "data-rv-brand": brand,
-      style,
-      children
-    }
-  );
-};
-var MainContent = ({
-  children,
-  className = "",
-  style
-}) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: `rv-mainContent ${className}`.trim(), style, children });
-};
+var AppShell = import_react.default.forwardRef(
+  ({ children, className = "", brand, ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+      "div",
+      {
+        ref,
+        className: `rv-container ${className}`.trim(),
+        "data-rv-brand": brand,
+        ...props,
+        children
+      }
+    );
+  }
+);
+AppShell.displayName = "AppShell";
+var MainContent = import_react.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+      "div",
+      {
+        ref,
+        className: `rv-mainContent ${className}`.trim(),
+        ...props,
+        children
+      }
+    );
+  }
+);
+MainContent.displayName = "MainContent";
 
 // src/components/shell/Canvas.tsx
-var import_react = __toESM(require("react"));
+var import_react2 = __toESM(require("react"));
 var import_jsx_runtime2 = require("react/jsx-runtime");
-var Canvas = ({
-  children,
-  deviceMode = "desktop",
-  scrolledBottom = false,
-  className = "",
-  style
-}) => {
-  const modeClass = deviceMode === "desktop" ? "rv-canvasDesktop" : "rv-canvasMobile";
-  const bottomClass = scrolledBottom ? "rv-canvasScrolledBottom" : "";
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-    "main",
-    {
-      className: `rv-canvas ${modeClass} ${bottomClass} ${className}`.trim(),
-      style,
-      children
-    }
-  );
-};
-var CanvasInner = ({
-  children,
-  className = "",
-  style
-}) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: `rv-canvasInner ${className}`.trim(), style, children });
-};
-var CanvasScroll = import_react.default.forwardRef(
-  ({ children, className = "", onScroll }, ref) => {
+var Canvas = import_react2.default.forwardRef(
+  ({ children, deviceMode = "desktop", scrolledBottom = false, className = "", ...props }, ref) => {
+    const modeClass = deviceMode === "desktop" ? "rv-canvasDesktop" : "rv-canvasMobile";
+    const bottomClass = scrolledBottom ? "rv-canvasScrolledBottom" : "";
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+      "main",
+      {
+        ref,
+        className: `rv-canvas ${modeClass} ${bottomClass} ${className}`.trim(),
+        ...props,
+        children
+      }
+    );
+  }
+);
+Canvas.displayName = "Canvas";
+var CanvasInner = import_react2.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+      "div",
+      {
+        ref,
+        className: `rv-canvasInner ${className}`.trim(),
+        ...props,
+        children
+      }
+    );
+  }
+);
+CanvasInner.displayName = "CanvasInner";
+var CanvasScroll = import_react2.default.forwardRef(
+  ({ children, className = "", onScroll, ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
       "div",
       {
         ref,
         className: `rv-canvasScroll ${className}`.trim(),
         onScroll,
+        ...props,
         children
       }
     );
   }
 );
 CanvasScroll.displayName = "CanvasScroll";
-var CanvasContent = ({
-  children,
-  className = ""
-}) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: `rv-canvasContent ${className}`.trim(), children });
-};
-var ComponentWrapper = ({
-  children,
-  selected = false,
-  className = "",
-  onClick,
-  onKeyDown,
-  id
-}) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
-    "div",
-    {
-      id,
-      className: `rv-componentWrapper ${selected ? "rv-componentSelected" : ""} ${className}`.trim(),
-      onClick,
-      onKeyDown,
-      children
-    }
-  );
-};
-var EmptyState = ({
-  children,
-  className = ""
-}) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: `rv-emptyState ${className}`.trim(), children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "rv-emptyStateText", children }) });
-};
+var CanvasContent = import_react2.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+      "div",
+      {
+        ref,
+        className: `rv-canvasContent ${className}`.trim(),
+        ...props,
+        children
+      }
+    );
+  }
+);
+CanvasContent.displayName = "CanvasContent";
+var ComponentWrapper = import_react2.default.forwardRef(
+  ({ children, selected = false, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+      "div",
+      {
+        ref,
+        className: `rv-componentWrapper ${selected ? "rv-componentSelected" : ""} ${className}`.trim(),
+        ...props,
+        children
+      }
+    );
+  }
+);
+ComponentWrapper.displayName = "ComponentWrapper";
+var EmptyState = import_react2.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+      "div",
+      {
+        ref,
+        className: `rv-emptyState ${className}`.trim(),
+        ...props,
+        children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "rv-emptyStateText", children })
+      }
+    );
+  }
+);
+EmptyState.displayName = "EmptyState";
+
+// src/components/sidebar/Sidebar.tsx
+var import_react4 = __toESM(require("react"));
 
 // src/components/sidebar/ResizeHandle.tsx
-var import_react2 = require("react");
+var import_react3 = require("react");
 var import_jsx_runtime3 = require("react/jsx-runtime");
 var ResizeHandle = ({
   onResize,
   onResizeEnd,
   className = ""
 }) => {
-  const [isDragging, setIsDragging] = (0, import_react2.useState)(false);
-  const handleMouseDown = (0, import_react2.useCallback)((e) => {
+  const [isDragging, setIsDragging] = (0, import_react3.useState)(false);
+  const handleMouseDown = (0, import_react3.useCallback)((e) => {
     e.preventDefault();
     setIsDragging(true);
   }, []);
-  (0, import_react2.useEffect)(() => {
+  (0, import_react3.useEffect)(() => {
     if (!isDragging) return;
     const handleMouseMove = (e) => {
       onResize?.(e.movementX);
@@ -191,46 +218,70 @@ var ResizeHandle = ({
 
 // src/components/sidebar/Sidebar.tsx
 var import_jsx_runtime4 = require("react/jsx-runtime");
-var Sidebar = ({
-  children,
-  state = "full",
-  className = "",
-  width,
-  onResize,
-  resizable = false,
-  style,
-  dataBuilderUi = true
-}) => {
-  const stateClass = state === "rail-only" ? "rv-sidebarRailOnly" : state === "collapsed" ? "rv-sidebarCollapsed" : "";
-  const inlineStyle = {
-    ...style,
-    ...width !== void 0 && state === "full" ? { width: typeof width === "number" ? `${width}px` : width } : {}
-  };
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-    "aside",
-    {
-      className: `rv-sidebarShell ${stateClass} ${className}`.trim(),
-      style: inlineStyle,
-      "data-builder-ui": dataBuilderUi ? "true" : void 0,
-      children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: "rv-sidebar", children: [
-        children,
-        resizable && state === "full" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ResizeHandle, { onResize })
-      ] })
-    }
-  );
-};
-var SidebarBody = ({
-  children,
-  className = ""
-}) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: `rv-sidebarBody ${className}`.trim(), children });
-};
-var SidebarPanel = ({
-  children,
-  className = ""
-}) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: `rv-sidebarPanel ${className}`.trim(), children });
-};
+var Sidebar = import_react4.default.forwardRef(
+  ({
+    children,
+    state = "full",
+    className = "",
+    width,
+    onResize,
+    resizable = false,
+    style,
+    dataBuilderUi = true,
+    innerClassName = "",
+    ...props
+  }, ref) => {
+    const stateClass = state === "rail-only" ? "rv-sidebarRailOnly" : state === "collapsed" ? "rv-sidebarCollapsed" : "";
+    const inlineStyle = {
+      ...style,
+      ...width !== void 0 && state === "full" ? { width: typeof width === "number" ? `${width}px` : width } : {}
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+      "aside",
+      {
+        ref,
+        className: `rv-sidebarShell ${stateClass} ${className}`.trim(),
+        style: inlineStyle,
+        "data-builder-ui": dataBuilderUi ? "true" : void 0,
+        ...props,
+        children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: `rv-sidebar ${innerClassName}`.trim(), children: [
+          children,
+          resizable && state === "full" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ResizeHandle, { onResize })
+        ] })
+      }
+    );
+  }
+);
+Sidebar.displayName = "Sidebar";
+var SidebarBody = import_react4.default.forwardRef(
+  ({ children, className = "", open, ...props }, ref) => {
+    const openClass = open ? "rv-sidebarBodyOpen" : "";
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+      "div",
+      {
+        ref,
+        className: `rv-sidebarBody ${openClass} ${className}`.trim(),
+        ...props,
+        children
+      }
+    );
+  }
+);
+SidebarBody.displayName = "SidebarBody";
+var SidebarPanel = import_react4.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+      "div",
+      {
+        ref,
+        className: `rv-sidebarPanel ${className}`.trim(),
+        ...props,
+        children
+      }
+    );
+  }
+);
+SidebarPanel.displayName = "SidebarPanel";
 
 // src/components/sidebar/SidebarRail.tsx
 var import_jsx_runtime5 = require("react/jsx-runtime");

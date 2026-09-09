@@ -1,82 +1,75 @@
 import React from 'react';
 
-interface AppShellProps {
+interface AppShellProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     className?: string;
     brand?: string;
-    style?: React.CSSProperties;
 }
-declare const AppShell: React.FC<AppShellProps>;
-interface MainContentProps {
+declare const AppShell: React.ForwardRefExoticComponent<AppShellProps & React.RefAttributes<HTMLDivElement>>;
+interface MainContentProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     className?: string;
-    style?: React.CSSProperties;
 }
-declare const MainContent: React.FC<MainContentProps>;
+declare const MainContent: React.ForwardRefExoticComponent<MainContentProps & React.RefAttributes<HTMLDivElement>>;
 
-interface CanvasProps {
+interface CanvasProps extends React.HTMLAttributes<HTMLElement> {
     children?: React.ReactNode;
     deviceMode?: 'desktop' | 'mobile';
     scrolledBottom?: boolean;
     className?: string;
-    style?: React.CSSProperties;
 }
-declare const Canvas: React.FC<CanvasProps>;
-interface CanvasInnerProps {
+declare const Canvas: React.ForwardRefExoticComponent<CanvasProps & React.RefAttributes<HTMLElement>>;
+interface CanvasInnerProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     className?: string;
-    style?: React.CSSProperties;
 }
-declare const CanvasInner: React.FC<CanvasInnerProps>;
-interface CanvasScrollProps {
+declare const CanvasInner: React.ForwardRefExoticComponent<CanvasInnerProps & React.RefAttributes<HTMLDivElement>>;
+interface CanvasScrollProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     className?: string;
     onScroll?: React.UIEventHandler<HTMLDivElement>;
-    ref?: React.Ref<HTMLDivElement>;
 }
-declare const CanvasScroll: React.ForwardRefExoticComponent<Omit<CanvasScrollProps, "ref"> & React.RefAttributes<HTMLDivElement>>;
-interface CanvasContentProps {
+declare const CanvasScroll: React.ForwardRefExoticComponent<CanvasScrollProps & React.RefAttributes<HTMLDivElement>>;
+interface CanvasContentProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     className?: string;
 }
-declare const CanvasContent: React.FC<CanvasContentProps>;
-interface ComponentWrapperProps {
+declare const CanvasContent: React.ForwardRefExoticComponent<CanvasContentProps & React.RefAttributes<HTMLDivElement>>;
+interface ComponentWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     selected?: boolean;
     className?: string;
-    onClick?: React.MouseEventHandler<HTMLDivElement>;
-    onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
-    id?: string;
 }
-declare const ComponentWrapper: React.FC<ComponentWrapperProps>;
-interface EmptyStateProps {
+declare const ComponentWrapper: React.ForwardRefExoticComponent<ComponentWrapperProps & React.RefAttributes<HTMLDivElement>>;
+interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     className?: string;
 }
-declare const EmptyState: React.FC<EmptyStateProps>;
+declare const EmptyState: React.ForwardRefExoticComponent<EmptyStateProps & React.RefAttributes<HTMLDivElement>>;
 
 type SidebarState = 'full' | 'rail-only' | 'collapsed';
-interface SidebarProps {
+interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
     children?: React.ReactNode;
     state?: SidebarState;
     className?: string;
     width?: number | string;
     onResize?: (deltaX: number) => void;
     resizable?: boolean;
-    style?: React.CSSProperties;
     dataBuilderUi?: boolean;
+    innerClassName?: string;
 }
-declare const Sidebar: React.FC<SidebarProps>;
-interface SidebarBodyProps {
+declare const Sidebar: React.ForwardRefExoticComponent<SidebarProps & React.RefAttributes<HTMLElement>>;
+interface SidebarBodyProps extends React.HTMLAttributes<HTMLDivElement> {
+    children?: React.ReactNode;
+    className?: string;
+    open?: boolean;
+}
+declare const SidebarBody: React.ForwardRefExoticComponent<SidebarBodyProps & React.RefAttributes<HTMLDivElement>>;
+interface SidebarPanelProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     className?: string;
 }
-declare const SidebarBody: React.FC<SidebarBodyProps>;
-interface SidebarPanelProps {
-    children?: React.ReactNode;
-    className?: string;
-}
-declare const SidebarPanel: React.FC<SidebarPanelProps>;
+declare const SidebarPanel: React.ForwardRefExoticComponent<SidebarPanelProps & React.RefAttributes<HTMLDivElement>>;
 
 interface RailItem {
     id: string;

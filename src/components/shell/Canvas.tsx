@@ -2,66 +2,65 @@
 
 import React from 'react';
 
-export interface CanvasProps {
+export interface CanvasProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
   deviceMode?: 'desktop' | 'mobile';
   scrolledBottom?: boolean;
   className?: string;
-  style?: React.CSSProperties;
 }
 
-export const Canvas: React.FC<CanvasProps> = ({
-  children,
-  deviceMode = 'desktop',
-  scrolledBottom = false,
-  className = '',
-  style,
-}) => {
-  const modeClass = deviceMode === 'desktop' ? 'rv-canvasDesktop' : 'rv-canvasMobile';
-  const bottomClass = scrolledBottom ? 'rv-canvasScrolledBottom' : '';
+export const Canvas = React.forwardRef<HTMLElement, CanvasProps>(
+  ({ children, deviceMode = 'desktop', scrolledBottom = false, className = '', ...props }, ref) => {
+    const modeClass = deviceMode === 'desktop' ? 'rv-canvasDesktop' : 'rv-canvasMobile';
+    const bottomClass = scrolledBottom ? 'rv-canvasScrolledBottom' : '';
 
-  return (
-    <main
-      className={`rv-canvas ${modeClass} ${bottomClass} ${className}`.trim()}
-      style={style}
-    >
-      {children}
-    </main>
-  );
-};
+    return (
+      <main
+        ref={ref}
+        className={`rv-canvas ${modeClass} ${bottomClass} ${className}`.trim()}
+        {...props}
+      >
+        {children}
+      </main>
+    );
+  }
+);
+Canvas.displayName = 'Canvas';
 
-export interface CanvasInnerProps {
+export interface CanvasInnerProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   className?: string;
-  style?: React.CSSProperties;
 }
 
-export const CanvasInner: React.FC<CanvasInnerProps> = ({
-  children,
-  className = '',
-  style,
-}) => {
-  return (
-    <div className={`rv-canvasInner ${className}`.trim()} style={style}>
-      {children}
-    </div>
-  );
-};
+export const CanvasInner = React.forwardRef<HTMLDivElement, CanvasInnerProps>(
+  ({ children, className = '', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={`rv-canvasInner ${className}`.trim()}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+CanvasInner.displayName = 'CanvasInner';
 
-export interface CanvasScrollProps {
+export interface CanvasScrollProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   className?: string;
   onScroll?: React.UIEventHandler<HTMLDivElement>;
-  ref?: React.Ref<HTMLDivElement>;
 }
 
 export const CanvasScroll = React.forwardRef<HTMLDivElement, CanvasScrollProps>(
-  ({ children, className = '', onScroll }, ref) => {
+  ({ children, className = '', onScroll, ...props }, ref) => {
     return (
       <div
         ref={ref}
         className={`rv-canvasScroll ${className}`.trim()}
         onScroll={onScroll}
+        {...props}
       >
         {children}
       </div>
@@ -70,59 +69,63 @@ export const CanvasScroll = React.forwardRef<HTMLDivElement, CanvasScrollProps>(
 );
 CanvasScroll.displayName = 'CanvasScroll';
 
-export interface CanvasContentProps {
+export interface CanvasContentProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   className?: string;
 }
 
-export const CanvasContent: React.FC<CanvasContentProps> = ({
-  children,
-  className = '',
-}) => {
-  return <div className={`rv-canvasContent ${className}`.trim()}>{children}</div>;
-};
+export const CanvasContent = React.forwardRef<HTMLDivElement, CanvasContentProps>(
+  ({ children, className = '', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={`rv-canvasContent ${className}`.trim()}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+CanvasContent.displayName = 'CanvasContent';
 
-export interface ComponentWrapperProps {
+export interface ComponentWrapperProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   selected?: boolean;
   className?: string;
-  onClick?: React.MouseEventHandler<HTMLDivElement>;
-  onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
-  id?: string;
 }
 
-export const ComponentWrapper: React.FC<ComponentWrapperProps> = ({
-  children,
-  selected = false,
-  className = '',
-  onClick,
-  onKeyDown,
-  id,
-}) => {
-  return (
-    <div
-      id={id}
-      className={`rv-componentWrapper ${selected ? 'rv-componentSelected' : ''} ${className}`.trim()}
-      onClick={onClick}
-      onKeyDown={onKeyDown}
-    >
-      {children}
-    </div>
-  );
-};
+export const ComponentWrapper = React.forwardRef<HTMLDivElement, ComponentWrapperProps>(
+  ({ children, selected = false, className = '', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={`rv-componentWrapper ${selected ? 'rv-componentSelected' : ''} ${className}`.trim()}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+ComponentWrapper.displayName = 'ComponentWrapper';
 
-export interface EmptyStateProps {
+export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   className?: string;
 }
 
-export const EmptyState: React.FC<EmptyStateProps> = ({
-  children,
-  className = '',
-}) => {
-  return (
-    <div className={`rv-emptyState ${className}`.trim()}>
-      <div className="rv-emptyStateText">{children}</div>
-    </div>
-  );
-};
+export const EmptyState = React.forwardRef<HTMLDivElement, EmptyStateProps>(
+  ({ children, className = '', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={`rv-emptyState ${className}`.trim()}
+        {...props}
+      >
+        <div className="rv-emptyStateText">{children}</div>
+      </div>
+    );
+  }
+);
+EmptyState.displayName = 'EmptyState';

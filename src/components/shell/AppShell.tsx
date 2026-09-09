@@ -2,44 +2,44 @@
 
 import React from 'react';
 
-export interface AppShellProps {
+export interface AppShellProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   className?: string;
   brand?: string;
-  style?: React.CSSProperties;
 }
 
-export const AppShell: React.FC<AppShellProps> = ({
-  children,
-  className = '',
-  brand,
-  style,
-}) => {
-  return (
-    <div
-      className={`rv-container ${className}`.trim()}
-      data-rv-brand={brand}
-      style={style}
-    >
-      {children}
-    </div>
-  );
-};
+export const AppShell = React.forwardRef<HTMLDivElement, AppShellProps>(
+  ({ children, className = '', brand, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={`rv-container ${className}`.trim()}
+        data-rv-brand={brand}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+AppShell.displayName = 'AppShell';
 
-export interface MainContentProps {
+export interface MainContentProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   className?: string;
-  style?: React.CSSProperties;
 }
 
-export const MainContent: React.FC<MainContentProps> = ({
-  children,
-  className = '',
-  style,
-}) => {
-  return (
-    <div className={`rv-mainContent ${className}`.trim()} style={style}>
-      {children}
-    </div>
-  );
-};
+export const MainContent = React.forwardRef<HTMLDivElement, MainContentProps>(
+  ({ children, className = '', ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={`rv-mainContent ${className}`.trim()}
+        {...props}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+MainContent.displayName = 'MainContent';
