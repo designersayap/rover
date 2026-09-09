@@ -215,6 +215,13 @@ form {
     gap: var(--rv-space-lg);
 }
 
+.rv-formFieldGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rv-space-xs);
+    width: 100%;
+}
+
 .rv-formInputTitle {
     color: var(--rv-neutral-100);
     font-size: var(--rv-font-size-md);
@@ -401,6 +408,26 @@ form {
     background: var(--rv-neutral-300);
 }
 
+/* Color Swatches & Selectors */
+.rv-colorSwatch {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.1s;
+}
+
+.rv-colorSwatch:hover {
+    transform: scale(1.2);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.rv-colorSwatchActive {
+    border-color: var(--rv-white);
+    transform: scale(1.1);
+}
+
 
 /* ==========================================================================
    PURPOSE: List Items
@@ -579,6 +606,19 @@ form {
     width: 1px;
     height: var(--rv-space-lg);
     background-color: var(--rv-bdr);
+}
+
+/* Media & Image Preview Box */
+.rv-mediaPreview {
+    width: 100%;
+    max-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--rv-radius-sm);
+    border: 1px solid var(--rv-bdr);
+    background: var(--rv-neutral-500);
 }
 
 /* ==========================================================================

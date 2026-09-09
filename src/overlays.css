@@ -303,25 +303,6 @@
     margin: 0 var(--rv-space-xs);
 }
 
-.rv-colorSwatch {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: transform 0.1s;
-}
-
-.rv-colorSwatch:hover {
-    transform: scale(1.2);
-    border-color: rgba(255, 255, 255, 0.5);
-}
-
-.rv-colorSwatchActive {
-    border-color: var(--rv-white);
-    transform: scale(1.1);
-}
-
 /* Floating Pill Container */
 .rv-floatingPill {
     position: fixed;
@@ -338,25 +319,4 @@
     align-items: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Form Field Group */
-.rv-formFieldGroup {
-    display: flex;
-    flex-direction: column;
-    gap: var(--rv-space-xs);
-    width: 100%;
-}
-
-/* Media & Image Preview Box */
-.rv-mediaPreview {
-    width: 100%;
-    max-height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: var(--rv-radius-sm);
-    border: 1px solid var(--rv-bdr);
-    background: var(--rv-neutral-500);
 }
