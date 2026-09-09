@@ -1,4 +1,5 @@
 'use client';
+import './index.css';
 
 // src/components/shell/AppShell.tsx
 import { jsx } from "react/jsx-runtime";

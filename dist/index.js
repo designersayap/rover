@@ -1,4 +1,5 @@
 'use client';
+require('./index.css');
 "use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;

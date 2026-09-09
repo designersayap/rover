@@ -8,7 +8,14 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   external: ['react', 'react-dom'],
-  banner: {
-    js: "'use client';",
+  banner({ format }) {
+    if (format === 'esm') {
+      return {
+        js: "'use client';\nimport './index.css';",
+      };
+    }
+    return {
+      js: "'use client';\nrequire('./index.css');",
+    };
   },
 });
