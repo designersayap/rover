@@ -1845,7 +1845,7 @@ form {
 .rv-toggleText {
   font-size: var(--rv-font-size-md);
   font-weight: var(--rv-font-weight-medium);
-  color: var(--rv-neutral-100);
+  color: var(--rv-neutral-50);
   margin-bottom: 0;
   user-select: none;
   cursor: pointer;
