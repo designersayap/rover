@@ -20,7 +20,7 @@
     padding: var(--rv-space-xs) var(--rv-space-sm);
     border-radius: var(--rv-radius-sm);
     font-family: var(--rv-font-family-default);
-    font-size: var(--rv-font-size-md);
+    font-size: var(--rv-font-size-sm);
     font-weight: 500;
     line-height: var(--rv-lh-loose);
     white-space: normal;
