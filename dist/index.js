@@ -40,11 +40,20 @@ __export(index_exports, {
   ComponentWrapper: () => ComponentWrapper,
   EmptyState: () => EmptyState,
   MainContent: () => MainContent,
+  Popover: () => Popover,
+  PopoverContent: () => PopoverContent,
+  PopoverHeader: () => PopoverHeader,
+  PopoverTitle: () => PopoverTitle,
   ResizeHandle: () => ResizeHandle,
   Sidebar: () => Sidebar,
   SidebarBody: () => SidebarBody,
   SidebarPanel: () => SidebarPanel,
-  SidebarRail: () => SidebarRail
+  SidebarRail: () => SidebarRail,
+  Tooltip: () => Tooltip,
+  Topbar: () => Topbar,
+  TopbarLeft: () => TopbarLeft,
+  TopbarLogo: () => TopbarLogo,
+  TopbarRight: () => TopbarRight
 });
 module.exports = __toCommonJS(index_exports);
 
@@ -326,6 +335,268 @@ var SidebarRail = ({
     children
   ] });
 };
+
+// src/components/topbar/Topbar.tsx
+var import_react5 = __toESM(require("react"));
+var import_jsx_runtime6 = require("react/jsx-runtime");
+var Topbar = import_react5.default.forwardRef(
+  ({ children, className = "", dataBuilderUi = true, ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+      "header",
+      {
+        ref,
+        className: `rv-topbar ${className}`.trim(),
+        "data-builder-ui": dataBuilderUi ? "true" : void 0,
+        ...props,
+        children
+      }
+    );
+  }
+);
+Topbar.displayName = "Topbar";
+var TopbarLeft = import_react5.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { ref, className: `rv-topbarLeft ${className}`.trim(), ...props, children });
+  }
+);
+TopbarLeft.displayName = "TopbarLeft";
+var TopbarRight = import_react5.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { ref, className: `rv-topbarRight ${className}`.trim(), ...props, children });
+  }
+);
+TopbarRight.displayName = "TopbarRight";
+var TopbarLogo = import_react5.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { ref, className: `rv-topbarLogo ${className}`.trim(), ...props, children });
+  }
+);
+TopbarLogo.displayName = "TopbarLogo";
+
+// src/components/overlays/Popover.tsx
+var import_react6 = __toESM(require("react"));
+var import_jsx_runtime7 = require("react/jsx-runtime");
+var Popover = import_react6.default.forwardRef(
+  ({
+    isOpen = true,
+    onClose,
+    position,
+    centerByDefault = true,
+    width = 362,
+    className = "",
+    overlayClassName = "",
+    dataBuilderUi = true,
+    children,
+    style,
+    ...props
+  }, ref) => {
+    if (!isOpen) return null;
+    let popoverStyle = centerByDefault ? {
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      margin: 0,
+      pointerEvents: "auto",
+      ...style
+    } : { ...style };
+    if (position && typeof window !== "undefined") {
+      const padding = 8;
+      const windowWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
+      const isRightHalf = position.left > windowWidth / 2;
+      if (isRightHalf) {
+        let idealRight = windowWidth - (position.left + width / 2);
+        idealRight = Math.max(padding, idealRight);
+        popoverStyle = {
+          position: "fixed",
+          top: `${position.top}px`,
+          right: `${idealRight}px`,
+          left: "auto",
+          margin: 0,
+          pointerEvents: "auto",
+          width,
+          maxWidth: `calc(100vw - ${padding * 2}px)`,
+          ...style
+        };
+      } else {
+        let idealLeft = position.left - width / 2;
+        idealLeft = Math.max(padding, idealLeft);
+        popoverStyle = {
+          position: "fixed",
+          top: `${position.top}px`,
+          left: `${idealLeft}px`,
+          right: "auto",
+          margin: 0,
+          pointerEvents: "auto",
+          width,
+          maxWidth: `calc(100vw - ${padding * 2}px)`,
+          ...style
+        };
+      }
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        "div",
+        {
+          className: `rv-popoverOverlay ${overlayClassName}`.trim(),
+          onClick: onClose,
+          style: { pointerEvents: onClose ? "auto" : "none" },
+          "aria-hidden": "true"
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+        "div",
+        {
+          ref,
+          className: `rv-popoverContainer ${className}`.trim(),
+          style: popoverStyle,
+          onClick: (e) => e.stopPropagation(),
+          "data-builder-ui": dataBuilderUi ? "true" : void 0,
+          role: "dialog",
+          "aria-modal": "true",
+          ...props,
+          children
+        }
+      )
+    ] });
+  }
+);
+Popover.displayName = "Popover";
+var PopoverHeader = import_react6.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { ref, className: `rv-popoverHeader ${className}`.trim(), ...props, children });
+  }
+);
+PopoverHeader.displayName = "PopoverHeader";
+var PopoverTitle = import_react6.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("span", { ref, className: `rv-popoverTitle ${className}`.trim(), ...props, children });
+  }
+);
+PopoverTitle.displayName = "PopoverTitle";
+var PopoverContent = import_react6.default.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { ref, className: `rv-popoverContent ${className}`.trim(), ...props, children });
+  }
+);
+PopoverContent.displayName = "PopoverContent";
+
+// src/components/overlays/Tooltip.tsx
+var import_react7 = require("react");
+var import_react_dom = require("react-dom");
+var import_jsx_runtime8 = require("react/jsx-runtime");
+var Tooltip = ({
+  content,
+  children,
+  position = "top",
+  delay = 500,
+  className = "",
+  zIndex = 9999
+}) => {
+  const [isVisible, setIsVisible] = (0, import_react7.useState)(false);
+  const [tooltipStyle, setTooltipStyle] = (0, import_react7.useState)({
+    top: -9999,
+    left: -9999,
+    opacity: 0
+  });
+  const triggerRef = (0, import_react7.useRef)(null);
+  const tooltipRef = (0, import_react7.useRef)(null);
+  const timeoutRef = (0, import_react7.useRef)(null);
+  const [mounted, setMounted] = (0, import_react7.useState)(false);
+  (0, import_react7.useEffect)(() => setMounted(true), []);
+  const updatePosition = () => {
+    if (!triggerRef.current || !tooltipRef.current || !isVisible) return;
+    let triggerEl = triggerRef.current;
+    if (triggerEl.style.display === "contents" && triggerEl.firstElementChild) {
+      triggerEl = triggerEl.firstElementChild;
+    }
+    const triggerRect = triggerEl.getBoundingClientRect();
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    if (tooltipRect.width === 0) return;
+    const triggerCenterX = triggerRect.left + triggerRect.width / 2;
+    const triggerCenterY = triggerRect.top + triggerRect.height / 2;
+    const gap = 6;
+    let top = 0;
+    let left = 0;
+    switch (position) {
+      case "top":
+        top = triggerRect.top - tooltipRect.height - gap;
+        left = triggerCenterX - tooltipRect.width / 2;
+        break;
+      case "bottom":
+        top = triggerRect.bottom + gap;
+        left = triggerCenterX - tooltipRect.width / 2;
+        break;
+      case "left":
+        top = triggerCenterY - tooltipRect.height / 2;
+        left = triggerRect.left - tooltipRect.width - gap;
+        break;
+      case "right":
+        top = triggerCenterY - tooltipRect.height / 2;
+        left = triggerRect.right + gap;
+        break;
+    }
+    const padding = 8;
+    left = Math.max(padding, Math.min(left, window.innerWidth - tooltipRect.width - padding));
+    top = Math.max(padding, Math.min(top, window.innerHeight - tooltipRect.height - padding));
+    setTooltipStyle({
+      position: "fixed",
+      top: `${top}px`,
+      left: `${left}px`,
+      opacity: 1,
+      zIndex,
+      pointerEvents: "none",
+      transition: "opacity 0.15s ease"
+    });
+  };
+  (0, import_react7.useEffect)(() => {
+    if (isVisible) {
+      updatePosition();
+      window.addEventListener("scroll", updatePosition, true);
+      window.addEventListener("resize", updatePosition);
+    }
+    return () => {
+      window.removeEventListener("scroll", updatePosition, true);
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, [isVisible]);
+  const handleMouseEnter = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsVisible(true);
+    }, delay);
+  };
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsVisible(false);
+    setTooltipStyle({ top: -9999, left: -9999, opacity: 0 });
+  };
+  if (!content) return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(import_jsx_runtime8.Fragment, { children });
+  return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(import_jsx_runtime8.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+      "div",
+      {
+        ref: triggerRef,
+        onMouseEnter: handleMouseEnter,
+        onMouseLeave: handleMouseLeave,
+        style: { display: "contents" },
+        children
+      }
+    ),
+    mounted && isVisible && (0, import_react_dom.createPortal)(
+      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+        "div",
+        {
+          ref: tooltipRef,
+          className: `rv-tooltip ${className}`.trim(),
+          style: tooltipStyle,
+          role: "tooltip",
+          children: content
+        }
+      ),
+      document.body
+    )
+  ] });
+};
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AppShell,
@@ -336,10 +607,19 @@ var SidebarRail = ({
   ComponentWrapper,
   EmptyState,
   MainContent,
+  Popover,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTitle,
   ResizeHandle,
   Sidebar,
   SidebarBody,
   SidebarPanel,
-  SidebarRail
+  SidebarRail,
+  Tooltip,
+  Topbar,
+  TopbarLeft,
+  TopbarLogo,
+  TopbarRight
 });
 //# sourceMappingURL=index.js.map

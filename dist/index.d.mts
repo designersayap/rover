@@ -93,4 +93,68 @@ interface ResizeHandleProps {
 }
 declare const ResizeHandle: React.FC<ResizeHandleProps>;
 
-export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, ComponentWrapper, type ComponentWrapperProps, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState };
+interface TopbarProps extends React.HTMLAttributes<HTMLElement> {
+    children?: React.ReactNode;
+    className?: string;
+    dataBuilderUi?: boolean;
+}
+declare const Topbar: React.ForwardRefExoticComponent<TopbarProps & React.RefAttributes<HTMLElement>>;
+interface TopbarLeftProps extends React.HTMLAttributes<HTMLDivElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const TopbarLeft: React.ForwardRefExoticComponent<TopbarLeftProps & React.RefAttributes<HTMLDivElement>>;
+interface TopbarRightProps extends React.HTMLAttributes<HTMLDivElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const TopbarRight: React.ForwardRefExoticComponent<TopbarRightProps & React.RefAttributes<HTMLDivElement>>;
+interface TopbarLogoProps extends React.HTMLAttributes<HTMLHeadingElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const TopbarLogo: React.ForwardRefExoticComponent<TopbarLogoProps & React.RefAttributes<HTMLHeadingElement>>;
+
+interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
+    isOpen?: boolean;
+    onClose?: () => void;
+    position?: {
+        top: number;
+        left: number;
+    } | null;
+    centerByDefault?: boolean;
+    width?: number;
+    className?: string;
+    overlayClassName?: string;
+    dataBuilderUi?: boolean;
+    children?: React.ReactNode;
+}
+declare const Popover: React.ForwardRefExoticComponent<PopoverProps & React.RefAttributes<HTMLDivElement>>;
+interface PopoverHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const PopoverHeader: React.ForwardRefExoticComponent<PopoverHeaderProps & React.RefAttributes<HTMLDivElement>>;
+interface PopoverTitleProps extends React.HTMLAttributes<HTMLSpanElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const PopoverTitle: React.ForwardRefExoticComponent<PopoverTitleProps & React.RefAttributes<HTMLSpanElement>>;
+interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const PopoverContent: React.ForwardRefExoticComponent<PopoverContentProps & React.RefAttributes<HTMLDivElement>>;
+
+type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
+interface TooltipProps {
+    content: React.ReactNode;
+    children: React.ReactNode;
+    position?: TooltipPosition;
+    delay?: number;
+    className?: string;
+    zIndex?: number;
+}
+declare const Tooltip: React.FC<TooltipProps>;
+
+export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, ComponentWrapper, type ComponentWrapperProps, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };

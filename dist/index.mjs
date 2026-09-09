@@ -279,6 +279,268 @@ var SidebarRail = ({
     children
   ] });
 };
+
+// src/components/topbar/Topbar.tsx
+import React5 from "react";
+import { jsx as jsx6 } from "react/jsx-runtime";
+var Topbar = React5.forwardRef(
+  ({ children, className = "", dataBuilderUi = true, ...props }, ref) => {
+    return /* @__PURE__ */ jsx6(
+      "header",
+      {
+        ref,
+        className: `rv-topbar ${className}`.trim(),
+        "data-builder-ui": dataBuilderUi ? "true" : void 0,
+        ...props,
+        children
+      }
+    );
+  }
+);
+Topbar.displayName = "Topbar";
+var TopbarLeft = React5.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx6("div", { ref, className: `rv-topbarLeft ${className}`.trim(), ...props, children });
+  }
+);
+TopbarLeft.displayName = "TopbarLeft";
+var TopbarRight = React5.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx6("div", { ref, className: `rv-topbarRight ${className}`.trim(), ...props, children });
+  }
+);
+TopbarRight.displayName = "TopbarRight";
+var TopbarLogo = React5.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx6("h1", { ref, className: `rv-topbarLogo ${className}`.trim(), ...props, children });
+  }
+);
+TopbarLogo.displayName = "TopbarLogo";
+
+// src/components/overlays/Popover.tsx
+import React6 from "react";
+import { Fragment, jsx as jsx7, jsxs as jsxs3 } from "react/jsx-runtime";
+var Popover = React6.forwardRef(
+  ({
+    isOpen = true,
+    onClose,
+    position,
+    centerByDefault = true,
+    width = 362,
+    className = "",
+    overlayClassName = "",
+    dataBuilderUi = true,
+    children,
+    style,
+    ...props
+  }, ref) => {
+    if (!isOpen) return null;
+    let popoverStyle = centerByDefault ? {
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      margin: 0,
+      pointerEvents: "auto",
+      ...style
+    } : { ...style };
+    if (position && typeof window !== "undefined") {
+      const padding = 8;
+      const windowWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
+      const isRightHalf = position.left > windowWidth / 2;
+      if (isRightHalf) {
+        let idealRight = windowWidth - (position.left + width / 2);
+        idealRight = Math.max(padding, idealRight);
+        popoverStyle = {
+          position: "fixed",
+          top: `${position.top}px`,
+          right: `${idealRight}px`,
+          left: "auto",
+          margin: 0,
+          pointerEvents: "auto",
+          width,
+          maxWidth: `calc(100vw - ${padding * 2}px)`,
+          ...style
+        };
+      } else {
+        let idealLeft = position.left - width / 2;
+        idealLeft = Math.max(padding, idealLeft);
+        popoverStyle = {
+          position: "fixed",
+          top: `${position.top}px`,
+          left: `${idealLeft}px`,
+          right: "auto",
+          margin: 0,
+          pointerEvents: "auto",
+          width,
+          maxWidth: `calc(100vw - ${padding * 2}px)`,
+          ...style
+        };
+      }
+    }
+    return /* @__PURE__ */ jsxs3(Fragment, { children: [
+      /* @__PURE__ */ jsx7(
+        "div",
+        {
+          className: `rv-popoverOverlay ${overlayClassName}`.trim(),
+          onClick: onClose,
+          style: { pointerEvents: onClose ? "auto" : "none" },
+          "aria-hidden": "true"
+        }
+      ),
+      /* @__PURE__ */ jsx7(
+        "div",
+        {
+          ref,
+          className: `rv-popoverContainer ${className}`.trim(),
+          style: popoverStyle,
+          onClick: (e) => e.stopPropagation(),
+          "data-builder-ui": dataBuilderUi ? "true" : void 0,
+          role: "dialog",
+          "aria-modal": "true",
+          ...props,
+          children
+        }
+      )
+    ] });
+  }
+);
+Popover.displayName = "Popover";
+var PopoverHeader = React6.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx7("div", { ref, className: `rv-popoverHeader ${className}`.trim(), ...props, children });
+  }
+);
+PopoverHeader.displayName = "PopoverHeader";
+var PopoverTitle = React6.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx7("span", { ref, className: `rv-popoverTitle ${className}`.trim(), ...props, children });
+  }
+);
+PopoverTitle.displayName = "PopoverTitle";
+var PopoverContent = React6.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx7("div", { ref, className: `rv-popoverContent ${className}`.trim(), ...props, children });
+  }
+);
+PopoverContent.displayName = "PopoverContent";
+
+// src/components/overlays/Tooltip.tsx
+import { useState as useState2, useRef, useEffect as useEffect2 } from "react";
+import { createPortal } from "react-dom";
+import { Fragment as Fragment2, jsx as jsx8, jsxs as jsxs4 } from "react/jsx-runtime";
+var Tooltip = ({
+  content,
+  children,
+  position = "top",
+  delay = 500,
+  className = "",
+  zIndex = 9999
+}) => {
+  const [isVisible, setIsVisible] = useState2(false);
+  const [tooltipStyle, setTooltipStyle] = useState2({
+    top: -9999,
+    left: -9999,
+    opacity: 0
+  });
+  const triggerRef = useRef(null);
+  const tooltipRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const [mounted, setMounted] = useState2(false);
+  useEffect2(() => setMounted(true), []);
+  const updatePosition = () => {
+    if (!triggerRef.current || !tooltipRef.current || !isVisible) return;
+    let triggerEl = triggerRef.current;
+    if (triggerEl.style.display === "contents" && triggerEl.firstElementChild) {
+      triggerEl = triggerEl.firstElementChild;
+    }
+    const triggerRect = triggerEl.getBoundingClientRect();
+    const tooltipRect = tooltipRef.current.getBoundingClientRect();
+    if (tooltipRect.width === 0) return;
+    const triggerCenterX = triggerRect.left + triggerRect.width / 2;
+    const triggerCenterY = triggerRect.top + triggerRect.height / 2;
+    const gap = 6;
+    let top = 0;
+    let left = 0;
+    switch (position) {
+      case "top":
+        top = triggerRect.top - tooltipRect.height - gap;
+        left = triggerCenterX - tooltipRect.width / 2;
+        break;
+      case "bottom":
+        top = triggerRect.bottom + gap;
+        left = triggerCenterX - tooltipRect.width / 2;
+        break;
+      case "left":
+        top = triggerCenterY - tooltipRect.height / 2;
+        left = triggerRect.left - tooltipRect.width - gap;
+        break;
+      case "right":
+        top = triggerCenterY - tooltipRect.height / 2;
+        left = triggerRect.right + gap;
+        break;
+    }
+    const padding = 8;
+    left = Math.max(padding, Math.min(left, window.innerWidth - tooltipRect.width - padding));
+    top = Math.max(padding, Math.min(top, window.innerHeight - tooltipRect.height - padding));
+    setTooltipStyle({
+      position: "fixed",
+      top: `${top}px`,
+      left: `${left}px`,
+      opacity: 1,
+      zIndex,
+      pointerEvents: "none",
+      transition: "opacity 0.15s ease"
+    });
+  };
+  useEffect2(() => {
+    if (isVisible) {
+      updatePosition();
+      window.addEventListener("scroll", updatePosition, true);
+      window.addEventListener("resize", updatePosition);
+    }
+    return () => {
+      window.removeEventListener("scroll", updatePosition, true);
+      window.removeEventListener("resize", updatePosition);
+    };
+  }, [isVisible]);
+  const handleMouseEnter = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsVisible(true);
+    }, delay);
+  };
+  const handleMouseLeave = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setIsVisible(false);
+    setTooltipStyle({ top: -9999, left: -9999, opacity: 0 });
+  };
+  if (!content) return /* @__PURE__ */ jsx8(Fragment2, { children });
+  return /* @__PURE__ */ jsxs4(Fragment2, { children: [
+    /* @__PURE__ */ jsx8(
+      "div",
+      {
+        ref: triggerRef,
+        onMouseEnter: handleMouseEnter,
+        onMouseLeave: handleMouseLeave,
+        style: { display: "contents" },
+        children
+      }
+    ),
+    mounted && isVisible && createPortal(
+      /* @__PURE__ */ jsx8(
+        "div",
+        {
+          ref: tooltipRef,
+          className: `rv-tooltip ${className}`.trim(),
+          style: tooltipStyle,
+          role: "tooltip",
+          children: content
+        }
+      ),
+      document.body
+    )
+  ] });
+};
 export {
   AppShell,
   Canvas,
@@ -288,10 +550,19 @@ export {
   ComponentWrapper,
   EmptyState,
   MainContent,
+  Popover,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTitle,
   ResizeHandle,
   Sidebar,
   SidebarBody,
   SidebarPanel,
-  SidebarRail
+  SidebarRail,
+  Tooltip,
+  Topbar,
+  TopbarLeft,
+  TopbarLogo,
+  TopbarRight
 };
 //# sourceMappingURL=index.mjs.map

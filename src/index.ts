@@ -61,3 +61,42 @@ export {
 export type {
   ResizeHandleProps,
 } from './components/sidebar/ResizeHandle';
+
+// Topbar exports
+export {
+  Topbar,
+  TopbarLeft,
+  TopbarRight,
+  TopbarLogo,
+} from './components/topbar/Topbar';
+
+export type {
+  TopbarProps,
+  TopbarLeftProps,
+  TopbarRightProps,
+  TopbarLogoProps,
+} from './components/topbar/Topbar';
+
+// Overlays exports
+export {
+  Popover,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverContent,
+} from './components/overlays/Popover';
+
+export type {
+  PopoverProps,
+  PopoverHeaderProps,
+  PopoverTitleProps,
+  PopoverContentProps,
+} from './components/overlays/Popover';
+
+export {
+  Tooltip,
+} from './components/overlays/Tooltip';
+
+export type {
+  TooltipProps,
+  TooltipPosition,
+} from './components/overlays/Tooltip';
