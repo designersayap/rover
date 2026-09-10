@@ -921,6 +921,7 @@
   white-space: nowrap;
   display: flex;
   overflow: hidden;
+  box-sizing: border-box;
 }
 .rv-sidebarRailOnly {
   width: calc(var(--rv-w-sidebar-rail) + var(--rv-space-md)) !important;
@@ -962,6 +963,7 @@
   overflow: hidden;
   position: relative;
   z-index: 10;
+  box-sizing: border-box;
 }
 .rv-sidebar::after {
   content: "";
@@ -995,10 +997,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--rv-space-md);
+  padding: var(--rv-space-md) 0;
   gap: var(--rv-space-xs);
   flex-shrink: 0;
   position: relative;
+  box-sizing: border-box;
 }
 .rv-sidebarRailItem {
   width: 68px;
@@ -1017,6 +1020,7 @@
   border-radius: var(--rv-radius-md);
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
 }
 .rv-sidebarRailItem:hover {
   color: var(--rv-white);
@@ -1027,7 +1031,7 @@
 .rv-sidebarRailIndicator {
   position: absolute;
   top: var(--rv-space-md);
-  left: var(--rv-space-md);
+  left: calc((100% - 68px) / 2);
   width: 68px;
   height: 68px;
   background: var(--rv-neutral-400);
@@ -1035,6 +1039,7 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 0;
+  box-sizing: border-box;
 }
 .rv-sidebarRailIndicator::after {
   content: "";
