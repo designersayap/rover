@@ -100,3 +100,22 @@ export type {
   TooltipProps,
   TooltipPosition,
 } from './components/overlays/Tooltip';
+
+export {
+  Modal,
+  ModalHeader,
+  ModalTitle,
+  ModalDescription,
+  ModalBody,
+  ModalFooter,
+} from './components/overlays/Modal';
+
+export type {
+  ModalProps,
+  ModalSize,
+  ModalHeaderProps,
+  ModalTitleProps,
+  ModalDescriptionProps,
+  ModalBodyProps,
+  ModalFooterProps,
+} from './components/overlays/Modal';

@@ -343,6 +343,53 @@ import { Tooltip } from 'rover';
 - `delay?: number` (ms before showing, default `500`).
 - `zIndex?: number` (default `9999`).
 
+#### Modal
+Portaled, accessible modal dialog with backdrop blur, keyboard Escape closing, body scroll locking, and predefined sizes.
+
+```tsx
+import {
+  Modal,
+  ModalHeader,
+  ModalTitle,
+  ModalDescription,
+  ModalBody,
+  ModalFooter
+} from 'rover';
+
+<Modal
+  isOpen={isModalOpen}
+  onClose={() => setIsModalOpen(false)}
+  size="md" // 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  closeOnOverlayClick={true}
+  closeOnEsc={true}
+>
+  <ModalHeader onClose={() => setIsModalOpen(false)} showCloseButton={true}>
+    <ModalTitle>Delete Chat?</ModalTitle>
+    <ModalDescription>This action cannot be undone.</ModalDescription>
+  </ModalHeader>
+  <ModalBody>
+    <p>Are you sure you want to permanently delete this chat session?</p>
+  </ModalBody>
+  <ModalFooter>
+    <button type="button" className="rv-btn rv-btnGhost" onClick={() => setIsModalOpen(false)}>
+      Cancel
+    </button>
+    <button type="button" className="rv-btn rv-btnPrimary" onClick={handleConfirm}>
+      Confirm
+    </button>
+  </ModalFooter>
+</Modal>
+```
+
+#### Props: `Modal`
+- `isOpen?: boolean` (default `false`): Controls modal visibility.
+- `onClose?: () => void`: Callback triggered on backdrop click, Escape key, or close button.
+- `size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'` (default `'md'`).
+- `width?: number | string`: Custom container width override.
+- `closeOnOverlayClick?: boolean` (default `true`).
+- `closeOnEsc?: boolean` (default `true`).
+- `portalTo?: HTMLElement`: Target portal container (defaults to `document.body`).
+
 ---
 
 ## 4. CSS Class Dictionary (`.rv-*`)

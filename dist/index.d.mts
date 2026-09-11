@@ -157,4 +157,46 @@ interface TooltipProps {
 }
 declare const Tooltip: React.FC<TooltipProps>;
 
-export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, ComponentWrapper, type ComponentWrapperProps, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };
+type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
+    isOpen?: boolean;
+    onClose?: () => void;
+    size?: ModalSize;
+    width?: number | string;
+    closeOnOverlayClick?: boolean;
+    closeOnEsc?: boolean;
+    children?: React.ReactNode;
+    overlayClassName?: string;
+    portalTo?: HTMLElement | null;
+    dataBuilderUi?: boolean;
+}
+declare const Modal: React.ForwardRefExoticComponent<ModalProps & React.RefAttributes<HTMLDivElement>>;
+interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+    children?: React.ReactNode;
+    className?: string;
+    onClose?: () => void;
+    showCloseButton?: boolean;
+}
+declare const ModalHeader: React.ForwardRefExoticComponent<ModalHeaderProps & React.RefAttributes<HTMLDivElement>>;
+interface ModalTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const ModalTitle: React.ForwardRefExoticComponent<ModalTitleProps & React.RefAttributes<HTMLHeadingElement>>;
+interface ModalDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const ModalDescription: React.ForwardRefExoticComponent<ModalDescriptionProps & React.RefAttributes<HTMLParagraphElement>>;
+interface ModalBodyProps extends React.HTMLAttributes<HTMLDivElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const ModalBody: React.ForwardRefExoticComponent<ModalBodyProps & React.RefAttributes<HTMLDivElement>>;
+interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
+    children?: React.ReactNode;
+    className?: string;
+}
+declare const ModalFooter: React.ForwardRefExoticComponent<ModalFooterProps & React.RefAttributes<HTMLDivElement>>;
+
+export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, ComponentWrapper, type ComponentWrapperProps, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };

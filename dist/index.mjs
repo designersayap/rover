@@ -541,6 +541,140 @@ var Tooltip = ({
     )
   ] });
 };
+
+// src/components/overlays/Modal.tsx
+import React8, { useEffect as useEffect3, useState as useState3 } from "react";
+import { createPortal as createPortal2 } from "react-dom";
+import { jsx as jsx9, jsxs as jsxs5 } from "react/jsx-runtime";
+var Modal = React8.forwardRef(
+  ({
+    isOpen = false,
+    onClose,
+    size = "md",
+    width,
+    closeOnOverlayClick = true,
+    closeOnEsc = true,
+    children,
+    className = "",
+    overlayClassName = "",
+    portalTo,
+    dataBuilderUi = true,
+    style,
+    ...props
+  }, ref) => {
+    const [mounted, setMounted] = useState3(false);
+    useEffect3(() => {
+      setMounted(true);
+    }, []);
+    useEffect3(() => {
+      if (!isOpen || !closeOnEsc || !onClose) return;
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+          e.stopPropagation();
+          onClose();
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [isOpen, closeOnEsc, onClose]);
+    useEffect3(() => {
+      if (!isOpen || typeof document === "undefined") return;
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }, [isOpen]);
+    if (!isOpen || !mounted) return null;
+    const targetContainer = portalTo || (typeof document !== "undefined" ? document.body : null);
+    if (!targetContainer) return null;
+    const sizeClassMap = {
+      sm: "rv-modalSm",
+      md: "rv-modalMd",
+      lg: "rv-modalLg",
+      xl: "rv-modalXl",
+      full: "rv-modalFull"
+    };
+    const sizeClass = sizeClassMap[size] || "rv-modalMd";
+    const containerStyle = {
+      ...style,
+      ...width !== void 0 ? { width: typeof width === "number" ? `${width}px` : width } : {}
+    };
+    return createPortal2(
+      /* @__PURE__ */ jsx9(
+        "div",
+        {
+          className: `rv-modalOverlay ${overlayClassName}`.trim(),
+          onClick: () => {
+            if (closeOnOverlayClick && onClose) {
+              onClose();
+            }
+          },
+          "aria-hidden": "true",
+          children: /* @__PURE__ */ jsx9(
+            "div",
+            {
+              ref,
+              className: `rv-modalContainer ${sizeClass} ${className}`.trim(),
+              style: containerStyle,
+              onClick: (e) => e.stopPropagation(),
+              "data-builder-ui": dataBuilderUi ? "true" : void 0,
+              role: "dialog",
+              "aria-modal": "true",
+              ...props,
+              children
+            }
+          )
+        }
+      ),
+      targetContainer
+    );
+  }
+);
+Modal.displayName = "Modal";
+var ModalHeader = React8.forwardRef(
+  ({ children, className = "", onClose, showCloseButton = false, ...props }, ref) => {
+    return /* @__PURE__ */ jsxs5("div", { ref, className: `rv-modalHeader ${className}`.trim(), ...props, children: [
+      /* @__PURE__ */ jsx9("div", { className: "rv-modalHeaderContent", children }),
+      showCloseButton && onClose && /* @__PURE__ */ jsx9(
+        "button",
+        {
+          type: "button",
+          onClick: onClose,
+          className: "rv-btn rv-btnGhost rv-btnIcon",
+          style: { width: 28, height: 28, borderRadius: "var(--rv-radius-round)" },
+          "aria-label": "Close dialog",
+          children: "\u2715"
+        }
+      )
+    ] });
+  }
+);
+ModalHeader.displayName = "ModalHeader";
+var ModalTitle = React8.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx9("h3", { ref, className: `rv-modalTitle ${className}`.trim(), ...props, children });
+  }
+);
+ModalTitle.displayName = "ModalTitle";
+var ModalDescription = React8.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx9("p", { ref, className: `rv-modalDescription ${className}`.trim(), ...props, children });
+  }
+);
+ModalDescription.displayName = "ModalDescription";
+var ModalBody = React8.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx9("div", { ref, className: `rv-modalBody ${className}`.trim(), ...props, children });
+  }
+);
+ModalBody.displayName = "ModalBody";
+var ModalFooter = React8.forwardRef(
+  ({ children, className = "", ...props }, ref) => {
+    return /* @__PURE__ */ jsx9("div", { ref, className: `rv-modalFooter ${className}`.trim(), ...props, children });
+  }
+);
+ModalFooter.displayName = "ModalFooter";
 export {
   AppShell,
   Canvas,
@@ -550,6 +684,12 @@ export {
   ComponentWrapper,
   EmptyState,
   MainContent,
+  Modal,
+  ModalBody,
+  ModalDescription,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
   Popover,
   PopoverContent,
   PopoverHeader,
