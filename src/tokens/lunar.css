@@ -24,11 +24,11 @@
     --rv-neutral-500: #121212;
 
     /* 3. BRAND STATUS SIGNALS */
-    --rv-danger: #ef4444;
-    --rv-danger-hover: #dc2626;
-    --rv-danger-active: #b91c1c;
-    --rv-danger-light: #f87171;
-    --rv-danger-subtle: #fecaca;
+    --rv-danger: #E11D48;
+    --rv-danger-hover: #BE123C;
+    --rv-danger-active: #4C0519;
+    --rv-danger-light: #F43F5E;
+    --rv-danger-subtle: #FDA4AF;
     --rv-success: #22c55e;
     --rv-warning: #f59e0b;
 

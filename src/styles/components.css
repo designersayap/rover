@@ -153,14 +153,14 @@
     display: flex;
     align-items: center;
     background: var(--rv-neutral-300);
-    border-radius: var(--rv-radius-md);
+    border-radius: var(--rv-brand-radius-button, var(--rv-radius-button));
     box-shadow: 0 2px var(--rv-space-xs) rgba(0, 0, 0, .1);
     transition: all 0.2s;
     height: var(--rv-h-btn);
 }
 
 .rv-splitButtonMain {
-    border-radius: var(--rv-radius-button) 0 0 var(--rv-radius-button);
+    border-radius: var(--rv-brand-radius-button, var(--rv-radius-button)) 0 0 var(--rv-brand-radius-button, var(--rv-radius-button));
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
     margin: 0;
     background: transparent;
@@ -181,7 +181,7 @@
 }
 
 .rv-splitButtonDropdown {
-    border-radius: 0 var(--rv-radius-button) var(--rv-radius-button) 0;
+    border-radius: 0 var(--rv-brand-radius-button, var(--rv-radius-button)) var(--rv-brand-radius-button, var(--rv-radius-button)) 0;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
     margin: 0;
     background: transparent;
@@ -198,6 +198,36 @@
 .rv-splitButtonDropdown.rv-splitButtonActive {
     background-color: var(--rv-neutral-400) !important;
     box-shadow: var(--rv-shd-active) !important;
+}
+
+/* Split Button Brand Variant */
+.rv-splitButtonBrand,
+.rv-splitButtonContainer.rv-splitButtonBrand {
+    background-color: var(--rv-brand-primary);
+    box-shadow: 0 2px var(--rv-space-xs) rgba(0, 0, 100, .2);
+}
+
+.rv-splitButtonBrand .rv-splitButtonMain,
+.rv-splitButtonContainer.rv-splitButtonBrand .rv-splitButtonMain {
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.rv-splitButtonBrand .rv-splitButtonMain:hover:not(:disabled),
+.rv-splitButtonBrand .rv-splitButtonDropdown:hover:not(:disabled),
+.rv-splitButtonContainer.rv-splitButtonBrand .rv-splitButtonMain:hover:not(:disabled),
+.rv-splitButtonContainer.rv-splitButtonBrand .rv-splitButtonDropdown:hover:not(:disabled) {
+    background-color: var(--rv-brand-primary-hover);
+}
+
+.rv-splitButtonBrand .rv-splitButtonMain:active:not(:disabled),
+.rv-splitButtonBrand .rv-splitButtonMain.rv-splitButtonActive,
+.rv-splitButtonBrand .rv-splitButtonDropdown:active:not(:disabled),
+.rv-splitButtonBrand .rv-splitButtonDropdown.rv-splitButtonActive,
+.rv-splitButtonContainer.rv-splitButtonBrand .rv-splitButtonMain:active:not(:disabled),
+.rv-splitButtonContainer.rv-splitButtonBrand .rv-splitButtonMain.rv-splitButtonActive,
+.rv-splitButtonContainer.rv-splitButtonBrand .rv-splitButtonDropdown:active:not(:disabled),
+.rv-splitButtonContainer.rv-splitButtonBrand .rv-splitButtonDropdown.rv-splitButtonActive {
+    background-color: var(--rv-brand-primary-active) !important;
 }
 
 @keyframes fadeIn {
