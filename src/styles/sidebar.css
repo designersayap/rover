@@ -437,8 +437,10 @@
     margin-bottom: var(--rv-space-xs);
 }
 
-.rv-accordionBody {
-    padding: var(--rv-space-sm) 0;
+.rv-sidebarForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rv-space-xl);
 }
 
 
