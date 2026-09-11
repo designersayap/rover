@@ -675,6 +675,97 @@ var ModalFooter = React8.forwardRef(
   }
 );
 ModalFooter.displayName = "ModalFooter";
+
+// src/components/overlays/Dialog.tsx
+import React9 from "react";
+import { Fragment as Fragment3, jsx as jsx10, jsxs as jsxs6 } from "react/jsx-runtime";
+var variantClassMap = {
+  primary: "rv-btnPrimary",
+  brand: "rv-btnBrand",
+  danger: "rv-btnDanger",
+  secondary: "rv-btnSecondary",
+  ghost: "rv-btnGhost"
+};
+var Dialog = React9.forwardRef(
+  ({
+    isOpen = false,
+    onClose,
+    title,
+    description,
+    children,
+    cancelLabel = "Cancel",
+    onCancel,
+    showCancel = true,
+    actionLabel = "Confirm",
+    actionVariant = "primary",
+    actionType,
+    onAction,
+    isActionLoading = false,
+    isActionDisabled = false,
+    onSubmit,
+    footer,
+    showCloseButton = false,
+    size = "sm",
+    ...modalProps
+  }, ref) => {
+    const computedActionType = actionType || (onSubmit ? "submit" : "button");
+    const actionClass = variantClassMap[actionVariant] || "rv-btnPrimary";
+    const dialogInner = /* @__PURE__ */ jsxs6(Fragment3, { children: [
+      /* @__PURE__ */ jsxs6(ModalHeader, { onClose, showCloseButton, children: [
+        /* @__PURE__ */ jsx10(ModalTitle, { children: title }),
+        children && description && /* @__PURE__ */ jsx10(ModalDescription, { children: description })
+      ] }),
+      children ? /* @__PURE__ */ jsx10(ModalBody, { children }) : description ? /* @__PURE__ */ jsx10(ModalBody, { children: /* @__PURE__ */ jsx10("p", { className: "rv-modalDescription", style: { margin: 0 }, children: description }) }) : null,
+      footer !== void 0 ? footer : /* @__PURE__ */ jsxs6(ModalFooter, { children: [
+        showCancel && /* @__PURE__ */ jsx10(
+          "button",
+          {
+            type: "button",
+            onClick: onCancel || onClose,
+            disabled: isActionLoading,
+            className: "rv-btn rv-btnGhost",
+            children: cancelLabel
+          }
+        ),
+        /* @__PURE__ */ jsx10(
+          "button",
+          {
+            type: computedActionType,
+            onClick: computedActionType === "button" ? onAction : void 0,
+            disabled: isActionDisabled || isActionLoading,
+            className: `rv-btn ${actionClass}`,
+            children: isActionLoading ? "Loading..." : actionLabel
+          }
+        )
+      ] })
+    ] });
+    return /* @__PURE__ */ jsx10(
+      Modal,
+      {
+        ref,
+        isOpen,
+        onClose,
+        size,
+        ...modalProps,
+        children: onSubmit ? /* @__PURE__ */ jsx10(
+          "form",
+          {
+            onSubmit,
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              flex: 1,
+              minHeight: 0,
+              margin: 0
+            },
+            children: dialogInner
+          }
+        ) : dialogInner
+      }
+    );
+  }
+);
+Dialog.displayName = "Dialog";
 export {
   AppShell,
   Canvas,
@@ -682,6 +773,7 @@ export {
   CanvasInner,
   CanvasScroll,
   ComponentWrapper,
+  Dialog,
   EmptyState,
   MainContent,
   Modal,

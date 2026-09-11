@@ -38,6 +38,7 @@ __export(index_exports, {
   CanvasInner: () => CanvasInner,
   CanvasScroll: () => CanvasScroll,
   ComponentWrapper: () => ComponentWrapper,
+  Dialog: () => Dialog,
   EmptyState: () => EmptyState,
   MainContent: () => MainContent,
   Modal: () => Modal,
@@ -737,6 +738,97 @@ var ModalFooter = import_react8.default.forwardRef(
   }
 );
 ModalFooter.displayName = "ModalFooter";
+
+// src/components/overlays/Dialog.tsx
+var import_react9 = __toESM(require("react"));
+var import_jsx_runtime10 = require("react/jsx-runtime");
+var variantClassMap = {
+  primary: "rv-btnPrimary",
+  brand: "rv-btnBrand",
+  danger: "rv-btnDanger",
+  secondary: "rv-btnSecondary",
+  ghost: "rv-btnGhost"
+};
+var Dialog = import_react9.default.forwardRef(
+  ({
+    isOpen = false,
+    onClose,
+    title,
+    description,
+    children,
+    cancelLabel = "Cancel",
+    onCancel,
+    showCancel = true,
+    actionLabel = "Confirm",
+    actionVariant = "primary",
+    actionType,
+    onAction,
+    isActionLoading = false,
+    isActionDisabled = false,
+    onSubmit,
+    footer,
+    showCloseButton = false,
+    size = "sm",
+    ...modalProps
+  }, ref) => {
+    const computedActionType = actionType || (onSubmit ? "submit" : "button");
+    const actionClass = variantClassMap[actionVariant] || "rv-btnPrimary";
+    const dialogInner = /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(ModalHeader, { onClose, showCloseButton, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ModalTitle, { children: title }),
+        children && description && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ModalDescription, { children: description })
+      ] }),
+      children ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ModalBody, { children }) : description ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(ModalBody, { children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { className: "rv-modalDescription", style: { margin: 0 }, children: description }) }) : null,
+      footer !== void 0 ? footer : /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(ModalFooter, { children: [
+        showCancel && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+          "button",
+          {
+            type: "button",
+            onClick: onCancel || onClose,
+            disabled: isActionLoading,
+            className: "rv-btn rv-btnGhost",
+            children: cancelLabel
+          }
+        ),
+        /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+          "button",
+          {
+            type: computedActionType,
+            onClick: computedActionType === "button" ? onAction : void 0,
+            disabled: isActionDisabled || isActionLoading,
+            className: `rv-btn ${actionClass}`,
+            children: isActionLoading ? "Loading..." : actionLabel
+          }
+        )
+      ] })
+    ] });
+    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+      Modal,
+      {
+        ref,
+        isOpen,
+        onClose,
+        size,
+        ...modalProps,
+        children: onSubmit ? /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+          "form",
+          {
+            onSubmit,
+            style: {
+              display: "flex",
+              flexDirection: "column",
+              flex: 1,
+              minHeight: 0,
+              margin: 0
+            },
+            children: dialogInner
+          }
+        ) : dialogInner
+      }
+    );
+  }
+);
+Dialog.displayName = "Dialog";
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AppShell,
@@ -745,6 +837,7 @@ ModalFooter.displayName = "ModalFooter";
   CanvasInner,
   CanvasScroll,
   ComponentWrapper,
+  Dialog,
   EmptyState,
   MainContent,
   Modal,

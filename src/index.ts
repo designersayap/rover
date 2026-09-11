@@ -119,3 +119,13 @@ export type {
   ModalBodyProps,
   ModalFooterProps,
 } from './components/overlays/Modal';
+
+export {
+  Dialog,
+} from './components/overlays/Dialog';
+
+export type {
+  DialogProps,
+  DialogActionVariant,
+} from './components/overlays/Dialog';
+

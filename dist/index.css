@@ -71,11 +71,11 @@
 
 /* src/tokens/apollo.css */
 [data-rv-brand=apollo] {
-  --rv-brand-primary: #9333ea;
-  --rv-brand-primary-hover: #7e22ce;
-  --rv-brand-primary-active: #6b21a8;
-  --rv-brand-primary-light: #d8b4fe;
-  --rv-brand-primary-subtle: #f3e8ff;
+  --rv-brand-primary: #1E3A8A;
+  --rv-brand-primary-hover: #172554;
+  --rv-brand-primary-active: #0F172A;
+  --rv-brand-primary-light: #3B82F6;
+  --rv-brand-primary-subtle: #93C5FD;
   --rv-white: #ffffff;
   --rv-black: #000000;
   --rv-neutral-50: #ffffff;
@@ -1611,6 +1611,22 @@
 .rv-btnBrandActive {
   background-color: var(--rv-brand-primary-active);
   box-shadow: var(--rv-shd-active);
+  transform: translateY(1px);
+}
+.rv-btnDanger {
+  background-color: var(--rv-danger);
+  color: var(--rv-white);
+  box-shadow: 0 2px var(--rv-space-xs) rgba(239, 68, 68, .2);
+}
+.rv-btnDanger:hover:not(:disabled) {
+  background-color: #dc2626;
+  color: var(--rv-white);
+}
+.rv-btnDanger:active:not(:disabled),
+.rv-btnDangerActive {
+  background-color: #b91c1c;
+  box-shadow: var(--rv-shd-active);
+  color: var(--rv-white);
   transform: translateY(1px);
 }
 .rv-btnGhost {

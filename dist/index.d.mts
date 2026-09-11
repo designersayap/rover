@@ -199,4 +199,46 @@ interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 declare const ModalFooter: React.ForwardRefExoticComponent<ModalFooterProps & React.RefAttributes<HTMLDivElement>>;
 
-export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, ComponentWrapper, type ComponentWrapperProps, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };
+type DialogActionVariant = 'primary' | 'brand' | 'danger' | 'secondary' | 'ghost';
+interface DialogProps extends Omit<ModalProps, 'title' | 'onSubmit'> {
+    /** Title of the dialog. Displayed in the header without a close button by default. */
+    title: React.ReactNode;
+    /** Subtitle or description. Rendered in header if children exist, or in body if no children. */
+    description?: React.ReactNode;
+    /** Dialog body content. Rendered inside ModalBody. */
+    children?: React.ReactNode;
+    /** Text or element for the cancel button. Defaults to 'Cancel'. */
+    cancelLabel?: React.ReactNode;
+    /** Click handler for cancel button. Defaults to onClose. */
+    onCancel?: () => void;
+    /** Whether to show the cancel button. Defaults to true. */
+    showCancel?: boolean;
+    /** Text or element for the primary action button. Defaults to 'Confirm'. */
+    actionLabel?: React.ReactNode;
+    /** Visual variant of the primary action button. Defaults to 'primary'. */
+    actionVariant?: DialogActionVariant;
+    /** Type attribute of the primary action button. Defaults to 'submit' if onSubmit is set, else 'button'. */
+    actionType?: 'button' | 'submit';
+    /** Click handler for the primary action button. */
+    onAction?: () => void;
+    /** Whether the primary action is in a loading state. */
+    isActionLoading?: boolean;
+    /** Whether the primary action is disabled. */
+    isActionDisabled?: boolean;
+    /** Form submission handler. If provided, dialog body and footer are wrapped in a form. */
+    onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+    /** Custom footer to replace the default cancel and action buttons. */
+    footer?: React.ReactNode;
+    /** Whether to show the close ('X') button on the header. Defaults to false. */
+    showCloseButton?: boolean;
+}
+/**
+ * Standardized Dialog layout component for Rover.
+ * Follows Rover dialog format rules:
+ * 1. Clean Title with no close button by default
+ * 2. Flexible body hosting form inputs or description
+ * 3. Standardized footer with Cancel button and primary action
+ */
+declare const Dialog: React.ForwardRefExoticComponent<DialogProps & React.RefAttributes<HTMLDivElement>>;
+
+export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };

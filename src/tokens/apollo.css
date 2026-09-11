@@ -5,11 +5,11 @@
 
 [data-rv-brand="apollo"] {
     /* 1. BRAND ACCENT COLORS */
-    --rv-brand-primary: #9333ea;
-    --rv-brand-primary-hover: #7e22ce;
-    --rv-brand-primary-active: #6b21a8;
-    --rv-brand-primary-light: #d8b4fe;
-    --rv-brand-primary-subtle: #f3e8ff;
+    --rv-brand-primary: #1E3A8A;
+    --rv-brand-primary-hover: #172554;
+    --rv-brand-primary-active: #0F172A;
+    --rv-brand-primary-light: #3B82F6;
+    --rv-brand-primary-subtle: #93C5FD;
 
     /* 2. BRAND NEUTRAL PALETTE (Cool Slate Dark Tone) */
     --rv-white: #ffffff;
