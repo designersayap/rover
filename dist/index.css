@@ -16,6 +16,10 @@
   --rv-neutral-400: #1e1e1e;
   --rv-neutral-500: #121212;
   --rv-danger: #ef4444;
+  --rv-danger-hover: #dc2626;
+  --rv-danger-active: #b91c1c;
+  --rv-danger-light: #f87171;
+  --rv-danger-subtle: #fecaca;
   --rv-success: #22c55e;
   --rv-warning: #f59e0b;
   --rv-font-family-default: "Plus Jakarta Sans", sans-serif;
@@ -86,6 +90,10 @@
   --rv-neutral-400: #1e1e1e;
   --rv-neutral-500: #121212;
   --rv-danger: #f43f5e;
+  --rv-danger-hover: #e11d48;
+  --rv-danger-active: #be123c;
+  --rv-danger-light: #fb7185;
+  --rv-danger-subtle: #fecdd3;
   --rv-success: #10b981;
   --rv-warning: #eab308;
   --rv-font-family-default:
@@ -1616,15 +1624,15 @@
 .rv-btnDanger {
   background-color: var(--rv-danger);
   color: var(--rv-white);
-  box-shadow: 0 2px var(--rv-space-xs) rgba(239, 68, 68, .2);
+  box-shadow: 0 2px var(--rv-space-xs) rgba(0, 0, 0, .2);
 }
 .rv-btnDanger:hover:not(:disabled) {
-  background-color: #dc2626;
+  background-color: var(--rv-danger-hover);
   color: var(--rv-white);
 }
 .rv-btnDanger:active:not(:disabled),
 .rv-btnDangerActive {
-  background-color: #b91c1c;
+  background-color: var(--rv-danger-active);
   box-shadow: var(--rv-shd-active);
   color: var(--rv-white);
   transform: translateY(1px);

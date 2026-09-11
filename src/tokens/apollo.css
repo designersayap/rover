@@ -24,6 +24,10 @@
 
     /* 3. BRAND STATUS SIGNALS */
     --rv-danger: #f43f5e;
+    --rv-danger-hover: #e11d48;
+    --rv-danger-active: #be123c;
+    --rv-danger-light: #fb7185;
+    --rv-danger-subtle: #fecdd3;
     --rv-success: #10b981;
     --rv-warning: #eab308;
 

@@ -79,17 +79,17 @@
 .rv-btnDanger {
     background-color: var(--rv-danger);
     color: var(--rv-white);
-    box-shadow: 0 2px var(--rv-space-xs) rgba(239, 68, 68, .2);
+    box-shadow: 0 2px var(--rv-space-xs) rgba(0, 0, 0, .2);
 }
 
 .rv-btnDanger:hover:not(:disabled) {
-    background-color: #dc2626;
+    background-color: var(--rv-danger-hover);
     color: var(--rv-white);
 }
 
 .rv-btnDanger:active:not(:disabled),
 .rv-btnDangerActive {
-    background-color: #b91c1c;
+    background-color: var(--rv-danger-active);
     box-shadow: var(--rv-shd-active);
     color: var(--rv-white);
     transform: translateY(1px);

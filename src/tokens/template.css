@@ -33,6 +33,10 @@
        3. BRAND STATUS SIGNALS
        -------------------------------------------------------------------------- */
     --rv-danger:               #ef4444;
+    --rv-danger-hover:         #dc2626;
+    --rv-danger-active:        #b91c1c;
+    --rv-danger-light:         #f87171;
+    --rv-danger-subtle:        #fecaca;
     --rv-success:              #22c55e;
     --rv-warning:              #f59e0b;
 
