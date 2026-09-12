@@ -8,6 +8,8 @@ export interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
   position?: { top: number; left: number } | null;
   centerByDefault?: boolean;
   width?: number;
+  variant?: 'default' | 'menu';
+  isMenu?: boolean;
   className?: string;
   overlayClassName?: string;
   dataBuilderUi?: boolean;
@@ -22,6 +24,8 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
       position,
       centerByDefault = true,
       width = 362,
+      variant = 'default',
+      isMenu = false,
       className = '',
       overlayClassName = '',
       dataBuilderUi = true,
@@ -32,6 +36,8 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
     ref
   ) => {
     if (!isOpen) return null;
+
+    const isMenuVariant = variant === 'menu' || isMenu;
 
     let popoverStyle: React.CSSProperties = centerByDefault
       ? {
@@ -93,11 +99,11 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
         />
         <div
           ref={ref}
-          className={`rv-popoverContainer ${className}`.trim()}
+          className={`rv-popoverContainer ${isMenuVariant ? 'rv-popoverMenu' : ''} ${className}`.trim()}
           style={popoverStyle}
           onClick={(e) => e.stopPropagation()}
           data-builder-ui={dataBuilderUi ? 'true' : undefined}
-          role="dialog"
+          role={isMenuVariant ? 'menu' : 'dialog'}
           aria-modal="true"
           {...props}
         >
@@ -156,3 +162,13 @@ export const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentPro
   }
 );
 PopoverContent.displayName = 'PopoverContent';
+
+export interface PopoverMenuProps extends PopoverProps {}
+
+export const PopoverMenu = React.forwardRef<HTMLDivElement, PopoverMenuProps>(
+  ({ variant = 'menu', ...props }, ref) => (
+    <Popover ref={ref} variant={variant} {...props} />
+  )
+);
+PopoverMenu.displayName = 'PopoverMenu';
+

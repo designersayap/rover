@@ -80,6 +80,7 @@ export type {
 // Overlays exports
 export {
   Popover,
+  PopoverMenu,
   PopoverHeader,
   PopoverTitle,
   PopoverContent,
@@ -87,6 +88,7 @@ export {
 
 export type {
   PopoverProps,
+  PopoverMenuProps,
   PopoverHeaderProps,
   PopoverTitleProps,
   PopoverContentProps,

@@ -65,6 +65,22 @@
     animation: popoverIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Popover Menu & Dropdown Menus: Padded container for list items with hover/active states */
+.rv-popoverMenu,
+.rv-popoverContainer.rv-popoverMenu,
+.rv-popoverContainer.rv-isMenu {
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    box-sizing: border-box;
+}
+
+.rv-popoverMenu .rv-listItem,
+.rv-popoverContainer.rv-popoverMenu .rv-listItem {
+    margin-bottom: 0;
+}
+
 .rv-popoverContent {
     padding: var(--rv-space-lg);
     overflow-y: auto;

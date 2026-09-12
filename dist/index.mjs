@@ -327,6 +327,8 @@ var Popover = React6.forwardRef(
     position,
     centerByDefault = true,
     width = 362,
+    variant = "default",
+    isMenu = false,
     className = "",
     overlayClassName = "",
     dataBuilderUi = true,
@@ -335,6 +337,7 @@ var Popover = React6.forwardRef(
     ...props
   }, ref) => {
     if (!isOpen) return null;
+    const isMenuVariant = variant === "menu" || isMenu;
     let popoverStyle = centerByDefault ? {
       position: "fixed",
       top: "50%",
@@ -392,11 +395,11 @@ var Popover = React6.forwardRef(
         "div",
         {
           ref,
-          className: `rv-popoverContainer ${className}`.trim(),
+          className: `rv-popoverContainer ${isMenuVariant ? "rv-popoverMenu" : ""} ${className}`.trim(),
           style: popoverStyle,
           onClick: (e) => e.stopPropagation(),
           "data-builder-ui": dataBuilderUi ? "true" : void 0,
-          role: "dialog",
+          role: isMenuVariant ? "menu" : "dialog",
           "aria-modal": "true",
           ...props,
           children
@@ -424,6 +427,10 @@ var PopoverContent = React6.forwardRef(
   }
 );
 PopoverContent.displayName = "PopoverContent";
+var PopoverMenu = React6.forwardRef(
+  ({ variant = "menu", ...props }, ref) => /* @__PURE__ */ jsx7(Popover, { ref, variant, ...props })
+);
+PopoverMenu.displayName = "PopoverMenu";
 
 // src/components/overlays/Tooltip.tsx
 import { useState as useState2, useRef, useEffect as useEffect2 } from "react";
@@ -1060,6 +1067,7 @@ export {
   Popover,
   PopoverContent,
   PopoverHeader,
+  PopoverMenu,
   PopoverTitle,
   ResizeHandle,
   Sidebar,

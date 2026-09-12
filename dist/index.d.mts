@@ -124,6 +124,8 @@ interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
     } | null;
     centerByDefault?: boolean;
     width?: number;
+    variant?: 'default' | 'menu';
+    isMenu?: boolean;
     className?: string;
     overlayClassName?: string;
     dataBuilderUi?: boolean;
@@ -145,6 +147,9 @@ interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement> {
     className?: string;
 }
 declare const PopoverContent: React.ForwardRefExoticComponent<PopoverContentProps & React.RefAttributes<HTMLDivElement>>;
+interface PopoverMenuProps extends PopoverProps {
+}
+declare const PopoverMenu: React.ForwardRefExoticComponent<PopoverMenuProps & React.RefAttributes<HTMLDivElement>>;
 
 type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 interface TooltipProps {
@@ -302,4 +307,4 @@ interface SplitButtonToggleProps extends ButtonHTMLAttributes<HTMLButtonElement>
 declare const SplitButtonToggle: React.ForwardRefExoticComponent<SplitButtonToggleProps & React.RefAttributes<HTMLButtonElement>>;
 declare const SplitButton: React.ForwardRefExoticComponent<SplitButtonProps & React.RefAttributes<HTMLDivElement>>;
 
-export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, MediaCard, type MediaCardProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };
+export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, MediaCard, type MediaCardProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, PopoverMenu, type PopoverMenuProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };
