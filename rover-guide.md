@@ -430,17 +430,31 @@ import { Dropzone } from 'rover';
 ```
 
 #### MediaCard
-Aspect-ratio media thumbnail card with hover action overlays and status badges.
+Aspect-ratio media thumbnail card supporting both `'tile'` (grid card) and `'list'` (compact row) variants with hover action overlays, title, subtitle, and status badges.
 
 ```tsx
 import { MediaCard } from 'rover';
 
+// Tile Variant (Default / Grid):
 <MediaCard
+  variant="tile"
   src="/mock/image.jpg"
   alt="Sample Preview"
+  title="Hero Banner"
   selected={isSelected}
   onClick={() => setSelectedId(id)}
-  badge={<span>Attached</span>}
+  badge={<span>New</span>}
+/>
+
+// List Variant (Compact Row with Small Image):
+<MediaCard
+  variant="list"
+  src="/mock/image.jpg"
+  alt="Sample Preview"
+  title="Background - Full Body"
+  subtitle="Header component"
+  selected={isSelected}
+  onClick={() => setSelectedId(id)}
 />
 ```
 
