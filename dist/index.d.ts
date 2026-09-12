@@ -266,9 +266,12 @@ interface DropzoneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onDrop'> {
 }
 declare const Dropzone: React.ForwardRefExoticComponent<DropzoneProps & React.RefAttributes<DropzoneRef>>;
 
-interface MediaCardProps extends HTMLAttributes<HTMLDivElement> {
+interface MediaCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
     src: string;
     alt?: string;
+    variant?: 'tile' | 'list';
+    title?: React.ReactNode;
+    subtitle?: React.ReactNode;
     selected?: boolean;
     badge?: React.ReactNode;
     overlay?: React.ReactNode;

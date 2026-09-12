@@ -895,6 +895,9 @@ import { jsx as jsx13, jsxs as jsxs9 } from "react/jsx-runtime";
 var MediaCard = forwardRef3(function MediaCard2({
   src,
   alt = "Media thumbnail",
+  variant = "tile",
+  title,
+  subtitle,
   selected = false,
   badge,
   overlay,
@@ -902,19 +905,26 @@ var MediaCard = forwardRef3(function MediaCard2({
   children,
   ...props
 }, ref) {
+  const isList = variant === "list";
   return /* @__PURE__ */ jsxs9(
     "div",
     {
       ref,
-      className: `rv-mediaCard ${selected ? "rv-mediaCardSelected" : ""} ${className}`.trim(),
+      className: `rv-mediaCard ${isList ? "rv-mediaCardList" : "rv-mediaCardTile"} ${selected ? "rv-mediaCardSelected" : ""} ${className}`.trim(),
       role: "button",
       tabIndex: 0,
       ...props,
       children: [
-        /* @__PURE__ */ jsx13("img", { src, alt, className: "rv-mediaCardThumb" }),
-        badge && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardBadge", children: badge }),
-        overlay && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardOverlay", children: overlay }),
-        children
+        /* @__PURE__ */ jsxs9("div", { className: "rv-mediaCardThumbWrapper", children: [
+          /* @__PURE__ */ jsx13("img", { src, alt, className: "rv-mediaCardThumb" }),
+          badge && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardBadge", children: badge }),
+          !isList && overlay && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardOverlay", children: overlay })
+        ] }),
+        (title || subtitle || children) && /* @__PURE__ */ jsxs9("div", { className: "rv-mediaCardContent", children: [
+          title && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardTitle", children: title }),
+          subtitle && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
+          children
+        ] })
       ]
     }
   );

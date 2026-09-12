@@ -960,6 +960,9 @@ var import_jsx_runtime13 = require("react/jsx-runtime");
 var MediaCard = (0, import_react12.forwardRef)(function MediaCard2({
   src,
   alt = "Media thumbnail",
+  variant = "tile",
+  title,
+  subtitle,
   selected = false,
   badge,
   overlay,
@@ -967,19 +970,26 @@ var MediaCard = (0, import_react12.forwardRef)(function MediaCard2({
   children,
   ...props
 }, ref) {
+  const isList = variant === "list";
   return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
     "div",
     {
       ref,
-      className: `rv-mediaCard ${selected ? "rv-mediaCardSelected" : ""} ${className}`.trim(),
+      className: `rv-mediaCard ${isList ? "rv-mediaCardList" : "rv-mediaCardTile"} ${selected ? "rv-mediaCardSelected" : ""} ${className}`.trim(),
       role: "button",
       tabIndex: 0,
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("img", { src, alt, className: "rv-mediaCardThumb" }),
-        badge && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
-        overlay && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardOverlay", children: overlay }),
-        children
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "rv-mediaCardThumbWrapper", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("img", { src, alt, className: "rv-mediaCardThumb" }),
+          badge && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
+          !isList && overlay && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardOverlay", children: overlay })
+        ] }),
+        (title || subtitle || children) && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "rv-mediaCardContent", children: [
+          title && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardTitle", children: title }),
+          subtitle && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
+          children
+        ] })
       ]
     }
   );
