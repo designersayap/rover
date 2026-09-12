@@ -125,7 +125,6 @@ interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
     centerByDefault?: boolean;
     width?: number;
     variant?: 'default' | 'menu';
-    isMenu?: boolean;
     className?: string;
     overlayClassName?: string;
     dataBuilderUi?: boolean;

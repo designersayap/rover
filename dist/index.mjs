@@ -328,7 +328,6 @@ var Popover = React6.forwardRef(
     centerByDefault = true,
     width = 362,
     variant = "default",
-    isMenu = false,
     className = "",
     overlayClassName = "",
     dataBuilderUi = true,
@@ -337,7 +336,7 @@ var Popover = React6.forwardRef(
     ...props
   }, ref) => {
     if (!isOpen) return null;
-    const isMenuVariant = variant === "menu" || isMenu;
+    const isMenuVariant = variant === "menu";
     let popoverStyle = centerByDefault ? {
       position: "fixed",
       top: "50%",

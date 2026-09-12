@@ -9,7 +9,6 @@ export interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
   centerByDefault?: boolean;
   width?: number;
   variant?: 'default' | 'menu';
-  isMenu?: boolean;
   className?: string;
   overlayClassName?: string;
   dataBuilderUi?: boolean;
@@ -25,7 +24,6 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
       centerByDefault = true,
       width = 362,
       variant = 'default',
-      isMenu = false,
       className = '',
       overlayClassName = '',
       dataBuilderUi = true,
@@ -37,7 +35,7 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
   ) => {
     if (!isOpen) return null;
 
-    const isMenuVariant = variant === 'menu' || isMenu;
+    const isMenuVariant = variant === 'menu';
 
     let popoverStyle: React.CSSProperties = centerByDefault
       ? {

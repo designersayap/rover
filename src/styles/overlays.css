@@ -66,9 +66,7 @@
 }
 
 /* Popover Menu & Dropdown Menus: Padded container for list items with hover/active states */
-.rv-popoverMenu,
-.rv-popoverContainer.rv-popoverMenu,
-.rv-popoverContainer.rv-isMenu {
+.rv-popoverMenu {
     padding: 8px 6px;
     display: flex;
     flex-direction: column;
@@ -76,8 +74,7 @@
     box-sizing: border-box;
 }
 
-.rv-popoverMenu .rv-listItem,
-.rv-popoverContainer.rv-popoverMenu .rv-listItem {
+.rv-popoverMenu .rv-listItem {
     margin-bottom: 0;
 }
 
@@ -253,8 +250,7 @@
     pointer-events: none;
 }
 
-.rv-overlayLabel,
-.rv-activeOverlayLabel {
+.rv-overlayLabel {
     gap: var(--rv-space-xs);
     padding: 0 var(--rv-space-sm);
     height: 100%;
