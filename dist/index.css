@@ -1985,6 +1985,25 @@ form {
   padding: var(--rv-space-sm) var(--rv-space-md);
   min-height: 44px;
 }
+.rv-listItemContent,
+.rv-listItemText {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  gap: 2px;
+}
+.rv-listItemTitle {
+  font-weight: var(--rv-font-weight-medium);
+  font-size: var(--rv-font-size-md);
+  color: var(--rv-white);
+  line-height: var(--rv-lh-tight);
+}
+.rv-listItemDesc {
+  font-size: var(--rv-font-size-sm);
+  color: var(--rv-neutral-100);
+  line-height: var(--rv-lh-tight);
+}
 .rv-listItem:hover:not(:disabled) {
   background: var(--rv-neutral-400);
   color: var(--rv-white);
