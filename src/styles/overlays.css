@@ -81,6 +81,27 @@
     margin-bottom: 0;
 }
 
+/* Popover Section / Category Group */
+.rv-popoverGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rv-popoverGroup:not(:first-child) {
+    margin-top: 6px;
+}
+
+.rv-popoverGroupTitle {
+    padding: 6px 8px 2px;
+    color: var(--rv-neutral-100);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    user-select: none;
+}
+
 .rv-popoverContent {
     padding: var(--rv-space-lg);
     overflow-y: auto;
