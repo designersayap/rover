@@ -37,10 +37,14 @@ __export(index_exports, {
   CanvasContent: () => CanvasContent,
   CanvasInner: () => CanvasInner,
   CanvasScroll: () => CanvasScroll,
+  Chip: () => Chip,
+  ChipGroup: () => ChipGroup,
   ComponentWrapper: () => ComponentWrapper,
   Dialog: () => Dialog,
+  Dropzone: () => Dropzone,
   EmptyState: () => EmptyState,
   MainContent: () => MainContent,
+  MediaCard: () => MediaCard,
   Modal: () => Modal,
   ModalBody: () => ModalBody,
   ModalDescription: () => ModalDescription,
@@ -56,6 +60,9 @@ __export(index_exports, {
   SidebarBody: () => SidebarBody,
   SidebarPanel: () => SidebarPanel,
   SidebarRail: () => SidebarRail,
+  SplitButton: () => SplitButton,
+  SplitButtonMain: () => SplitButtonMain,
+  SplitButtonToggle: () => SplitButtonToggle,
   Tooltip: () => Tooltip,
   Topbar: () => Topbar,
   TopbarLeft: () => TopbarLeft,
@@ -829,6 +836,262 @@ var Dialog = import_react9.default.forwardRef(
   }
 );
 Dialog.displayName = "Dialog";
+
+// src/components/ui/Chip.tsx
+var import_react10 = require("react");
+var import_jsx_runtime11 = require("react/jsx-runtime");
+var Chip = (0, import_react10.forwardRef)(function Chip2({
+  active = false,
+  icon,
+  children,
+  className = "",
+  type = "button",
+  ...props
+}, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+    "button",
+    {
+      ref,
+      type,
+      className: `rv-chip ${active ? "rv-chipActive" : ""} ${className}`.trim(),
+      ...props,
+      children: [
+        icon && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "rv-chipIcon", children: icon }),
+        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children })
+      ]
+    }
+  );
+});
+var ChipGroup = (0, import_react10.forwardRef)(function ChipGroup2({ children, className = "", ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
+});
+
+// src/components/ui/Dropzone.tsx
+var import_react11 = require("react");
+var import_jsx_runtime12 = require("react/jsx-runtime");
+var Dropzone = (0, import_react11.forwardRef)(function Dropzone2({
+  onDropFiles,
+  title = "Drag and drop media here",
+  hint = "or click to browse files",
+  icon,
+  accept,
+  multiple = true,
+  disabled = false,
+  className = "",
+  children,
+  ...props
+}, ref) {
+  const [isDragging, setIsDragging] = (0, import_react11.useState)(false);
+  const inputRef = (0, import_react11.useRef)(null);
+  (0, import_react11.useImperativeHandle)(ref, () => ({
+    open: () => {
+      if (!disabled) {
+        inputRef.current?.click();
+      }
+    }
+  }));
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!disabled && !isDragging) {
+      setIsDragging(true);
+    }
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    if (disabled) return;
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      onDropFiles?.(e.dataTransfer.files);
+    }
+  };
+  const handleFileInputChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      onDropFiles?.(e.target.files);
+    }
+  };
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+    "div",
+    {
+      onClick: () => {
+        if (!disabled) {
+          inputRef.current?.click();
+        }
+      },
+      onDragOver: handleDragOver,
+      onDragLeave: handleDragLeave,
+      onDrop: handleDrop,
+      className: `rv-dropzone ${isDragging ? "rv-dropzoneActive" : ""} ${className}`.trim(),
+      role: "button",
+      tabIndex: 0,
+      ...props,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+          "input",
+          {
+            ref: inputRef,
+            type: "file",
+            accept,
+            multiple,
+            disabled,
+            onChange: handleFileInputChange,
+            style: { display: "none" }
+          }
+        ),
+        children ? children : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+          icon && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "rv-dropzoneIcon", children: icon }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "rv-dropzoneTitle", children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "rv-dropzoneHint", children: hint })
+        ] })
+      ]
+    }
+  );
+});
+
+// src/components/ui/MediaCard.tsx
+var import_react12 = require("react");
+var import_jsx_runtime13 = require("react/jsx-runtime");
+var MediaCard = (0, import_react12.forwardRef)(function MediaCard2({
+  src,
+  alt = "Media thumbnail",
+  selected = false,
+  badge,
+  overlay,
+  className = "",
+  children,
+  ...props
+}, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+    "div",
+    {
+      ref,
+      className: `rv-mediaCard ${selected ? "rv-mediaCardSelected" : ""} ${className}`.trim(),
+      role: "button",
+      tabIndex: 0,
+      ...props,
+      children: [
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("img", { src, alt, className: "rv-mediaCardThumb" }),
+        badge && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
+        overlay && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardOverlay", children: overlay }),
+        children
+      ]
+    }
+  );
+});
+
+// src/components/ui/SplitButton.tsx
+var import_react13 = __toESM(require("react"));
+var import_jsx_runtime14 = require("react/jsx-runtime");
+var VARIANT_CLASS_MAP = {
+  primary: "rv-btnPrimary",
+  secondary: "rv-btnSecondary",
+  brand: "rv-btnBrand",
+  danger: "rv-btnDanger",
+  ghost: "rv-btnGhost"
+};
+var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+  "svg",
+  {
+    width: "14",
+    height: "14",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    style: { display: "block" },
+    children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { d: "m6 9 6 6 6-6" })
+  }
+);
+var SplitButtonMain = (0, import_react13.forwardRef)(
+  function SplitButtonMain2({ variant = "primary", className = "", children, ...props }, ref) {
+    const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+      "button",
+      {
+        ref,
+        type: "button",
+        className: `rv-btn ${variantClass} rv-splitBtnMain ${className}`.trim(),
+        ...props,
+        children
+      }
+    );
+  }
+);
+var SplitButtonToggle = (0, import_react13.forwardRef)(
+  function SplitButtonToggle2({ variant = "primary", isActive = false, className = "", children, ...props }, ref) {
+    const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+      "button",
+      {
+        ref,
+        type: "button",
+        className: `rv-btn rv-btnIcon ${variantClass} rv-splitBtnToggle ${isActive ? "rv-btnActive" : ""} ${className}`.trim(),
+        ...props,
+        children: children || /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(DefaultChevronDown, {})
+      }
+    );
+  }
+);
+var SplitButton = (0, import_react13.forwardRef)(
+  function SplitButton2({
+    variant = "primary",
+    disabled = false,
+    onAction,
+    onToggle,
+    actionAriaLabel,
+    toggleAriaLabel = "More options",
+    isToggleActive = false,
+    actionIcon,
+    toggleIcon,
+    className = "",
+    children,
+    ...props
+  }, ref) {
+    const isCustomChildren = import_react13.default.Children.count(children) > 1;
+    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+      "div",
+      {
+        ref,
+        className: `rv-splitBtn ${className}`.trim(),
+        ...props,
+        children: isCustomChildren ? children : /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+            SplitButtonMain,
+            {
+              variant,
+              disabled,
+              onClick: onAction,
+              "aria-label": actionAriaLabel,
+              children: [
+                actionIcon,
+                children && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { children })
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+            SplitButtonToggle,
+            {
+              variant,
+              disabled,
+              isActive: isToggleActive,
+              onClick: onToggle,
+              "aria-label": toggleAriaLabel,
+              children: toggleIcon
+            }
+          )
+        ] })
+      }
+    );
+  }
+);
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AppShell,
@@ -836,10 +1099,14 @@ Dialog.displayName = "Dialog";
   CanvasContent,
   CanvasInner,
   CanvasScroll,
+  Chip,
+  ChipGroup,
   ComponentWrapper,
   Dialog,
+  Dropzone,
   EmptyState,
   MainContent,
+  MediaCard,
   Modal,
   ModalBody,
   ModalDescription,
@@ -855,6 +1122,9 @@ Dialog.displayName = "Dialog";
   SidebarBody,
   SidebarPanel,
   SidebarRail,
+  SplitButton,
+  SplitButtonMain,
+  SplitButtonToggle,
   Tooltip,
   Topbar,
   TopbarLeft,

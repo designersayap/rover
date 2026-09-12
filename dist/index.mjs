@@ -766,16 +766,281 @@ var Dialog = React9.forwardRef(
   }
 );
 Dialog.displayName = "Dialog";
+
+// src/components/ui/Chip.tsx
+import { forwardRef } from "react";
+import { jsx as jsx11, jsxs as jsxs7 } from "react/jsx-runtime";
+var Chip = forwardRef(function Chip2({
+  active = false,
+  icon,
+  children,
+  className = "",
+  type = "button",
+  ...props
+}, ref) {
+  return /* @__PURE__ */ jsxs7(
+    "button",
+    {
+      ref,
+      type,
+      className: `rv-chip ${active ? "rv-chipActive" : ""} ${className}`.trim(),
+      ...props,
+      children: [
+        icon && /* @__PURE__ */ jsx11("span", { className: "rv-chipIcon", children: icon }),
+        /* @__PURE__ */ jsx11("span", { children })
+      ]
+    }
+  );
+});
+var ChipGroup = forwardRef(function ChipGroup2({ children, className = "", ...props }, ref) {
+  return /* @__PURE__ */ jsx11("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
+});
+
+// src/components/ui/Dropzone.tsx
+import {
+  forwardRef as forwardRef2,
+  useState as useState4,
+  useRef as useRef2,
+  useImperativeHandle
+} from "react";
+import { Fragment as Fragment4, jsx as jsx12, jsxs as jsxs8 } from "react/jsx-runtime";
+var Dropzone = forwardRef2(function Dropzone2({
+  onDropFiles,
+  title = "Drag and drop media here",
+  hint = "or click to browse files",
+  icon,
+  accept,
+  multiple = true,
+  disabled = false,
+  className = "",
+  children,
+  ...props
+}, ref) {
+  const [isDragging, setIsDragging] = useState4(false);
+  const inputRef = useRef2(null);
+  useImperativeHandle(ref, () => ({
+    open: () => {
+      if (!disabled) {
+        inputRef.current?.click();
+      }
+    }
+  }));
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!disabled && !isDragging) {
+      setIsDragging(true);
+    }
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    if (disabled) return;
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      onDropFiles?.(e.dataTransfer.files);
+    }
+  };
+  const handleFileInputChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      onDropFiles?.(e.target.files);
+    }
+  };
+  return /* @__PURE__ */ jsxs8(
+    "div",
+    {
+      onClick: () => {
+        if (!disabled) {
+          inputRef.current?.click();
+        }
+      },
+      onDragOver: handleDragOver,
+      onDragLeave: handleDragLeave,
+      onDrop: handleDrop,
+      className: `rv-dropzone ${isDragging ? "rv-dropzoneActive" : ""} ${className}`.trim(),
+      role: "button",
+      tabIndex: 0,
+      ...props,
+      children: [
+        /* @__PURE__ */ jsx12(
+          "input",
+          {
+            ref: inputRef,
+            type: "file",
+            accept,
+            multiple,
+            disabled,
+            onChange: handleFileInputChange,
+            style: { display: "none" }
+          }
+        ),
+        children ? children : /* @__PURE__ */ jsxs8(Fragment4, { children: [
+          icon && /* @__PURE__ */ jsx12("div", { className: "rv-dropzoneIcon", children: icon }),
+          /* @__PURE__ */ jsx12("div", { className: "rv-dropzoneTitle", children: title }),
+          /* @__PURE__ */ jsx12("div", { className: "rv-dropzoneHint", children: hint })
+        ] })
+      ]
+    }
+  );
+});
+
+// src/components/ui/MediaCard.tsx
+import { forwardRef as forwardRef3 } from "react";
+import { jsx as jsx13, jsxs as jsxs9 } from "react/jsx-runtime";
+var MediaCard = forwardRef3(function MediaCard2({
+  src,
+  alt = "Media thumbnail",
+  selected = false,
+  badge,
+  overlay,
+  className = "",
+  children,
+  ...props
+}, ref) {
+  return /* @__PURE__ */ jsxs9(
+    "div",
+    {
+      ref,
+      className: `rv-mediaCard ${selected ? "rv-mediaCardSelected" : ""} ${className}`.trim(),
+      role: "button",
+      tabIndex: 0,
+      ...props,
+      children: [
+        /* @__PURE__ */ jsx13("img", { src, alt, className: "rv-mediaCardThumb" }),
+        badge && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardBadge", children: badge }),
+        overlay && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardOverlay", children: overlay }),
+        children
+      ]
+    }
+  );
+});
+
+// src/components/ui/SplitButton.tsx
+import React13, { forwardRef as forwardRef4 } from "react";
+import { Fragment as Fragment5, jsx as jsx14, jsxs as jsxs10 } from "react/jsx-runtime";
+var VARIANT_CLASS_MAP = {
+  primary: "rv-btnPrimary",
+  secondary: "rv-btnSecondary",
+  brand: "rv-btnBrand",
+  danger: "rv-btnDanger",
+  ghost: "rv-btnGhost"
+};
+var DefaultChevronDown = () => /* @__PURE__ */ jsx14(
+  "svg",
+  {
+    width: "14",
+    height: "14",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    style: { display: "block" },
+    children: /* @__PURE__ */ jsx14("path", { d: "m6 9 6 6 6-6" })
+  }
+);
+var SplitButtonMain = forwardRef4(
+  function SplitButtonMain2({ variant = "primary", className = "", children, ...props }, ref) {
+    const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
+    return /* @__PURE__ */ jsx14(
+      "button",
+      {
+        ref,
+        type: "button",
+        className: `rv-btn ${variantClass} rv-splitBtnMain ${className}`.trim(),
+        ...props,
+        children
+      }
+    );
+  }
+);
+var SplitButtonToggle = forwardRef4(
+  function SplitButtonToggle2({ variant = "primary", isActive = false, className = "", children, ...props }, ref) {
+    const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
+    return /* @__PURE__ */ jsx14(
+      "button",
+      {
+        ref,
+        type: "button",
+        className: `rv-btn rv-btnIcon ${variantClass} rv-splitBtnToggle ${isActive ? "rv-btnActive" : ""} ${className}`.trim(),
+        ...props,
+        children: children || /* @__PURE__ */ jsx14(DefaultChevronDown, {})
+      }
+    );
+  }
+);
+var SplitButton = forwardRef4(
+  function SplitButton2({
+    variant = "primary",
+    disabled = false,
+    onAction,
+    onToggle,
+    actionAriaLabel,
+    toggleAriaLabel = "More options",
+    isToggleActive = false,
+    actionIcon,
+    toggleIcon,
+    className = "",
+    children,
+    ...props
+  }, ref) {
+    const isCustomChildren = React13.Children.count(children) > 1;
+    return /* @__PURE__ */ jsx14(
+      "div",
+      {
+        ref,
+        className: `rv-splitBtn ${className}`.trim(),
+        ...props,
+        children: isCustomChildren ? children : /* @__PURE__ */ jsxs10(Fragment5, { children: [
+          /* @__PURE__ */ jsxs10(
+            SplitButtonMain,
+            {
+              variant,
+              disabled,
+              onClick: onAction,
+              "aria-label": actionAriaLabel,
+              children: [
+                actionIcon,
+                children && /* @__PURE__ */ jsx14("span", { children })
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsx14(
+            SplitButtonToggle,
+            {
+              variant,
+              disabled,
+              isActive: isToggleActive,
+              onClick: onToggle,
+              "aria-label": toggleAriaLabel,
+              children: toggleIcon
+            }
+          )
+        ] })
+      }
+    );
+  }
+);
 export {
   AppShell,
   Canvas,
   CanvasContent,
   CanvasInner,
   CanvasScroll,
+  Chip,
+  ChipGroup,
   ComponentWrapper,
   Dialog,
+  Dropzone,
   EmptyState,
   MainContent,
+  MediaCard,
   Modal,
   ModalBody,
   ModalDescription,
@@ -791,6 +1056,9 @@ export {
   SidebarBody,
   SidebarPanel,
   SidebarRail,
+  SplitButton,
+  SplitButtonMain,
+  SplitButtonToggle,
   Tooltip,
   Topbar,
   TopbarLeft,

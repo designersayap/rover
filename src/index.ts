@@ -129,3 +129,46 @@ export type {
   DialogActionVariant,
 } from './components/overlays/Dialog';
 
+// UI Primitives exports
+export {
+  Chip,
+  ChipGroup,
+} from './components/ui/Chip';
+
+export type {
+  ChipProps,
+  ChipGroupProps,
+} from './components/ui/Chip';
+
+export {
+  Dropzone,
+} from './components/ui/Dropzone';
+
+export type {
+  DropzoneProps,
+  DropzoneRef,
+} from './components/ui/Dropzone';
+
+export {
+  MediaCard,
+} from './components/ui/MediaCard';
+
+export type {
+  MediaCardProps,
+} from './components/ui/MediaCard';
+
+export {
+  SplitButton,
+  SplitButtonMain,
+  SplitButtonToggle,
+} from './components/ui/SplitButton';
+
+export type {
+  SplitButtonProps,
+  SplitButtonMainProps,
+  SplitButtonToggleProps,
+  SplitButtonVariant,
+} from './components/ui/SplitButton';
+
+
+

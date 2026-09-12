@@ -64,7 +64,7 @@
     --rv-shd-btn: 0 1px 2px rgba(0, 0, 0, .2);
     --rv-shd-active: inset 0 2px 4px rgba(0, 0, 0, 0.5);
     --rv-shd-input: inset 0 1px 2px rgba(0, 0, 0, .2);
-    --rv-shd-pop: 0 8px 30px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    --rv-shd-pop: 0 4px 12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1);
     --rv-shadow-md: 0 2px 4px rgba(0, 0, 0, 0.2);
     --rv-shd-lg: var(--rv-shd-pop);
 

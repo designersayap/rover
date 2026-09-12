@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes, HTMLAttributes } from 'react';
 
 interface AppShellProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
@@ -241,4 +241,62 @@ interface DialogProps extends Omit<ModalProps, 'title' | 'onSubmit'> {
  */
 declare const Dialog: React.ForwardRefExoticComponent<DialogProps & React.RefAttributes<HTMLDivElement>>;
 
-export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };
+interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    active?: boolean;
+    icon?: React.ReactNode;
+    children: React.ReactNode;
+}
+declare const Chip: React.ForwardRefExoticComponent<ChipProps & React.RefAttributes<HTMLButtonElement>>;
+interface ChipGroupProps extends HTMLAttributes<HTMLDivElement> {
+    children: React.ReactNode;
+}
+declare const ChipGroup: React.ForwardRefExoticComponent<ChipGroupProps & React.RefAttributes<HTMLDivElement>>;
+
+interface DropzoneRef {
+    open: () => void;
+}
+interface DropzoneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onDrop'> {
+    onDropFiles?: (files: FileList) => void;
+    title?: string;
+    hint?: string;
+    icon?: React.ReactNode;
+    accept?: string;
+    multiple?: boolean;
+    disabled?: boolean;
+}
+declare const Dropzone: React.ForwardRefExoticComponent<DropzoneProps & React.RefAttributes<DropzoneRef>>;
+
+interface MediaCardProps extends HTMLAttributes<HTMLDivElement> {
+    src: string;
+    alt?: string;
+    selected?: boolean;
+    badge?: React.ReactNode;
+    overlay?: React.ReactNode;
+}
+declare const MediaCard: React.ForwardRefExoticComponent<MediaCardProps & React.RefAttributes<HTMLDivElement>>;
+
+type SplitButtonVariant = 'primary' | 'secondary' | 'brand' | 'danger' | 'ghost';
+interface SplitButtonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onToggle'> {
+    variant?: SplitButtonVariant;
+    disabled?: boolean;
+    onAction?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    onToggle?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    actionAriaLabel?: string;
+    toggleAriaLabel?: string;
+    isToggleActive?: boolean;
+    actionIcon?: React.ReactNode;
+    toggleIcon?: React.ReactNode;
+    children?: React.ReactNode;
+}
+interface SplitButtonMainProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: SplitButtonVariant;
+}
+declare const SplitButtonMain: React.ForwardRefExoticComponent<SplitButtonMainProps & React.RefAttributes<HTMLButtonElement>>;
+interface SplitButtonToggleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: SplitButtonVariant;
+    isActive?: boolean;
+}
+declare const SplitButtonToggle: React.ForwardRefExoticComponent<SplitButtonToggleProps & React.RefAttributes<HTMLButtonElement>>;
+declare const SplitButton: React.ForwardRefExoticComponent<SplitButtonProps & React.RefAttributes<HTMLDivElement>>;
+
+export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, MediaCard, type MediaCardProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };

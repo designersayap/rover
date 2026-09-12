@@ -392,6 +392,83 @@ import {
 
 ---
 
+### 3.6 Reusable UI Primitives (`Chip`, `Dropzone`, `MediaCard`, `SplitButton`)
+
+These primitives provide standardized UI components across Lunar (Page Builder) and Apollo (Media Studio).
+
+#### Chip & ChipGroup
+Interactive pills for categories, tags, and filters.
+
+```tsx
+import { Chip, ChipGroup } from 'rover';
+
+<ChipGroup>
+  {categories.map((cat) => (
+    <Chip
+      key={cat.id}
+      active={selectedCategory === cat.id}
+      onClick={() => setSelectedCategory(cat.id)}
+    >
+      {cat.label}
+    </Chip>
+  ))}
+</ChipGroup>
+```
+
+#### Dropzone
+Drag-and-drop file uploader with built-in input triggering, drag-over highlights, and thumbnail management.
+
+```tsx
+import { Dropzone } from 'rover';
+
+<Dropzone
+  accept="image/*"
+  onDropFiles={(files) => handleUpload(files)}
+  title="Drop images here, or browse files"
+  hint="Supports JPG, PNG, WebP up to 25MB"
+/>
+```
+
+#### MediaCard
+Aspect-ratio media thumbnail card with hover action overlays and status badges.
+
+```tsx
+import { MediaCard } from 'rover';
+
+<MediaCard
+  src="/mock/image.jpg"
+  alt="Sample Preview"
+  selected={isSelected}
+  onClick={() => setSelectedId(id)}
+  badge={<span>Attached</span>}
+/>
+```
+
+#### SplitButton
+Compound and shorthand multi-action buttons (Primary Action + Dropdown Toggle) supporting all Rover button variants (`primary`, `secondary`, `brand`, `danger`, `ghost`).
+
+```tsx
+import { SplitButton, SplitButtonMain, SplitButtonToggle } from 'rover';
+
+// Shorthand:
+<SplitButton
+  variant="brand"
+  onAction={handlePublish}
+  onToggle={toggleOptionsPopover}
+  isToggleActive={isPopoverOpen}
+>
+  Publish
+</SplitButton>
+
+// Compound:
+<SplitButton variant="secondary">
+  <SplitButtonMain onClick={handleSave}>Save</SplitButtonMain>
+  <SplitButtonToggle onClick={toggleDropdown} />
+</SplitButton>
+```
+
+---
+
 ## 4. CSS Class Dictionary (`.rv-*`)
 
 When crafting controls, toolbars, and popover bodies, use Rover's built-in utility classes.
