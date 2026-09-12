@@ -72,7 +72,7 @@
     padding: 6px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--rv-space-xs);
     box-sizing: border-box;
 }
 
@@ -85,7 +85,7 @@
 .rv-popoverGroup {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: var(--rv-space-xs);
 }
 
 .rv-popoverGroup:not(:first-child) {
@@ -93,7 +93,7 @@
 }
 
 .rv-popoverGroupTitle {
-    padding: 6px 8px 2px;
+    padding: 6px 8px;
     color: var(--rv-neutral-100);
     font-size: 10px;
     font-weight: 600;
@@ -368,6 +368,7 @@
         opacity: 0;
         transform: translateY(12px) scale(0.98);
     }
+
     to {
         opacity: 1;
         transform: translateY(0) scale(1);

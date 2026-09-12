@@ -2606,7 +2606,7 @@ form {
   padding: 6px;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--rv-space-xs);
   box-sizing: border-box;
 }
 .rv-popoverMenu .rv-listItem,
@@ -2616,13 +2616,13 @@ form {
 .rv-popoverGroup {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: var(--rv-space-xs);
 }
 .rv-popoverGroup:not(:first-child) {
   margin-top: 6px;
 }
 .rv-popoverGroupTitle {
-  padding: 6px 8px 2px;
+  padding: 6px 8px;
   color: var(--rv-neutral-100);
   font-size: 10px;
   font-weight: 600;
