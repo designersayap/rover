@@ -2004,7 +2004,6 @@ form {
   color: var(--rv-white);
   line-height: var(--rv-lh-tight);
 }
-.rv-listItemDescription,
 .rv-listItemDesc {
   font-size: var(--rv-font-size-sm);
   color: var(--rv-neutral-100);
