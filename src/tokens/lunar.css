@@ -6,11 +6,11 @@
 :root,
 [data-rv-brand="lunar"] {
     /* 1. BRAND ACCENT COLORS */
-    --rv-brand-primary: #1976d2;
-    --rv-brand-primary-hover: #1565c0;
-    --rv-brand-primary-active: #0d47a1;
-    --rv-brand-primary-light: #64b5f6;
-    --rv-brand-primary-subtle: #e3f2fd;
+    --rv-brand-primary: #4338CA;
+    --rv-brand-primary-hover: #3730A3;
+    --rv-brand-primary-active: #312E81;
+    --rv-brand-primary-light: #818CF8;
+    --rv-brand-primary-subtle: #C7D2FE;
 
     /* 2. BRAND NEUTRAL PALETTE (Lunar Pure Dark Tone) */
     --rv-white: #ffffff;

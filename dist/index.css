@@ -1,11 +1,11 @@
 /* src/tokens/lunar.css */
 :root,
 [data-rv-brand=lunar] {
-  --rv-brand-primary: #1976d2;
-  --rv-brand-primary-hover: #1565c0;
-  --rv-brand-primary-active: #0d47a1;
-  --rv-brand-primary-light: #64b5f6;
-  --rv-brand-primary-subtle: #e3f2fd;
+  --rv-brand-primary: #4338CA;
+  --rv-brand-primary-hover: #3730A3;
+  --rv-brand-primary-active: #312E81;
+  --rv-brand-primary-light: #818CF8;
+  --rv-brand-primary-subtle: #C7D2FE;
   --rv-white: #ffffff;
   --rv-black: #000000;
   --rv-neutral-50: #ffffff;
@@ -75,11 +75,11 @@
 
 /* src/tokens/apollo.css */
 [data-rv-brand=apollo] {
-  --rv-brand-primary: #1E3A8A;
-  --rv-brand-primary-hover: #172554;
-  --rv-brand-primary-active: #0F172A;
-  --rv-brand-primary-light: #3B82F6;
-  --rv-brand-primary-subtle: #93C5FD;
+  --rv-brand-primary: #1976d2;
+  --rv-brand-primary-hover: #1565c0;
+  --rv-brand-primary-active: #0d47a1;
+  --rv-brand-primary-light: #64b5f6;
+  --rv-brand-primary-subtle: #e3f2fd;
   --rv-white: #ffffff;
   --rv-black: #000000;
   --rv-neutral-50: #ffffff;
@@ -1937,11 +1937,11 @@ form {
   color: var(--rv-neutral-100);
   line-height: var(--rv-lh-tight);
 }
-.rv-listItem:hover:not(:disabled) {
-  background: var(--rv-neutral-400);
-  color: var(--rv-white);
-}
-.rv-listItemActive {
+.rv-listItem:hover:not(:disabled),
+.rv-listItemActive,
+.rv-listItemOpen,
+.rv-listItem.rv-isOpen,
+.rv-listItem:has([aria-expanded=true]) {
   background: var(--rv-neutral-400);
   color: var(--rv-white);
 }
@@ -1961,7 +1961,10 @@ form {
   height: 16px;
 }
 .rv-listItem:hover .rv-listItemIcon,
-.rv-listItemActive .rv-listItemIcon {
+.rv-listItemActive .rv-listItemIcon,
+.rv-listItemOpen .rv-listItemIcon,
+.rv-listItem.rv-isOpen .rv-listItemIcon,
+.rv-listItem:has([aria-expanded=true]) .rv-listItemIcon {
   opacity: 1;
 }
 .rv-listItemLabel {
@@ -1986,10 +1989,19 @@ form {
     margin 0.2s ease;
 }
 .rv-listItem:hover .rv-listItemAction,
-.rv-listItemActive .rv-listItemAction {
+.rv-listItemActive .rv-listItemAction,
+.rv-listItemOpen .rv-listItemAction,
+.rv-listItem.rv-isOpen .rv-listItemAction,
+.rv-listItem:has([aria-expanded=true]) .rv-listItemAction {
   opacity: 1;
   width: auto;
   margin-left: var(--rv-space-sm);
+}
+.rv-listItemAction .rv-btn {
+  width: 22px;
+  height: 22px;
+  min-height: 22px;
+  padding: 0;
 }
 .rv-popoverCard {
   border: none;

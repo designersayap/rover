@@ -511,6 +511,7 @@ When crafting controls, toolbars, and popover bodies, use Rover's built-in utili
 ### 4.3 Lists & Navigation Rows
 - `.rv-listItem`: Clickable list row with hover highlight.
 - `.rv-listItemActive`: Selected/active list row.
+- `.rv-listItemOpen`: Highlighted list row when its action menu/popover is open or its child button is pressed.
 - `.rv-treeItem`: Layer hierarchy row (with indent, expand chevron, visibility toggle).
 - `.rv-treeItemActive`: Highlighted active layer row.
 

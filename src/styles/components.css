@@ -462,12 +462,11 @@ form {
     line-height: var(--rv-lh-tight);
 }
 
-.rv-listItem:hover:not(:disabled) {
-    background: var(--rv-neutral-400);
-    color: var(--rv-white);
-}
-
-.rv-listItemActive {
+.rv-listItem:hover:not(:disabled),
+.rv-listItemActive,
+.rv-listItemOpen,
+.rv-listItem.rv-isOpen,
+.rv-listItem:has([aria-expanded="true"]) {
     background: var(--rv-neutral-400);
     color: var(--rv-white);
 }
@@ -490,7 +489,10 @@ form {
 }
 
 .rv-listItem:hover .rv-listItemIcon,
-.rv-listItemActive .rv-listItemIcon {
+.rv-listItemActive .rv-listItemIcon,
+.rv-listItemOpen .rv-listItemIcon,
+.rv-listItem.rv-isOpen .rv-listItemIcon,
+.rv-listItem:has([aria-expanded="true"]) .rv-listItemIcon {
     opacity: 1;
 }
 
@@ -515,10 +517,20 @@ form {
 }
 
 .rv-listItem:hover .rv-listItemAction,
-.rv-listItemActive .rv-listItemAction {
+.rv-listItemActive .rv-listItemAction,
+.rv-listItemOpen .rv-listItemAction,
+.rv-listItem.rv-isOpen .rv-listItemAction,
+.rv-listItem:has([aria-expanded="true"]) .rv-listItemAction {
     opacity: 1;
     width: auto;
     margin-left: var(--rv-space-sm);
+}
+
+.rv-listItemAction .rv-btn {
+    width: 22px;
+    height: 22px;
+    min-height: 22px;
+    padding: 0;
 }
 
 
