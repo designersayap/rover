@@ -654,6 +654,36 @@ form {
     font-weight: 600;
 }
 
+/* Avatars */
+.rv-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--rv-radius-round);
+    object-fit: cover;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--rv-neutral-400);
+    color: var(--rv-white);
+    font-weight: var(--rv-font-weight-bold);
+    font-size: var(--rv-font-size-xs);
+    user-select: none;
+}
+
+.rv-btnAvatar {
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--rv-radius-round);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-left: var(--rv-space-xs);
+}
+
 /* Dividers */
 .rv-horizontalDivider {
     border-top: 1px solid var(--rv-bdr);
