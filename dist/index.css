@@ -1993,6 +1993,11 @@ form {
   min-width: 0;
   gap: 2px;
 }
+.rv-listItemTitleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--rv-space-xs);
+}
 .rv-listItemTitle {
   font-weight: var(--rv-font-weight-medium);
   font-size: var(--rv-font-size-md);
@@ -2003,6 +2008,12 @@ form {
   font-size: var(--rv-font-size-sm);
   color: var(--rv-neutral-100);
   line-height: var(--rv-lh-tight);
+}
+.rv-listItemMeta {
+  font-size: 10px;
+  color: var(--rv-neutral-200);
+  line-height: 1.2;
+  margin-top: 1px;
 }
 .rv-listItem:hover:not(:disabled) {
   background: var(--rv-neutral-400);
@@ -2111,6 +2122,23 @@ form {
   width: 8px;
   height: 8px;
   border-radius: 50%;
+}
+.rv-badge {
+  font-size: 10px;
+  font-weight: var(--rv-font-weight-medium);
+  padding: 1px 6px;
+  border-radius: var(--rv-radius-round);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--rv-neutral-300);
+  color: var(--rv-neutral-75);
+  line-height: 1.4;
+  user-select: none;
+}
+.rv-badgeSubtle {
+  background: var(--rv-neutral-300);
+  color: var(--rv-neutral-75);
 }
 .rv-countBadge {
   background-color: var(--rv-brand-primary);
