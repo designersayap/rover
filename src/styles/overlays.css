@@ -69,7 +69,7 @@
 .rv-popoverMenu,
 .rv-popoverContainer.rv-popoverMenu,
 .rv-popoverContainer.rv-isMenu {
-    padding: 6px;
+    padding: 8px 6px;
     display: flex;
     flex-direction: column;
     gap: var(--rv-space-xs);

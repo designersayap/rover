@@ -1969,7 +1969,7 @@ form {
   width: 100%;
   cursor: pointer;
   min-height: 32px;
-  padding: 2px var(--rv-space-md);
+  padding: 4px var(--rv-space-md);
   margin-bottom: var(--rv-space-xs);
   border-radius: var(--rv-radius-md);
   transition: all 0.2s;
@@ -1979,6 +1979,11 @@ form {
   text-align: left;
   font-size: var(--rv-font-size-md);
   user-select: none;
+}
+.rv-listItemTwoLine,
+.rv-listItem.rv-isTwoLine {
+  padding: var(--rv-space-sm) var(--rv-space-md);
+  min-height: 44px;
 }
 .rv-listItem:hover:not(:disabled) {
   background: var(--rv-neutral-400);
@@ -2603,7 +2608,7 @@ form {
 .rv-popoverMenu,
 .rv-popoverContainer.rv-popoverMenu,
 .rv-popoverContainer.rv-isMenu {
-  padding: 6px;
+  padding: 8px 6px;
   display: flex;
   flex-direction: column;
   gap: var(--rv-space-xs);
