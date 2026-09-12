@@ -2004,16 +2004,11 @@ form {
   color: var(--rv-white);
   line-height: var(--rv-lh-tight);
 }
+.rv-listItemDescription,
 .rv-listItemDesc {
   font-size: var(--rv-font-size-sm);
   color: var(--rv-neutral-100);
   line-height: var(--rv-lh-tight);
-}
-.rv-listItemMeta {
-  font-size: 10px;
-  color: var(--rv-neutral-200);
-  line-height: 1.2;
-  margin-top: 1px;
 }
 .rv-listItem:hover:not(:disabled) {
   background: var(--rv-neutral-400);
