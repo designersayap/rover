@@ -75,11 +75,11 @@
 
 /* src/tokens/apollo.css */
 [data-rv-brand=apollo] {
-  --rv-brand-primary: #1976d2;
-  --rv-brand-primary-hover: #1565c0;
-  --rv-brand-primary-active: #0d47a1;
-  --rv-brand-primary-light: #64b5f6;
-  --rv-brand-primary-subtle: #e3f2fd;
+  --rv-brand-primary: #00488A;
+  --rv-brand-primary-hover: #00315E;
+  --rv-brand-primary-active: #001B35;
+  --rv-brand-primary-light: #4D97DD;
+  --rv-brand-primary-subtle: #B8D8F8;
   --rv-white: #ffffff;
   --rv-black: #000000;
   --rv-neutral-50: #ffffff;
@@ -143,7 +143,7 @@
   --rv-space-xl: 24px;
   --rv-h-btn: 36px;
   --rv-h-topbar: 64px;
-  --rv-w-sidebar: 360px;
+  --rv-w-sidebar: 400px;
   --rv-w-sidebar-rail: 92px;
   --rv-w-pop: 362px;
 }
