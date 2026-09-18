@@ -1,5 +1,4 @@
 'use client';
-import './index.css';
 
 // src/components/shell/AppShell.tsx
 import React from "react";
@@ -773,9 +772,296 @@ var Dialog = React9.forwardRef(
 );
 Dialog.displayName = "Dialog";
 
+// src/components/overlays/Menu.tsx
+import React10, {
+  createContext,
+  useContext,
+  useState as useState4,
+  useRef as useRef2,
+  useEffect as useEffect4,
+  useCallback as useCallback2,
+  useId
+} from "react";
+import { createPortal as createPortal3 } from "react-dom";
+import { jsx as jsx11 } from "react/jsx-runtime";
+var MenuContext = createContext(null);
+function useMenu() {
+  const context = useContext(MenuContext);
+  if (!context) {
+    throw new Error("useMenu must be used within a <Menu /> component");
+  }
+  return context;
+}
+function Menu({
+  children,
+  open: controlledOpen,
+  onOpenChange,
+  defaultOpen = false
+}) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState4(defaultOpen);
+  const triggerRef = useRef2(null);
+  const contentRef = useRef2(null);
+  const menuId = useId();
+  const isControlled = controlledOpen !== void 0;
+  const isOpen = isControlled ? controlledOpen : uncontrolledOpen;
+  const setIsOpen = useCallback2(
+    (action) => {
+      const nextOpen = typeof action === "function" ? action(isOpen) : action;
+      if (!isControlled) {
+        setUncontrolledOpen(nextOpen);
+      }
+      onOpenChange?.(nextOpen);
+    },
+    [isControlled, isOpen, onOpenChange]
+  );
+  const closeMenu = useCallback2(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
+  const toggleMenu = useCallback2(() => {
+    setIsOpen((prev) => !prev);
+  }, [setIsOpen]);
+  return /* @__PURE__ */ jsx11(
+    MenuContext.Provider,
+    {
+      value: {
+        isOpen,
+        setIsOpen,
+        triggerRef,
+        contentRef,
+        menuId,
+        closeMenu,
+        toggleMenu
+      },
+      children
+    }
+  );
+}
+var MenuTrigger = React10.forwardRef(
+  ({ asChild = false, children, onClick, ...props }, forwardedRef) => {
+    const { isOpen, toggleMenu, triggerRef, menuId } = useMenu();
+    const handleClick = (e) => {
+      e.stopPropagation();
+      onClick?.(e);
+      if (!e.defaultPrevented) {
+        toggleMenu();
+      }
+    };
+    const handleRef = (node) => {
+      triggerRef.current = node;
+      if (typeof forwardedRef === "function") {
+        forwardedRef(node);
+      } else if (forwardedRef) {
+        forwardedRef.current = node;
+      }
+    };
+    if (asChild && React10.isValidElement(children)) {
+      const child = children;
+      return React10.cloneElement(child, {
+        ref: handleRef,
+        onClick: (e) => {
+          child.props.onClick?.(e);
+          handleClick(e);
+        },
+        "aria-expanded": isOpen,
+        "aria-haspopup": "menu",
+        "aria-controls": isOpen ? menuId : void 0
+      });
+    }
+    return /* @__PURE__ */ jsx11(
+      "button",
+      {
+        ref: handleRef,
+        type: "button",
+        onClick: handleClick,
+        "aria-expanded": isOpen,
+        "aria-haspopup": "menu",
+        "aria-controls": isOpen ? menuId : void 0,
+        ...props,
+        children
+      }
+    );
+  }
+);
+MenuTrigger.displayName = "MenuTrigger";
+var MenuContent = React10.forwardRef(
+  ({
+    align = "end",
+    side = "bottom",
+    sideOffset = 4,
+    width = "auto",
+    portal = true,
+    className = "",
+    style,
+    children,
+    ...props
+  }, forwardedRef) => {
+    const { isOpen, closeMenu, triggerRef, contentRef, menuId } = useMenu();
+    const [mounted, setMounted] = useState4(false);
+    const [positionStyle, setPositionStyle] = useState4({});
+    useEffect4(() => {
+      setMounted(true);
+    }, []);
+    const updatePosition = useCallback2(() => {
+      if (!triggerRef.current || typeof window === "undefined") return;
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const viewportPadding = 8;
+      const windowWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
+      const windowHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
+      let top = 0;
+      let left = 0;
+      if (side === "bottom") {
+        top = triggerRect.bottom + sideOffset;
+        if (top + 160 > windowHeight) {
+          top = triggerRect.top - sideOffset;
+        }
+      } else if (side === "top") {
+        top = triggerRect.top - sideOffset;
+      } else if (side === "left" || side === "right") {
+        top = triggerRect.top;
+      }
+      if (align === "end") {
+        left = triggerRect.right;
+      } else if (align === "start") {
+        left = triggerRect.left;
+      } else {
+        left = triggerRect.left + triggerRect.width / 2;
+      }
+      const isRightHalf = left > windowWidth / 2;
+      let calculatedStyle = {
+        position: "fixed",
+        zIndex: 1e4,
+        margin: 0,
+        width: typeof width === "number" ? `${width}px` : width,
+        maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,
+        ...style
+      };
+      if (side === "bottom") {
+        if (top + 160 > windowHeight) {
+          calculatedStyle.bottom = `${windowHeight - triggerRect.top + sideOffset}px`;
+          calculatedStyle.top = "auto";
+        } else {
+          calculatedStyle.top = `${top}px`;
+          calculatedStyle.bottom = "auto";
+        }
+      } else if (side === "top") {
+        calculatedStyle.bottom = `${windowHeight - triggerRect.top + sideOffset}px`;
+        calculatedStyle.top = "auto";
+      } else {
+        calculatedStyle.top = `${top}px`;
+      }
+      if (align === "end") {
+        const rightOffset = windowWidth - triggerRect.right;
+        calculatedStyle.right = `${Math.max(viewportPadding, rightOffset)}px`;
+        calculatedStyle.left = "auto";
+      } else if (align === "start") {
+        calculatedStyle.left = `${Math.max(viewportPadding, left)}px`;
+        calculatedStyle.right = "auto";
+      } else {
+        calculatedStyle.left = `${Math.max(viewportPadding, left)}px`;
+        calculatedStyle.transform = "translateX(-50%)";
+        calculatedStyle.right = "auto";
+      }
+      setPositionStyle(calculatedStyle);
+    }, [triggerRef, align, side, sideOffset, width, style]);
+    useEffect4(() => {
+      if (isOpen) {
+        updatePosition();
+        window.addEventListener("resize", updatePosition);
+        window.addEventListener("scroll", updatePosition, true);
+      }
+      return () => {
+        window.removeEventListener("resize", updatePosition);
+        window.removeEventListener("scroll", updatePosition, true);
+      };
+    }, [isOpen, updatePosition]);
+    useEffect4(() => {
+      if (!isOpen) return;
+      const handlePointerDown = (event) => {
+        const target = event.target;
+        if (contentRef.current?.contains(target)) {
+          return;
+        }
+        if (triggerRef.current?.contains(target)) {
+          return;
+        }
+        closeMenu();
+      };
+      const handleKeyDown = (event) => {
+        if (event.key === "Escape") {
+          closeMenu();
+          triggerRef.current?.focus();
+        }
+      };
+      document.addEventListener("mousedown", handlePointerDown);
+      document.addEventListener("touchstart", handlePointerDown);
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("mousedown", handlePointerDown);
+        document.removeEventListener("touchstart", handlePointerDown);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [isOpen, closeMenu, contentRef, triggerRef]);
+    if (!isOpen) return null;
+    const handleRef = (node) => {
+      contentRef.current = node;
+      if (typeof forwardedRef === "function") {
+        forwardedRef(node);
+      } else if (forwardedRef) {
+        forwardedRef.current = node;
+      }
+    };
+    const contentNode = /* @__PURE__ */ jsx11(
+      "div",
+      {
+        ref: handleRef,
+        id: menuId,
+        role: "menu",
+        "aria-orientation": "vertical",
+        tabIndex: -1,
+        className: `rv-popoverContainer rv-popoverMenu ${className}`.trim(),
+        style: positionStyle,
+        onClick: (e) => e.stopPropagation(),
+        ...props,
+        children
+      }
+    );
+    if (portal && mounted && typeof document !== "undefined") {
+      return createPortal3(contentNode, document.body);
+    }
+    return contentNode;
+  }
+);
+MenuContent.displayName = "MenuContent";
+var MenuItem = React10.forwardRef(
+  ({ preventClose = false, className = "", children, onClick, disabled, ...props }, ref) => {
+    const { closeMenu } = useMenu();
+    const handleClick = (e) => {
+      if (disabled) return;
+      onClick?.(e);
+      if (!preventClose && !e.defaultPrevented) {
+        closeMenu();
+      }
+    };
+    return /* @__PURE__ */ jsx11(
+      "button",
+      {
+        ref,
+        type: "button",
+        role: "menuitem",
+        disabled,
+        className: `rv-listItem ${className}`.trim(),
+        onClick: handleClick,
+        ...props,
+        children
+      }
+    );
+  }
+);
+MenuItem.displayName = "MenuItem";
+
 // src/components/ui/Chip.tsx
 import { forwardRef } from "react";
-import { jsx as jsx11, jsxs as jsxs7 } from "react/jsx-runtime";
+import { jsx as jsx12, jsxs as jsxs7 } from "react/jsx-runtime";
 var Chip = forwardRef(function Chip2({
   active = false,
   icon,
@@ -792,24 +1078,24 @@ var Chip = forwardRef(function Chip2({
       className: `rv-chip ${active ? "rv-chipActive" : ""} ${className}`.trim(),
       ...props,
       children: [
-        icon && /* @__PURE__ */ jsx11("span", { className: "rv-chipIcon", children: icon }),
-        /* @__PURE__ */ jsx11("span", { children })
+        icon && /* @__PURE__ */ jsx12("span", { className: "rv-chipIcon", children: icon }),
+        /* @__PURE__ */ jsx12("span", { children })
       ]
     }
   );
 });
 var ChipGroup = forwardRef(function ChipGroup2({ children, className = "", ...props }, ref) {
-  return /* @__PURE__ */ jsx11("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
+  return /* @__PURE__ */ jsx12("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
 });
 
 // src/components/ui/Dropzone.tsx
 import {
   forwardRef as forwardRef2,
-  useState as useState4,
-  useRef as useRef2,
+  useState as useState5,
+  useRef as useRef3,
   useImperativeHandle
 } from "react";
-import { Fragment as Fragment4, jsx as jsx12, jsxs as jsxs8 } from "react/jsx-runtime";
+import { Fragment as Fragment4, jsx as jsx13, jsxs as jsxs8 } from "react/jsx-runtime";
 var Dropzone = forwardRef2(function Dropzone2({
   onDropFiles,
   title = "Drag and drop media here",
@@ -822,8 +1108,8 @@ var Dropzone = forwardRef2(function Dropzone2({
   children,
   ...props
 }, ref) {
-  const [isDragging, setIsDragging] = useState4(false);
-  const inputRef = useRef2(null);
+  const [isDragging, setIsDragging] = useState5(false);
+  const inputRef = useRef3(null);
   useImperativeHandle(ref, () => ({
     open: () => {
       if (!disabled) {
@@ -873,7 +1159,7 @@ var Dropzone = forwardRef2(function Dropzone2({
       tabIndex: 0,
       ...props,
       children: [
-        /* @__PURE__ */ jsx12(
+        /* @__PURE__ */ jsx13(
           "input",
           {
             ref: inputRef,
@@ -886,9 +1172,9 @@ var Dropzone = forwardRef2(function Dropzone2({
           }
         ),
         children ? children : /* @__PURE__ */ jsxs8(Fragment4, { children: [
-          icon && /* @__PURE__ */ jsx12("div", { className: "rv-dropzoneIcon", children: icon }),
-          /* @__PURE__ */ jsx12("div", { className: "rv-dropzoneTitle", children: title }),
-          /* @__PURE__ */ jsx12("div", { className: "rv-dropzoneHint", children: hint })
+          icon && /* @__PURE__ */ jsx13("div", { className: "rv-dropzoneIcon", children: icon }),
+          /* @__PURE__ */ jsx13("div", { className: "rv-dropzoneTitle", children: title }),
+          /* @__PURE__ */ jsx13("div", { className: "rv-dropzoneHint", children: hint })
         ] })
       ]
     }
@@ -897,7 +1183,7 @@ var Dropzone = forwardRef2(function Dropzone2({
 
 // src/components/ui/MediaCard.tsx
 import { forwardRef as forwardRef3 } from "react";
-import { jsx as jsx13, jsxs as jsxs9 } from "react/jsx-runtime";
+import { jsx as jsx14, jsxs as jsxs9 } from "react/jsx-runtime";
 var MediaCard = forwardRef3(function MediaCard2({
   src,
   alt = "Media thumbnail",
@@ -922,13 +1208,13 @@ var MediaCard = forwardRef3(function MediaCard2({
       ...props,
       children: [
         /* @__PURE__ */ jsxs9("div", { className: "rv-mediaCardThumbWrapper", children: [
-          /* @__PURE__ */ jsx13("img", { src, alt, className: "rv-mediaCardThumb" }),
-          badge && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardBadge", children: badge }),
-          !isList && overlay && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardOverlay", children: overlay })
+          /* @__PURE__ */ jsx14("img", { src, alt, className: "rv-mediaCardThumb" }),
+          badge && /* @__PURE__ */ jsx14("div", { className: "rv-mediaCardBadge", children: badge }),
+          !isList && overlay && /* @__PURE__ */ jsx14("div", { className: "rv-mediaCardOverlay", children: overlay })
         ] }),
         (title || subtitle || children) && /* @__PURE__ */ jsxs9("div", { className: "rv-mediaCardContent", children: [
-          title && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardTitle", children: title }),
-          subtitle && /* @__PURE__ */ jsx13("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
+          title && /* @__PURE__ */ jsx14("div", { className: "rv-mediaCardTitle", children: title }),
+          subtitle && /* @__PURE__ */ jsx14("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
           children
         ] })
       ]
@@ -937,8 +1223,8 @@ var MediaCard = forwardRef3(function MediaCard2({
 });
 
 // src/components/ui/SplitButton.tsx
-import React13, { forwardRef as forwardRef4 } from "react";
-import { Fragment as Fragment5, jsx as jsx14, jsxs as jsxs10 } from "react/jsx-runtime";
+import React14, { forwardRef as forwardRef4 } from "react";
+import { Fragment as Fragment5, jsx as jsx15, jsxs as jsxs10 } from "react/jsx-runtime";
 var VARIANT_CLASS_MAP = {
   primary: "rv-btnPrimary",
   secondary: "rv-btnSecondary",
@@ -946,7 +1232,7 @@ var VARIANT_CLASS_MAP = {
   danger: "rv-btnDanger",
   ghost: "rv-btnGhost"
 };
-var DefaultChevronDown = () => /* @__PURE__ */ jsx14(
+var DefaultChevronDown = () => /* @__PURE__ */ jsx15(
   "svg",
   {
     width: "14",
@@ -958,13 +1244,13 @@ var DefaultChevronDown = () => /* @__PURE__ */ jsx14(
     strokeLinecap: "round",
     strokeLinejoin: "round",
     style: { display: "block" },
-    children: /* @__PURE__ */ jsx14("path", { d: "m6 9 6 6 6-6" })
+    children: /* @__PURE__ */ jsx15("path", { d: "m6 9 6 6 6-6" })
   }
 );
 var SplitButtonMain = forwardRef4(
   function SplitButtonMain2({ variant = "primary", className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ jsx14(
+    return /* @__PURE__ */ jsx15(
       "button",
       {
         ref,
@@ -979,14 +1265,14 @@ var SplitButtonMain = forwardRef4(
 var SplitButtonToggle = forwardRef4(
   function SplitButtonToggle2({ variant = "primary", isActive = false, className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ jsx14(
+    return /* @__PURE__ */ jsx15(
       "button",
       {
         ref,
         type: "button",
         className: `rv-btn rv-btnIcon ${variantClass} rv-splitBtnToggle ${isActive ? "rv-btnActive" : ""} ${className}`.trim(),
         ...props,
-        children: children || /* @__PURE__ */ jsx14(DefaultChevronDown, {})
+        children: children || /* @__PURE__ */ jsx15(DefaultChevronDown, {})
       }
     );
   }
@@ -1006,8 +1292,8 @@ var SplitButton = forwardRef4(
     children,
     ...props
   }, ref) {
-    const isCustomChildren = React13.Children.count(children) > 1;
-    return /* @__PURE__ */ jsx14(
+    const isCustomChildren = React14.Children.count(children) > 1;
+    return /* @__PURE__ */ jsx15(
       "div",
       {
         ref,
@@ -1023,11 +1309,11 @@ var SplitButton = forwardRef4(
               "aria-label": actionAriaLabel,
               children: [
                 actionIcon,
-                children && /* @__PURE__ */ jsx14("span", { children })
+                children && /* @__PURE__ */ jsx15("span", { children })
               ]
             }
           ),
-          /* @__PURE__ */ jsx14(
+          /* @__PURE__ */ jsx15(
             SplitButtonToggle,
             {
               variant,
@@ -1057,6 +1343,10 @@ export {
   EmptyState,
   MainContent,
   MediaCard,
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuTrigger,
   Modal,
   ModalBody,
   ModalDescription,
@@ -1080,6 +1370,7 @@ export {
   Topbar,
   TopbarLeft,
   TopbarLogo,
-  TopbarRight
+  TopbarRight,
+  useMenu
 };
 //# sourceMappingURL=index.mjs.map

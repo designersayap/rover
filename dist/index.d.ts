@@ -245,6 +245,45 @@ interface DialogProps extends Omit<ModalProps, 'title' | 'onSubmit'> {
  */
 declare const Dialog: React.ForwardRefExoticComponent<DialogProps & React.RefAttributes<HTMLDivElement>>;
 
+interface MenuContextValue {
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    triggerRef: React.RefObject<HTMLElement | null>;
+    contentRef: React.RefObject<HTMLDivElement | null>;
+    menuId: string;
+    closeMenu: () => void;
+    toggleMenu: () => void;
+}
+declare function useMenu(): MenuContextValue;
+interface MenuProps {
+    children: React.ReactNode;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
+    defaultOpen?: boolean;
+}
+declare function Menu({ children, open: controlledOpen, onOpenChange, defaultOpen, }: MenuProps): React.JSX.Element;
+interface MenuTriggerProps extends React.HTMLAttributes<HTMLElement> {
+    asChild?: boolean;
+    children: React.ReactNode;
+}
+declare const MenuTrigger: React.ForwardRefExoticComponent<MenuTriggerProps & React.RefAttributes<HTMLElement>>;
+interface MenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
+    align?: 'start' | 'end' | 'center';
+    side?: 'bottom' | 'top' | 'left' | 'right';
+    sideOffset?: number;
+    width?: number | string;
+    portal?: boolean;
+    className?: string;
+    children?: React.ReactNode;
+}
+declare const MenuContent: React.ForwardRefExoticComponent<MenuContentProps & React.RefAttributes<HTMLDivElement>>;
+interface MenuItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    preventClose?: boolean;
+    className?: string;
+    children: React.ReactNode;
+}
+declare const MenuItem: React.ForwardRefExoticComponent<MenuItemProps & React.RefAttributes<HTMLButtonElement>>;
+
 interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     active?: boolean;
     icon?: React.ReactNode;
@@ -306,4 +345,4 @@ interface SplitButtonToggleProps extends ButtonHTMLAttributes<HTMLButtonElement>
 declare const SplitButtonToggle: React.ForwardRefExoticComponent<SplitButtonToggleProps & React.RefAttributes<HTMLButtonElement>>;
 declare const SplitButton: React.ForwardRefExoticComponent<SplitButtonProps & React.RefAttributes<HTMLDivElement>>;
 
-export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, MediaCard, type MediaCardProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, PopoverMenu, type PopoverMenuProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps };
+export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, MediaCard, type MediaCardProps, Menu, MenuContent, type MenuContentProps, MenuItem, type MenuItemProps, type MenuProps, MenuTrigger, type MenuTriggerProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, PopoverMenu, type PopoverMenuProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps, useMenu };

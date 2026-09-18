@@ -1,6 +1,3 @@
-// Ensure core CSS tokens and styling rules are imported
-import './styles/index.css';
-
 // Shell exports
 export {
   AppShell,
@@ -130,6 +127,21 @@ export type {
   DialogProps,
   DialogActionVariant,
 } from './components/overlays/Dialog';
+
+export {
+  Menu,
+  MenuTrigger,
+  MenuContent,
+  MenuItem,
+  useMenu,
+} from './components/overlays/Menu';
+
+export type {
+  MenuProps,
+  MenuTriggerProps,
+  MenuContentProps,
+  MenuItemProps,
+} from './components/overlays/Menu';
 
 // UI Primitives exports
 export {

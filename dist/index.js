@@ -1,5 +1,4 @@
 'use client';
-require('./index.css');
 "use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -45,6 +44,10 @@ __export(index_exports, {
   EmptyState: () => EmptyState,
   MainContent: () => MainContent,
   MediaCard: () => MediaCard,
+  Menu: () => Menu,
+  MenuContent: () => MenuContent,
+  MenuItem: () => MenuItem,
+  MenuTrigger: () => MenuTrigger,
   Modal: () => Modal,
   ModalBody: () => ModalBody,
   ModalDescription: () => ModalDescription,
@@ -68,7 +71,8 @@ __export(index_exports, {
   Topbar: () => Topbar,
   TopbarLeft: () => TopbarLeft,
   TopbarLogo: () => TopbarLogo,
-  TopbarRight: () => TopbarRight
+  TopbarRight: () => TopbarRight,
+  useMenu: () => useMenu
 });
 module.exports = __toCommonJS(index_exports);
 
@@ -844,10 +848,289 @@ var Dialog = import_react9.default.forwardRef(
 );
 Dialog.displayName = "Dialog";
 
-// src/components/ui/Chip.tsx
-var import_react10 = require("react");
+// src/components/overlays/Menu.tsx
+var import_react10 = __toESM(require("react"));
+var import_react_dom3 = require("react-dom");
 var import_jsx_runtime11 = require("react/jsx-runtime");
-var Chip = (0, import_react10.forwardRef)(function Chip2({
+var MenuContext = (0, import_react10.createContext)(null);
+function useMenu() {
+  const context = (0, import_react10.useContext)(MenuContext);
+  if (!context) {
+    throw new Error("useMenu must be used within a <Menu /> component");
+  }
+  return context;
+}
+function Menu({
+  children,
+  open: controlledOpen,
+  onOpenChange,
+  defaultOpen = false
+}) {
+  const [uncontrolledOpen, setUncontrolledOpen] = (0, import_react10.useState)(defaultOpen);
+  const triggerRef = (0, import_react10.useRef)(null);
+  const contentRef = (0, import_react10.useRef)(null);
+  const menuId = (0, import_react10.useId)();
+  const isControlled = controlledOpen !== void 0;
+  const isOpen = isControlled ? controlledOpen : uncontrolledOpen;
+  const setIsOpen = (0, import_react10.useCallback)(
+    (action) => {
+      const nextOpen = typeof action === "function" ? action(isOpen) : action;
+      if (!isControlled) {
+        setUncontrolledOpen(nextOpen);
+      }
+      onOpenChange?.(nextOpen);
+    },
+    [isControlled, isOpen, onOpenChange]
+  );
+  const closeMenu = (0, import_react10.useCallback)(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
+  const toggleMenu = (0, import_react10.useCallback)(() => {
+    setIsOpen((prev) => !prev);
+  }, [setIsOpen]);
+  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+    MenuContext.Provider,
+    {
+      value: {
+        isOpen,
+        setIsOpen,
+        triggerRef,
+        contentRef,
+        menuId,
+        closeMenu,
+        toggleMenu
+      },
+      children
+    }
+  );
+}
+var MenuTrigger = import_react10.default.forwardRef(
+  ({ asChild = false, children, onClick, ...props }, forwardedRef) => {
+    const { isOpen, toggleMenu, triggerRef, menuId } = useMenu();
+    const handleClick = (e) => {
+      e.stopPropagation();
+      onClick?.(e);
+      if (!e.defaultPrevented) {
+        toggleMenu();
+      }
+    };
+    const handleRef = (node) => {
+      triggerRef.current = node;
+      if (typeof forwardedRef === "function") {
+        forwardedRef(node);
+      } else if (forwardedRef) {
+        forwardedRef.current = node;
+      }
+    };
+    if (asChild && import_react10.default.isValidElement(children)) {
+      const child = children;
+      return import_react10.default.cloneElement(child, {
+        ref: handleRef,
+        onClick: (e) => {
+          child.props.onClick?.(e);
+          handleClick(e);
+        },
+        "aria-expanded": isOpen,
+        "aria-haspopup": "menu",
+        "aria-controls": isOpen ? menuId : void 0
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      "button",
+      {
+        ref: handleRef,
+        type: "button",
+        onClick: handleClick,
+        "aria-expanded": isOpen,
+        "aria-haspopup": "menu",
+        "aria-controls": isOpen ? menuId : void 0,
+        ...props,
+        children
+      }
+    );
+  }
+);
+MenuTrigger.displayName = "MenuTrigger";
+var MenuContent = import_react10.default.forwardRef(
+  ({
+    align = "end",
+    side = "bottom",
+    sideOffset = 4,
+    width = "auto",
+    portal = true,
+    className = "",
+    style,
+    children,
+    ...props
+  }, forwardedRef) => {
+    const { isOpen, closeMenu, triggerRef, contentRef, menuId } = useMenu();
+    const [mounted, setMounted] = (0, import_react10.useState)(false);
+    const [positionStyle, setPositionStyle] = (0, import_react10.useState)({});
+    (0, import_react10.useEffect)(() => {
+      setMounted(true);
+    }, []);
+    const updatePosition = (0, import_react10.useCallback)(() => {
+      if (!triggerRef.current || typeof window === "undefined") return;
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const viewportPadding = 8;
+      const windowWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
+      const windowHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
+      let top = 0;
+      let left = 0;
+      if (side === "bottom") {
+        top = triggerRect.bottom + sideOffset;
+        if (top + 160 > windowHeight) {
+          top = triggerRect.top - sideOffset;
+        }
+      } else if (side === "top") {
+        top = triggerRect.top - sideOffset;
+      } else if (side === "left" || side === "right") {
+        top = triggerRect.top;
+      }
+      if (align === "end") {
+        left = triggerRect.right;
+      } else if (align === "start") {
+        left = triggerRect.left;
+      } else {
+        left = triggerRect.left + triggerRect.width / 2;
+      }
+      const isRightHalf = left > windowWidth / 2;
+      let calculatedStyle = {
+        position: "fixed",
+        zIndex: 1e4,
+        margin: 0,
+        width: typeof width === "number" ? `${width}px` : width,
+        maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,
+        ...style
+      };
+      if (side === "bottom") {
+        if (top + 160 > windowHeight) {
+          calculatedStyle.bottom = `${windowHeight - triggerRect.top + sideOffset}px`;
+          calculatedStyle.top = "auto";
+        } else {
+          calculatedStyle.top = `${top}px`;
+          calculatedStyle.bottom = "auto";
+        }
+      } else if (side === "top") {
+        calculatedStyle.bottom = `${windowHeight - triggerRect.top + sideOffset}px`;
+        calculatedStyle.top = "auto";
+      } else {
+        calculatedStyle.top = `${top}px`;
+      }
+      if (align === "end") {
+        const rightOffset = windowWidth - triggerRect.right;
+        calculatedStyle.right = `${Math.max(viewportPadding, rightOffset)}px`;
+        calculatedStyle.left = "auto";
+      } else if (align === "start") {
+        calculatedStyle.left = `${Math.max(viewportPadding, left)}px`;
+        calculatedStyle.right = "auto";
+      } else {
+        calculatedStyle.left = `${Math.max(viewportPadding, left)}px`;
+        calculatedStyle.transform = "translateX(-50%)";
+        calculatedStyle.right = "auto";
+      }
+      setPositionStyle(calculatedStyle);
+    }, [triggerRef, align, side, sideOffset, width, style]);
+    (0, import_react10.useEffect)(() => {
+      if (isOpen) {
+        updatePosition();
+        window.addEventListener("resize", updatePosition);
+        window.addEventListener("scroll", updatePosition, true);
+      }
+      return () => {
+        window.removeEventListener("resize", updatePosition);
+        window.removeEventListener("scroll", updatePosition, true);
+      };
+    }, [isOpen, updatePosition]);
+    (0, import_react10.useEffect)(() => {
+      if (!isOpen) return;
+      const handlePointerDown = (event) => {
+        const target = event.target;
+        if (contentRef.current?.contains(target)) {
+          return;
+        }
+        if (triggerRef.current?.contains(target)) {
+          return;
+        }
+        closeMenu();
+      };
+      const handleKeyDown = (event) => {
+        if (event.key === "Escape") {
+          closeMenu();
+          triggerRef.current?.focus();
+        }
+      };
+      document.addEventListener("mousedown", handlePointerDown);
+      document.addEventListener("touchstart", handlePointerDown);
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("mousedown", handlePointerDown);
+        document.removeEventListener("touchstart", handlePointerDown);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [isOpen, closeMenu, contentRef, triggerRef]);
+    if (!isOpen) return null;
+    const handleRef = (node) => {
+      contentRef.current = node;
+      if (typeof forwardedRef === "function") {
+        forwardedRef(node);
+      } else if (forwardedRef) {
+        forwardedRef.current = node;
+      }
+    };
+    const contentNode = /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      "div",
+      {
+        ref: handleRef,
+        id: menuId,
+        role: "menu",
+        "aria-orientation": "vertical",
+        tabIndex: -1,
+        className: `rv-popoverContainer rv-popoverMenu ${className}`.trim(),
+        style: positionStyle,
+        onClick: (e) => e.stopPropagation(),
+        ...props,
+        children
+      }
+    );
+    if (portal && mounted && typeof document !== "undefined") {
+      return (0, import_react_dom3.createPortal)(contentNode, document.body);
+    }
+    return contentNode;
+  }
+);
+MenuContent.displayName = "MenuContent";
+var MenuItem = import_react10.default.forwardRef(
+  ({ preventClose = false, className = "", children, onClick, disabled, ...props }, ref) => {
+    const { closeMenu } = useMenu();
+    const handleClick = (e) => {
+      if (disabled) return;
+      onClick?.(e);
+      if (!preventClose && !e.defaultPrevented) {
+        closeMenu();
+      }
+    };
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      "button",
+      {
+        ref,
+        type: "button",
+        role: "menuitem",
+        disabled,
+        className: `rv-listItem ${className}`.trim(),
+        onClick: handleClick,
+        ...props,
+        children
+      }
+    );
+  }
+);
+MenuItem.displayName = "MenuItem";
+
+// src/components/ui/Chip.tsx
+var import_react11 = require("react");
+var import_jsx_runtime12 = require("react/jsx-runtime");
+var Chip = (0, import_react11.forwardRef)(function Chip2({
   active = false,
   icon,
   children,
@@ -855,7 +1138,7 @@ var Chip = (0, import_react10.forwardRef)(function Chip2({
   type = "button",
   ...props
 }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
     "button",
     {
       ref,
@@ -863,20 +1146,20 @@ var Chip = (0, import_react10.forwardRef)(function Chip2({
       className: `rv-chip ${active ? "rv-chipActive" : ""} ${className}`.trim(),
       ...props,
       children: [
-        icon && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { className: "rv-chipIcon", children: icon }),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("span", { children })
+        icon && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { className: "rv-chipIcon", children: icon }),
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("span", { children })
       ]
     }
   );
 });
-var ChipGroup = (0, import_react10.forwardRef)(function ChipGroup2({ children, className = "", ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
+var ChipGroup = (0, import_react11.forwardRef)(function ChipGroup2({ children, className = "", ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
 });
 
 // src/components/ui/Dropzone.tsx
-var import_react11 = require("react");
-var import_jsx_runtime12 = require("react/jsx-runtime");
-var Dropzone = (0, import_react11.forwardRef)(function Dropzone2({
+var import_react12 = require("react");
+var import_jsx_runtime13 = require("react/jsx-runtime");
+var Dropzone = (0, import_react12.forwardRef)(function Dropzone2({
   onDropFiles,
   title = "Drag and drop media here",
   hint = "or click to browse files",
@@ -888,9 +1171,9 @@ var Dropzone = (0, import_react11.forwardRef)(function Dropzone2({
   children,
   ...props
 }, ref) {
-  const [isDragging, setIsDragging] = (0, import_react11.useState)(false);
-  const inputRef = (0, import_react11.useRef)(null);
-  (0, import_react11.useImperativeHandle)(ref, () => ({
+  const [isDragging, setIsDragging] = (0, import_react12.useState)(false);
+  const inputRef = (0, import_react12.useRef)(null);
+  (0, import_react12.useImperativeHandle)(ref, () => ({
     open: () => {
       if (!disabled) {
         inputRef.current?.click();
@@ -923,7 +1206,7 @@ var Dropzone = (0, import_react11.forwardRef)(function Dropzone2({
       onDropFiles?.(e.target.files);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
     "div",
     {
       onClick: () => {
@@ -939,7 +1222,7 @@ var Dropzone = (0, import_react11.forwardRef)(function Dropzone2({
       tabIndex: 0,
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
           "input",
           {
             ref: inputRef,
@@ -951,10 +1234,10 @@ var Dropzone = (0, import_react11.forwardRef)(function Dropzone2({
             style: { display: "none" }
           }
         ),
-        children ? children : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
-          icon && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "rv-dropzoneIcon", children: icon }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "rv-dropzoneTitle", children: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("div", { className: "rv-dropzoneHint", children: hint })
+        children ? children : /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(import_jsx_runtime13.Fragment, { children: [
+          icon && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-dropzoneIcon", children: icon }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-dropzoneTitle", children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-dropzoneHint", children: hint })
         ] })
       ]
     }
@@ -962,9 +1245,9 @@ var Dropzone = (0, import_react11.forwardRef)(function Dropzone2({
 });
 
 // src/components/ui/MediaCard.tsx
-var import_react12 = require("react");
-var import_jsx_runtime13 = require("react/jsx-runtime");
-var MediaCard = (0, import_react12.forwardRef)(function MediaCard2({
+var import_react13 = require("react");
+var import_jsx_runtime14 = require("react/jsx-runtime");
+var MediaCard = (0, import_react13.forwardRef)(function MediaCard2({
   src,
   alt = "Media thumbnail",
   variant = "tile",
@@ -978,7 +1261,7 @@ var MediaCard = (0, import_react12.forwardRef)(function MediaCard2({
   ...props
 }, ref) {
   const isList = variant === "list";
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
     "div",
     {
       ref,
@@ -987,14 +1270,14 @@ var MediaCard = (0, import_react12.forwardRef)(function MediaCard2({
       tabIndex: 0,
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "rv-mediaCardThumbWrapper", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("img", { src, alt, className: "rv-mediaCardThumb" }),
-          badge && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
-          !isList && overlay && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardOverlay", children: overlay })
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "rv-mediaCardThumbWrapper", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("img", { src, alt, className: "rv-mediaCardThumb" }),
+          badge && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
+          !isList && overlay && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardOverlay", children: overlay })
         ] }),
-        (title || subtitle || children) && /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)("div", { className: "rv-mediaCardContent", children: [
-          title && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardTitle", children: title }),
-          subtitle && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
+        (title || subtitle || children) && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "rv-mediaCardContent", children: [
+          title && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardTitle", children: title }),
+          subtitle && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
           children
         ] })
       ]
@@ -1003,8 +1286,8 @@ var MediaCard = (0, import_react12.forwardRef)(function MediaCard2({
 });
 
 // src/components/ui/SplitButton.tsx
-var import_react13 = __toESM(require("react"));
-var import_jsx_runtime14 = require("react/jsx-runtime");
+var import_react14 = __toESM(require("react"));
+var import_jsx_runtime15 = require("react/jsx-runtime");
 var VARIANT_CLASS_MAP = {
   primary: "rv-btnPrimary",
   secondary: "rv-btnSecondary",
@@ -1012,7 +1295,7 @@ var VARIANT_CLASS_MAP = {
   danger: "rv-btnDanger",
   ghost: "rv-btnGhost"
 };
-var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
   "svg",
   {
     width: "14",
@@ -1024,13 +1307,13 @@ var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
     strokeLinecap: "round",
     strokeLinejoin: "round",
     style: { display: "block" },
-    children: /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("path", { d: "m6 9 6 6 6-6" })
+    children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("path", { d: "m6 9 6 6 6-6" })
   }
 );
-var SplitButtonMain = (0, import_react13.forwardRef)(
+var SplitButtonMain = (0, import_react14.forwardRef)(
   function SplitButtonMain2({ variant = "primary", className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
       "button",
       {
         ref,
@@ -1042,22 +1325,22 @@ var SplitButtonMain = (0, import_react13.forwardRef)(
     );
   }
 );
-var SplitButtonToggle = (0, import_react13.forwardRef)(
+var SplitButtonToggle = (0, import_react14.forwardRef)(
   function SplitButtonToggle2({ variant = "primary", isActive = false, className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
       "button",
       {
         ref,
         type: "button",
         className: `rv-btn rv-btnIcon ${variantClass} rv-splitBtnToggle ${isActive ? "rv-btnActive" : ""} ${className}`.trim(),
         ...props,
-        children: children || /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(DefaultChevronDown, {})
+        children: children || /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DefaultChevronDown, {})
       }
     );
   }
 );
-var SplitButton = (0, import_react13.forwardRef)(
+var SplitButton = (0, import_react14.forwardRef)(
   function SplitButton2({
     variant = "primary",
     disabled = false,
@@ -1072,15 +1355,15 @@ var SplitButton = (0, import_react13.forwardRef)(
     children,
     ...props
   }, ref) {
-    const isCustomChildren = import_react13.default.Children.count(children) > 1;
-    return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+    const isCustomChildren = import_react14.default.Children.count(children) > 1;
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
       "div",
       {
         ref,
         className: `rv-splitBtn ${className}`.trim(),
         ...props,
-        children: isCustomChildren ? children : /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+        children: isCustomChildren ? children : /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
             SplitButtonMain,
             {
               variant,
@@ -1089,11 +1372,11 @@ var SplitButton = (0, import_react13.forwardRef)(
               "aria-label": actionAriaLabel,
               children: [
                 actionIcon,
-                children && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { children })
+                children && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { children })
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
             SplitButtonToggle,
             {
               variant,
@@ -1124,6 +1407,10 @@ var SplitButton = (0, import_react13.forwardRef)(
   EmptyState,
   MainContent,
   MediaCard,
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuTrigger,
   Modal,
   ModalBody,
   ModalDescription,
@@ -1147,6 +1434,7 @@ var SplitButton = (0, import_react13.forwardRef)(
   Topbar,
   TopbarLeft,
   TopbarLogo,
-  TopbarRight
+  TopbarRight,
+  useMenu
 });
 //# sourceMappingURL=index.js.map
