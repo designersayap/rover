@@ -65,17 +65,19 @@
     animation: popoverIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Popover Menu & Dropdown Menus: Padded container for list items with hover/active states */
+/* Popover Menu & Dropdown Menus: Edge-to-edge container for list items with zero border-radius */
 .rv-popoverMenu {
-    padding: 8px 6px;
+    padding: 6px 0;
     display: flex;
     flex-direction: column;
-    gap: var(--rv-space-xs);
+    gap: 0;
     box-sizing: border-box;
 }
 
 .rv-popoverMenu .rv-listItem {
     margin-bottom: 0;
+    border-radius: 0;
+    padding: 8px var(--rv-space-md);
 }
 
 .rv-popoverMenu .rv-listItemLabel,
@@ -89,15 +91,17 @@
 .rv-popoverGroup {
     display: flex;
     flex-direction: column;
-    gap: var(--rv-space-xs);
+    gap: 0;
 }
 
 .rv-popoverGroup:not(:first-child) {
     margin-top: 6px;
+    border-top: 1px solid var(--rv-bdr);
+    padding-top: 6px;
 }
 
 .rv-popoverGroupTitle {
-    padding: 6px 8px;
+    padding: 6px var(--rv-space-md);
     color: var(--rv-neutral-100);
     font-size: 10px;
     font-weight: 600;
