@@ -77,19 +77,19 @@
 .rv-popoverMenu .rv-listItem {
     margin-bottom: 0;
     border-radius: 0;
-    padding: 8px var(--rv-space-md);
+    padding: var(--rv-space-md);
 }
 
-.rv-popoverMenu > .rv-listItem:first-child,
-.rv-popoverMenu > *:first-child > .rv-listItem:first-child,
-.rv-popoverMenu > *:first-child.rv-listItem {
+.rv-popoverMenu>.rv-listItem:first-child,
+.rv-popoverMenu>*:first-child>.rv-listItem:first-child,
+.rv-popoverMenu>*:first-child.rv-listItem {
     border-top-left-radius: calc(var(--rv-radius-lg) - 1px);
     border-top-right-radius: calc(var(--rv-radius-lg) - 1px);
 }
 
-.rv-popoverMenu > .rv-listItem:last-child,
-.rv-popoverMenu > *:last-child > .rv-listItem:last-child,
-.rv-popoverMenu > *:last-child.rv-listItem {
+.rv-popoverMenu>.rv-listItem:last-child,
+.rv-popoverMenu>*:last-child>.rv-listItem:last-child,
+.rv-popoverMenu>*:last-child.rv-listItem {
     border-bottom-left-radius: calc(var(--rv-radius-lg) - 1px);
     border-bottom-right-radius: calc(var(--rv-radius-lg) - 1px);
 }
