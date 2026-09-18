@@ -291,7 +291,42 @@ import { Topbar, TopbarLeft, TopbarRight, TopbarLogo } from 'rover';
 
 ---
 
-### 3.5 Overlays (`Popover`, `Tooltip`)
+### 3.5 Overlays (`Menu`, `Popover`, `Tooltip`, `Modal`, `Dialog`)
+
+#### Overlay Selection Rule: `Menu` vs `Popover`
+- **Use `Menu` (`Menu`, `MenuTrigger`, `MenuContent`, `MenuItem`)**: Strictly for lists of actions and commands (*Rename, Duplicate, Delete*). Automatically executes the action and closes on item click.
+- **Use `Popover` (`Popover`, `PopoverHeader`, `PopoverContent`)**: For floating forms, rich dialogs, and interactive widgets (*New Staging Page, Color Pickers*). Stays open while typing and interacting inside.
+- **Interaction Standards**: Both must toggle cleanly on trigger click (no `mousedown` race conditions), dismiss on click-outside (while ignoring trigger button clicks), dismiss on `Escape`, and clamp to viewport boundaries.
+
+#### Menu (Compound Action Menu)
+Standardized action menu with built-in trigger management, edge-collision detection, and outside-click handling.
+
+```tsx
+import {
+  Menu,
+  MenuTrigger,
+  MenuContent,
+  MenuItem,
+} from 'rover';
+
+<Menu>
+  <MenuTrigger asChild>
+    <button type="button" className="rv-btn rv-btnGhost rv-btnIcon">
+      <MoreHorizontal className="rv-iconSm" />
+    </button>
+  </MenuTrigger>
+  <MenuContent align="end" side="bottom" width={140}>
+    <MenuItem onClick={handleRename}>
+      <Pencil className="rv-iconXs" />
+      <span>Rename</span>
+    </MenuItem>
+    <MenuItem onClick={handleDelete} className="rv-textDanger">
+      <Trash2 className="rv-iconXs" />
+      <span>Delete</span>
+    </MenuItem>
+  </MenuContent>
+</Menu>
+```
 
 #### Popover
 Floating portal dialog with automatic center alignment or anchor-based positioning with screen edge overflow protection.
