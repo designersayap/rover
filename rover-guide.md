@@ -328,32 +328,38 @@ import {
 </Menu>
 ```
 
-#### Popover
-Floating portal dialog with automatic center alignment or anchor-based positioning with screen edge overflow protection.
+#### Popover (Rich Form & Dialog Overlays)
+Standardized compound floating container for interactive forms, inputs, and rich widgets with automatic anchor positioning, smart screen edge clamping, and outside-click dismissal.
 
 ```tsx
 import {
   Popover,
+  PopoverTrigger,
+  PopoverContent,
   PopoverHeader,
   PopoverTitle,
-  PopoverContent
 } from 'rover';
 
-<Popover
-  isOpen={isOpen}
-  onClose={() => setIsOpen(false)}
-  position={anchorRect ? { top: anchorRect.bottom + 8, left: anchorRect.left } : null}
-  centerByDefault={true} // Centers on screen if position is null
-  width={362}
->
-  <PopoverHeader>
-    <PopoverTitle>Export Code</PopoverTitle>
-    <button type="button" className="rv-btn rv-btnGhost rv-btnIcon" onClick={() => setIsOpen(false)}>
-      ✕
+<Popover>
+  {/* 1. Trigger (Rover manages toggle and aria-expanded) */}
+  <PopoverTrigger asChild>
+    <button className="rv-btn rv-btnSecondary">
+      <span>Export</span>
+      <ChevronDown className="rv-iconXs" />
     </button>
-  </PopoverHeader>
-  <PopoverContent>
-    {/* Dialog Content */}
+  </PopoverTrigger>
+
+  {/* 2. Content (Fully customizable forms, inputs, and actions) */}
+  <PopoverContent align="end" side="bottom" width={320}>
+    <PopoverHeader>
+      <PopoverTitle>New Staging Page</PopoverTitle>
+    </PopoverHeader>
+    <div className="rv-pSm">
+      <input type="text" placeholder="folder-name" className="rv-formInput" />
+      <button type="button" className="rv-btn rv-btnBrand rv-wFull rv-mtSm">
+        Create Staging
+      </button>
+    </div>
   </PopoverContent>
 </Popover>
 ```

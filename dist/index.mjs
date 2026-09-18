@@ -317,11 +317,30 @@ var TopbarLogo = React5.forwardRef(
 TopbarLogo.displayName = "TopbarLogo";
 
 // src/components/overlays/Popover.tsx
-import React6 from "react";
-import { Fragment, jsx as jsx7, jsxs as jsxs3 } from "react/jsx-runtime";
+import React6, {
+  createContext,
+  useContext,
+  useState as useState2,
+  useRef,
+  useEffect as useEffect2,
+  useCallback as useCallback2,
+  useId
+} from "react";
+import { createPortal } from "react-dom";
+import { jsx as jsx7, jsxs as jsxs3 } from "react/jsx-runtime";
+var PopoverContext = createContext(null);
+function usePopover() {
+  const context = useContext(PopoverContext);
+  return context;
+}
 var Popover = React6.forwardRef(
   ({
-    isOpen = true,
+    // Compound props
+    open: controlledOpen,
+    onOpenChange,
+    defaultOpen = false,
+    // Legacy props
+    isOpen: legacyIsOpen,
     onClose,
     position,
     centerByDefault = true,
@@ -334,6 +353,45 @@ var Popover = React6.forwardRef(
     style,
     ...props
   }, ref) => {
+    const isExplicitLegacy = legacyIsOpen !== void 0 || position !== void 0 || onClose !== void 0;
+    const [uncontrolledOpen, setUncontrolledOpen] = useState2(defaultOpen);
+    const triggerRef = useRef(null);
+    const contentRef = useRef(null);
+    const popoverId = useId();
+    const isControlled = controlledOpen !== void 0;
+    const isOpen = isControlled ? controlledOpen : isExplicitLegacy ? Boolean(legacyIsOpen) : uncontrolledOpen;
+    const setIsOpen = useCallback2(
+      (action) => {
+        const nextOpen = typeof action === "function" ? action(isOpen) : action;
+        if (!isControlled && !isExplicitLegacy) {
+          setUncontrolledOpen(nextOpen);
+        }
+        onOpenChange?.(nextOpen);
+        if (!nextOpen && onClose) {
+          onClose();
+        }
+      },
+      [isControlled, isExplicitLegacy, isOpen, onOpenChange, onClose]
+    );
+    const closePopover = useCallback2(() => {
+      setIsOpen(false);
+    }, [setIsOpen]);
+    const togglePopover = useCallback2(() => {
+      setIsOpen((prev) => !prev);
+    }, [setIsOpen]);
+    const contextValue = {
+      isOpen,
+      setIsOpen,
+      triggerRef,
+      contentRef,
+      popoverId,
+      closePopover,
+      togglePopover,
+      isCompound: !isExplicitLegacy
+    };
+    if (!isExplicitLegacy) {
+      return /* @__PURE__ */ jsx7(PopoverContext.Provider, { value: contextValue, children });
+    }
     if (!isOpen) return null;
     const isMenuVariant = variant === "menu";
     let popoverStyle = centerByDefault ? {
@@ -379,7 +437,7 @@ var Popover = React6.forwardRef(
         };
       }
     }
-    return /* @__PURE__ */ jsxs3(Fragment, { children: [
+    return /* @__PURE__ */ jsxs3(PopoverContext.Provider, { value: contextValue, children: [
       /* @__PURE__ */ jsx7(
         "div",
         {
@@ -407,6 +465,213 @@ var Popover = React6.forwardRef(
   }
 );
 Popover.displayName = "Popover";
+var PopoverTrigger = React6.forwardRef(
+  ({ asChild = false, children, onClick, ...props }, forwardedRef) => {
+    const context = usePopover();
+    const isOpen = context?.isOpen ?? false;
+    const togglePopover = context?.togglePopover ?? (() => {
+    });
+    const triggerRef = context?.triggerRef;
+    const popoverId = context?.popoverId ?? "";
+    const handleClick = (e) => {
+      e.stopPropagation();
+      onClick?.(e);
+      if (!e.defaultPrevented) {
+        togglePopover();
+      }
+    };
+    const handleRef = (node) => {
+      if (triggerRef) {
+        triggerRef.current = node;
+      }
+      if (typeof forwardedRef === "function") {
+        forwardedRef(node);
+      } else if (forwardedRef) {
+        forwardedRef.current = node;
+      }
+    };
+    if (asChild && React6.isValidElement(children)) {
+      const child = children;
+      return React6.cloneElement(child, {
+        ref: handleRef,
+        onClick: (e) => {
+          child.props.onClick?.(e);
+          handleClick(e);
+        },
+        "aria-expanded": isOpen,
+        "aria-haspopup": "dialog",
+        "aria-controls": isOpen ? popoverId : void 0
+      });
+    }
+    return /* @__PURE__ */ jsx7(
+      "button",
+      {
+        ref: handleRef,
+        type: "button",
+        onClick: handleClick,
+        "aria-expanded": isOpen,
+        "aria-haspopup": "dialog",
+        "aria-controls": isOpen ? popoverId : void 0,
+        ...props,
+        children
+      }
+    );
+  }
+);
+PopoverTrigger.displayName = "PopoverTrigger";
+var PopoverContent = React6.forwardRef(
+  ({
+    align = "end",
+    side = "bottom",
+    sideOffset = 6,
+    width = "auto",
+    portal = true,
+    className = "",
+    style,
+    children,
+    ...props
+  }, forwardedRef) => {
+    const context = usePopover();
+    const isOpen = context?.isOpen ?? true;
+    const closePopover = context?.closePopover ?? (() => {
+    });
+    const triggerRef = context?.triggerRef;
+    const contentRef = context?.contentRef;
+    const popoverId = context?.popoverId ?? "";
+    const [mounted, setMounted] = useState2(false);
+    const [positionStyle, setPositionStyle] = useState2({});
+    useEffect2(() => {
+      setMounted(true);
+    }, []);
+    const updatePosition = useCallback2(() => {
+      if (!triggerRef?.current || typeof window === "undefined") return;
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const viewportPadding = 8;
+      const windowWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
+      const windowHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
+      let top = 0;
+      let left = 0;
+      if (side === "bottom") {
+        top = triggerRect.bottom + sideOffset;
+      } else if (side === "top") {
+        top = triggerRect.top - sideOffset;
+      } else {
+        top = triggerRect.top;
+      }
+      if (align === "end") {
+        left = triggerRect.right;
+      } else if (align === "start") {
+        left = triggerRect.left;
+      } else {
+        left = triggerRect.left + triggerRect.width / 2;
+      }
+      let calculatedStyle = {
+        position: "fixed",
+        zIndex: 1e4,
+        margin: 0,
+        width: typeof width === "number" ? `${width}px` : width,
+        maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,
+        ...style
+      };
+      if (side === "bottom") {
+        if (top + 240 > windowHeight) {
+          calculatedStyle.bottom = `${windowHeight - triggerRect.top + sideOffset}px`;
+          calculatedStyle.top = "auto";
+        } else {
+          calculatedStyle.top = `${top}px`;
+          calculatedStyle.bottom = "auto";
+        }
+      } else if (side === "top") {
+        calculatedStyle.bottom = `${windowHeight - triggerRect.top + sideOffset}px`;
+        calculatedStyle.top = "auto";
+      } else {
+        calculatedStyle.top = `${top}px`;
+      }
+      if (align === "end") {
+        const rightOffset = windowWidth - triggerRect.right;
+        calculatedStyle.right = `${Math.max(viewportPadding, rightOffset)}px`;
+        calculatedStyle.left = "auto";
+      } else if (align === "start") {
+        calculatedStyle.left = `${Math.max(viewportPadding, left)}px`;
+        calculatedStyle.right = "auto";
+      } else {
+        calculatedStyle.left = `${Math.max(viewportPadding, left)}px`;
+        calculatedStyle.transform = "translateX(-50%)";
+        calculatedStyle.right = "auto";
+      }
+      setPositionStyle(calculatedStyle);
+    }, [triggerRef, align, side, sideOffset, width, style]);
+    useEffect2(() => {
+      if (isOpen && triggerRef?.current) {
+        updatePosition();
+        window.addEventListener("resize", updatePosition);
+        window.addEventListener("scroll", updatePosition, true);
+      }
+      return () => {
+        window.removeEventListener("resize", updatePosition);
+        window.removeEventListener("scroll", updatePosition, true);
+      };
+    }, [isOpen, triggerRef, updatePosition]);
+    useEffect2(() => {
+      if (!isOpen) return;
+      const handlePointerDown = (event) => {
+        const target = event.target;
+        if (contentRef?.current?.contains(target)) {
+          return;
+        }
+        if (triggerRef?.current?.contains(target)) {
+          return;
+        }
+        closePopover();
+      };
+      const handleKeyDown = (event) => {
+        if (event.key === "Escape") {
+          closePopover();
+          triggerRef?.current?.focus();
+        }
+      };
+      document.addEventListener("mousedown", handlePointerDown);
+      document.addEventListener("touchstart", handlePointerDown);
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("mousedown", handlePointerDown);
+        document.removeEventListener("touchstart", handlePointerDown);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [isOpen, closePopover, contentRef, triggerRef]);
+    if (!isOpen) return null;
+    const handleRef = (node) => {
+      if (contentRef) {
+        contentRef.current = node;
+      }
+      if (typeof forwardedRef === "function") {
+        forwardedRef(node);
+      } else if (forwardedRef) {
+        forwardedRef.current = node;
+      }
+    };
+    const contentNode = /* @__PURE__ */ jsx7(
+      "div",
+      {
+        ref: handleRef,
+        id: popoverId,
+        role: "dialog",
+        "aria-modal": "true",
+        tabIndex: -1,
+        className: `rv-popoverContainer ${className}`.trim(),
+        style: triggerRef?.current ? positionStyle : style,
+        onClick: (e) => e.stopPropagation(),
+        ...props,
+        children
+      }
+    );
+    if (portal && mounted && typeof document !== "undefined") {
+      return createPortal(contentNode, document.body);
+    }
+    return contentNode;
+  }
+);
+PopoverContent.displayName = "PopoverContent";
 var PopoverHeader = React6.forwardRef(
   ({ children, className = "", ...props }, ref) => {
     return /* @__PURE__ */ jsx7("div", { ref, className: `rv-popoverHeader ${className}`.trim(), ...props, children });
@@ -419,21 +684,15 @@ var PopoverTitle = React6.forwardRef(
   }
 );
 PopoverTitle.displayName = "PopoverTitle";
-var PopoverContent = React6.forwardRef(
-  ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ jsx7("div", { ref, className: `rv-popoverContent ${className}`.trim(), ...props, children });
-  }
-);
-PopoverContent.displayName = "PopoverContent";
 var PopoverMenu = React6.forwardRef(
   ({ variant = "menu", ...props }, ref) => /* @__PURE__ */ jsx7(Popover, { ref, variant, ...props })
 );
 PopoverMenu.displayName = "PopoverMenu";
 
 // src/components/overlays/Tooltip.tsx
-import { useState as useState2, useRef, useEffect as useEffect2 } from "react";
-import { createPortal } from "react-dom";
-import { Fragment as Fragment2, jsx as jsx8, jsxs as jsxs4 } from "react/jsx-runtime";
+import { useState as useState3, useRef as useRef2, useEffect as useEffect3 } from "react";
+import { createPortal as createPortal2 } from "react-dom";
+import { Fragment, jsx as jsx8, jsxs as jsxs4 } from "react/jsx-runtime";
 var Tooltip = ({
   content,
   children,
@@ -442,17 +701,17 @@ var Tooltip = ({
   className = "",
   zIndex = 9999
 }) => {
-  const [isVisible, setIsVisible] = useState2(false);
-  const [tooltipStyle, setTooltipStyle] = useState2({
+  const [isVisible, setIsVisible] = useState3(false);
+  const [tooltipStyle, setTooltipStyle] = useState3({
     top: -9999,
     left: -9999,
     opacity: 0
   });
-  const triggerRef = useRef(null);
-  const tooltipRef = useRef(null);
-  const timeoutRef = useRef(null);
-  const [mounted, setMounted] = useState2(false);
-  useEffect2(() => setMounted(true), []);
+  const triggerRef = useRef2(null);
+  const tooltipRef = useRef2(null);
+  const timeoutRef = useRef2(null);
+  const [mounted, setMounted] = useState3(false);
+  useEffect3(() => setMounted(true), []);
   const updatePosition = () => {
     if (!triggerRef.current || !tooltipRef.current || !isVisible) return;
     let triggerEl = triggerRef.current;
@@ -498,7 +757,7 @@ var Tooltip = ({
       transition: "opacity 0.15s ease"
     });
   };
-  useEffect2(() => {
+  useEffect3(() => {
     if (isVisible) {
       updatePosition();
       window.addEventListener("scroll", updatePosition, true);
@@ -519,8 +778,8 @@ var Tooltip = ({
     setIsVisible(false);
     setTooltipStyle({ top: -9999, left: -9999, opacity: 0 });
   };
-  if (!content) return /* @__PURE__ */ jsx8(Fragment2, { children });
-  return /* @__PURE__ */ jsxs4(Fragment2, { children: [
+  if (!content) return /* @__PURE__ */ jsx8(Fragment, { children });
+  return /* @__PURE__ */ jsxs4(Fragment, { children: [
     /* @__PURE__ */ jsx8(
       "div",
       {
@@ -531,7 +790,7 @@ var Tooltip = ({
         children
       }
     ),
-    mounted && isVisible && createPortal(
+    mounted && isVisible && createPortal2(
       /* @__PURE__ */ jsx8(
         "div",
         {
@@ -548,8 +807,8 @@ var Tooltip = ({
 };
 
 // src/components/overlays/Modal.tsx
-import React8, { useEffect as useEffect3, useState as useState3 } from "react";
-import { createPortal as createPortal2 } from "react-dom";
+import React8, { useEffect as useEffect4, useState as useState4 } from "react";
+import { createPortal as createPortal3 } from "react-dom";
 import { jsx as jsx9, jsxs as jsxs5 } from "react/jsx-runtime";
 var Modal = React8.forwardRef(
   ({
@@ -567,11 +826,11 @@ var Modal = React8.forwardRef(
     style,
     ...props
   }, ref) => {
-    const [mounted, setMounted] = useState3(false);
-    useEffect3(() => {
+    const [mounted, setMounted] = useState4(false);
+    useEffect4(() => {
       setMounted(true);
     }, []);
-    useEffect3(() => {
+    useEffect4(() => {
       if (!isOpen || !closeOnEsc || !onClose) return;
       const handleKeyDown = (e) => {
         if (e.key === "Escape") {
@@ -582,7 +841,7 @@ var Modal = React8.forwardRef(
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
     }, [isOpen, closeOnEsc, onClose]);
-    useEffect3(() => {
+    useEffect4(() => {
       if (!isOpen || typeof document === "undefined") return;
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
@@ -605,7 +864,7 @@ var Modal = React8.forwardRef(
       ...style,
       ...width !== void 0 ? { width: typeof width === "number" ? `${width}px` : width } : {}
     };
-    return createPortal2(
+    return createPortal3(
       /* @__PURE__ */ jsx9(
         "div",
         {
@@ -683,7 +942,7 @@ ModalFooter.displayName = "ModalFooter";
 
 // src/components/overlays/Dialog.tsx
 import React9 from "react";
-import { Fragment as Fragment3, jsx as jsx10, jsxs as jsxs6 } from "react/jsx-runtime";
+import { Fragment as Fragment2, jsx as jsx10, jsxs as jsxs6 } from "react/jsx-runtime";
 var variantClassMap = {
   primary: "rv-btnPrimary",
   brand: "rv-btnBrand",
@@ -715,7 +974,7 @@ var Dialog = React9.forwardRef(
   }, ref) => {
     const computedActionType = actionType || (onSubmit ? "submit" : "button");
     const actionClass = variantClassMap[actionVariant] || "rv-btnPrimary";
-    const dialogInner = /* @__PURE__ */ jsxs6(Fragment3, { children: [
+    const dialogInner = /* @__PURE__ */ jsxs6(Fragment2, { children: [
       /* @__PURE__ */ jsxs6(ModalHeader, { onClose, showCloseButton, children: [
         /* @__PURE__ */ jsx10(ModalTitle, { children: title }),
         children && description && /* @__PURE__ */ jsx10(ModalDescription, { children: description })
@@ -774,19 +1033,19 @@ Dialog.displayName = "Dialog";
 
 // src/components/overlays/Menu.tsx
 import React10, {
-  createContext,
-  useContext,
-  useState as useState4,
-  useRef as useRef2,
-  useEffect as useEffect4,
-  useCallback as useCallback2,
-  useId
+  createContext as createContext2,
+  useContext as useContext2,
+  useState as useState5,
+  useRef as useRef3,
+  useEffect as useEffect5,
+  useCallback as useCallback3,
+  useId as useId2
 } from "react";
-import { createPortal as createPortal3 } from "react-dom";
+import { createPortal as createPortal4 } from "react-dom";
 import { jsx as jsx11 } from "react/jsx-runtime";
-var MenuContext = createContext(null);
+var MenuContext = createContext2(null);
 function useMenu() {
-  const context = useContext(MenuContext);
+  const context = useContext2(MenuContext);
   if (!context) {
     throw new Error("useMenu must be used within a <Menu /> component");
   }
@@ -798,13 +1057,13 @@ function Menu({
   onOpenChange,
   defaultOpen = false
 }) {
-  const [uncontrolledOpen, setUncontrolledOpen] = useState4(defaultOpen);
-  const triggerRef = useRef2(null);
-  const contentRef = useRef2(null);
-  const menuId = useId();
+  const [uncontrolledOpen, setUncontrolledOpen] = useState5(defaultOpen);
+  const triggerRef = useRef3(null);
+  const contentRef = useRef3(null);
+  const menuId = useId2();
   const isControlled = controlledOpen !== void 0;
   const isOpen = isControlled ? controlledOpen : uncontrolledOpen;
-  const setIsOpen = useCallback2(
+  const setIsOpen = useCallback3(
     (action) => {
       const nextOpen = typeof action === "function" ? action(isOpen) : action;
       if (!isControlled) {
@@ -814,10 +1073,10 @@ function Menu({
     },
     [isControlled, isOpen, onOpenChange]
   );
-  const closeMenu = useCallback2(() => {
+  const closeMenu = useCallback3(() => {
     setIsOpen(false);
   }, [setIsOpen]);
-  const toggleMenu = useCallback2(() => {
+  const toggleMenu = useCallback3(() => {
     setIsOpen((prev) => !prev);
   }, [setIsOpen]);
   return /* @__PURE__ */ jsx11(
@@ -896,12 +1155,12 @@ var MenuContent = React10.forwardRef(
     ...props
   }, forwardedRef) => {
     const { isOpen, closeMenu, triggerRef, contentRef, menuId } = useMenu();
-    const [mounted, setMounted] = useState4(false);
-    const [positionStyle, setPositionStyle] = useState4({});
-    useEffect4(() => {
+    const [mounted, setMounted] = useState5(false);
+    const [positionStyle, setPositionStyle] = useState5({});
+    useEffect5(() => {
       setMounted(true);
     }, []);
-    const updatePosition = useCallback2(() => {
+    const updatePosition = useCallback3(() => {
       if (!triggerRef.current || typeof window === "undefined") return;
       const triggerRect = triggerRef.current.getBoundingClientRect();
       const viewportPadding = 8;
@@ -963,7 +1222,7 @@ var MenuContent = React10.forwardRef(
       }
       setPositionStyle(calculatedStyle);
     }, [triggerRef, align, side, sideOffset, width, style]);
-    useEffect4(() => {
+    useEffect5(() => {
       if (isOpen) {
         updatePosition();
         window.addEventListener("resize", updatePosition);
@@ -974,7 +1233,7 @@ var MenuContent = React10.forwardRef(
         window.removeEventListener("scroll", updatePosition, true);
       };
     }, [isOpen, updatePosition]);
-    useEffect4(() => {
+    useEffect5(() => {
       if (!isOpen) return;
       const handlePointerDown = (event) => {
         const target = event.target;
@@ -1026,7 +1285,7 @@ var MenuContent = React10.forwardRef(
       }
     );
     if (portal && mounted && typeof document !== "undefined") {
-      return createPortal3(contentNode, document.body);
+      return createPortal4(contentNode, document.body);
     }
     return contentNode;
   }
@@ -1091,11 +1350,11 @@ var ChipGroup = forwardRef(function ChipGroup2({ children, className = "", ...pr
 // src/components/ui/Dropzone.tsx
 import {
   forwardRef as forwardRef2,
-  useState as useState5,
-  useRef as useRef3,
+  useState as useState6,
+  useRef as useRef4,
   useImperativeHandle
 } from "react";
-import { Fragment as Fragment4, jsx as jsx13, jsxs as jsxs8 } from "react/jsx-runtime";
+import { Fragment as Fragment3, jsx as jsx13, jsxs as jsxs8 } from "react/jsx-runtime";
 var Dropzone = forwardRef2(function Dropzone2({
   onDropFiles,
   title = "Drag and drop media here",
@@ -1108,8 +1367,8 @@ var Dropzone = forwardRef2(function Dropzone2({
   children,
   ...props
 }, ref) {
-  const [isDragging, setIsDragging] = useState5(false);
-  const inputRef = useRef3(null);
+  const [isDragging, setIsDragging] = useState6(false);
+  const inputRef = useRef4(null);
   useImperativeHandle(ref, () => ({
     open: () => {
       if (!disabled) {
@@ -1171,7 +1430,7 @@ var Dropzone = forwardRef2(function Dropzone2({
             style: { display: "none" }
           }
         ),
-        children ? children : /* @__PURE__ */ jsxs8(Fragment4, { children: [
+        children ? children : /* @__PURE__ */ jsxs8(Fragment3, { children: [
           icon && /* @__PURE__ */ jsx13("div", { className: "rv-dropzoneIcon", children: icon }),
           /* @__PURE__ */ jsx13("div", { className: "rv-dropzoneTitle", children: title }),
           /* @__PURE__ */ jsx13("div", { className: "rv-dropzoneHint", children: hint })
@@ -1224,7 +1483,7 @@ var MediaCard = forwardRef3(function MediaCard2({
 
 // src/components/ui/SplitButton.tsx
 import React14, { forwardRef as forwardRef4 } from "react";
-import { Fragment as Fragment5, jsx as jsx15, jsxs as jsxs10 } from "react/jsx-runtime";
+import { Fragment as Fragment4, jsx as jsx15, jsxs as jsxs10 } from "react/jsx-runtime";
 var VARIANT_CLASS_MAP = {
   primary: "rv-btnPrimary",
   secondary: "rv-btnSecondary",
@@ -1299,7 +1558,7 @@ var SplitButton = forwardRef4(
         ref,
         className: `rv-splitBtn ${className}`.trim(),
         ...props,
-        children: isCustomChildren ? children : /* @__PURE__ */ jsxs10(Fragment5, { children: [
+        children: isCustomChildren ? children : /* @__PURE__ */ jsxs10(Fragment4, { children: [
           /* @__PURE__ */ jsxs10(
             SplitButtonMain,
             {
@@ -1358,6 +1617,7 @@ export {
   PopoverHeader,
   PopoverMenu,
   PopoverTitle,
+  PopoverTrigger,
   ResizeHandle,
   Sidebar,
   SidebarBody,
@@ -1371,6 +1631,7 @@ export {
   TopbarLeft,
   TopbarLogo,
   TopbarRight,
-  useMenu
+  useMenu,
+  usePopover
 };
 //# sourceMappingURL=index.mjs.map

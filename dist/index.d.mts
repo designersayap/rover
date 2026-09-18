@@ -115,7 +115,21 @@ interface TopbarLogoProps extends React.HTMLAttributes<HTMLHeadingElement> {
 }
 declare const TopbarLogo: React.ForwardRefExoticComponent<TopbarLogoProps & React.RefAttributes<HTMLHeadingElement>>;
 
+interface PopoverContextValue {
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    triggerRef: React.RefObject<HTMLElement | null>;
+    contentRef: React.RefObject<HTMLDivElement | null>;
+    popoverId: string;
+    closePopover: () => void;
+    togglePopover: () => void;
+    isCompound: boolean;
+}
+declare function usePopover(): PopoverContextValue | null;
 interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
+    defaultOpen?: boolean;
     isOpen?: boolean;
     onClose?: () => void;
     position?: {
@@ -131,6 +145,21 @@ interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
 }
 declare const Popover: React.ForwardRefExoticComponent<PopoverProps & React.RefAttributes<HTMLDivElement>>;
+interface PopoverTriggerProps extends React.HTMLAttributes<HTMLElement> {
+    asChild?: boolean;
+    children: React.ReactNode;
+}
+declare const PopoverTrigger: React.ForwardRefExoticComponent<PopoverTriggerProps & React.RefAttributes<HTMLElement>>;
+interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement> {
+    align?: 'start' | 'end' | 'center';
+    side?: 'bottom' | 'top' | 'left' | 'right';
+    sideOffset?: number;
+    width?: number | string;
+    portal?: boolean;
+    className?: string;
+    children?: React.ReactNode;
+}
+declare const PopoverContent: React.ForwardRefExoticComponent<PopoverContentProps & React.RefAttributes<HTMLDivElement>>;
 interface PopoverHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
     className?: string;
@@ -141,11 +170,6 @@ interface PopoverTitleProps extends React.HTMLAttributes<HTMLSpanElement> {
     className?: string;
 }
 declare const PopoverTitle: React.ForwardRefExoticComponent<PopoverTitleProps & React.RefAttributes<HTMLSpanElement>>;
-interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement> {
-    children?: React.ReactNode;
-    className?: string;
-}
-declare const PopoverContent: React.ForwardRefExoticComponent<PopoverContentProps & React.RefAttributes<HTMLDivElement>>;
 interface PopoverMenuProps extends PopoverProps {
 }
 declare const PopoverMenu: React.ForwardRefExoticComponent<PopoverMenuProps & React.RefAttributes<HTMLDivElement>>;
@@ -345,4 +369,4 @@ interface SplitButtonToggleProps extends ButtonHTMLAttributes<HTMLButtonElement>
 declare const SplitButtonToggle: React.ForwardRefExoticComponent<SplitButtonToggleProps & React.RefAttributes<HTMLButtonElement>>;
 declare const SplitButton: React.ForwardRefExoticComponent<SplitButtonProps & React.RefAttributes<HTMLDivElement>>;
 
-export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, MediaCard, type MediaCardProps, Menu, MenuContent, type MenuContentProps, MenuItem, type MenuItemProps, type MenuProps, MenuTrigger, type MenuTriggerProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, PopoverMenu, type PopoverMenuProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps, useMenu };
+export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, MediaCard, type MediaCardProps, Menu, MenuContent, type MenuContentProps, MenuItem, type MenuItemProps, type MenuProps, MenuTrigger, type MenuTriggerProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, PopoverMenu, type PopoverMenuProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, PopoverTrigger, type PopoverTriggerProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps, useMenu, usePopover };

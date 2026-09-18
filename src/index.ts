@@ -77,18 +77,21 @@ export type {
 // Overlays exports
 export {
   Popover,
-  PopoverMenu,
+  PopoverTrigger,
+  PopoverContent,
   PopoverHeader,
   PopoverTitle,
-  PopoverContent,
+  PopoverMenu,
+  usePopover,
 } from './components/overlays/Popover';
 
 export type {
   PopoverProps,
-  PopoverMenuProps,
+  PopoverTriggerProps,
+  PopoverContentProps,
   PopoverHeaderProps,
   PopoverTitleProps,
-  PopoverContentProps,
+  PopoverMenuProps,
 } from './components/overlays/Popover';
 
 export {

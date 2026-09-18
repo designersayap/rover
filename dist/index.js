@@ -59,6 +59,7 @@ __export(index_exports, {
   PopoverHeader: () => PopoverHeader,
   PopoverMenu: () => PopoverMenu,
   PopoverTitle: () => PopoverTitle,
+  PopoverTrigger: () => PopoverTrigger,
   ResizeHandle: () => ResizeHandle,
   Sidebar: () => Sidebar,
   SidebarBody: () => SidebarBody,
@@ -72,7 +73,8 @@ __export(index_exports, {
   TopbarLeft: () => TopbarLeft,
   TopbarLogo: () => TopbarLogo,
   TopbarRight: () => TopbarRight,
-  useMenu: () => useMenu
+  useMenu: () => useMenu,
+  usePopover: () => usePopover
 });
 module.exports = __toCommonJS(index_exports);
 
@@ -394,10 +396,21 @@ TopbarLogo.displayName = "TopbarLogo";
 
 // src/components/overlays/Popover.tsx
 var import_react6 = __toESM(require("react"));
+var import_react_dom = require("react-dom");
 var import_jsx_runtime7 = require("react/jsx-runtime");
+var PopoverContext = (0, import_react6.createContext)(null);
+function usePopover() {
+  const context = (0, import_react6.useContext)(PopoverContext);
+  return context;
+}
 var Popover = import_react6.default.forwardRef(
   ({
-    isOpen = true,
+    // Compound props
+    open: controlledOpen,
+    onOpenChange,
+    defaultOpen = false,
+    // Legacy props
+    isOpen: legacyIsOpen,
     onClose,
     position,
     centerByDefault = true,
@@ -410,6 +423,45 @@ var Popover = import_react6.default.forwardRef(
     style,
     ...props
   }, ref) => {
+    const isExplicitLegacy = legacyIsOpen !== void 0 || position !== void 0 || onClose !== void 0;
+    const [uncontrolledOpen, setUncontrolledOpen] = (0, import_react6.useState)(defaultOpen);
+    const triggerRef = (0, import_react6.useRef)(null);
+    const contentRef = (0, import_react6.useRef)(null);
+    const popoverId = (0, import_react6.useId)();
+    const isControlled = controlledOpen !== void 0;
+    const isOpen = isControlled ? controlledOpen : isExplicitLegacy ? Boolean(legacyIsOpen) : uncontrolledOpen;
+    const setIsOpen = (0, import_react6.useCallback)(
+      (action) => {
+        const nextOpen = typeof action === "function" ? action(isOpen) : action;
+        if (!isControlled && !isExplicitLegacy) {
+          setUncontrolledOpen(nextOpen);
+        }
+        onOpenChange?.(nextOpen);
+        if (!nextOpen && onClose) {
+          onClose();
+        }
+      },
+      [isControlled, isExplicitLegacy, isOpen, onOpenChange, onClose]
+    );
+    const closePopover = (0, import_react6.useCallback)(() => {
+      setIsOpen(false);
+    }, [setIsOpen]);
+    const togglePopover = (0, import_react6.useCallback)(() => {
+      setIsOpen((prev) => !prev);
+    }, [setIsOpen]);
+    const contextValue = {
+      isOpen,
+      setIsOpen,
+      triggerRef,
+      contentRef,
+      popoverId,
+      closePopover,
+      togglePopover,
+      isCompound: !isExplicitLegacy
+    };
+    if (!isExplicitLegacy) {
+      return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(PopoverContext.Provider, { value: contextValue, children });
+    }
     if (!isOpen) return null;
     const isMenuVariant = variant === "menu";
     let popoverStyle = centerByDefault ? {
@@ -455,7 +507,7 @@ var Popover = import_react6.default.forwardRef(
         };
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(import_jsx_runtime7.Fragment, { children: [
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(PopoverContext.Provider, { value: contextValue, children: [
       /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
         "div",
         {
@@ -483,6 +535,213 @@ var Popover = import_react6.default.forwardRef(
   }
 );
 Popover.displayName = "Popover";
+var PopoverTrigger = import_react6.default.forwardRef(
+  ({ asChild = false, children, onClick, ...props }, forwardedRef) => {
+    const context = usePopover();
+    const isOpen = context?.isOpen ?? false;
+    const togglePopover = context?.togglePopover ?? (() => {
+    });
+    const triggerRef = context?.triggerRef;
+    const popoverId = context?.popoverId ?? "";
+    const handleClick = (e) => {
+      e.stopPropagation();
+      onClick?.(e);
+      if (!e.defaultPrevented) {
+        togglePopover();
+      }
+    };
+    const handleRef = (node) => {
+      if (triggerRef) {
+        triggerRef.current = node;
+      }
+      if (typeof forwardedRef === "function") {
+        forwardedRef(node);
+      } else if (forwardedRef) {
+        forwardedRef.current = node;
+      }
+    };
+    if (asChild && import_react6.default.isValidElement(children)) {
+      const child = children;
+      return import_react6.default.cloneElement(child, {
+        ref: handleRef,
+        onClick: (e) => {
+          child.props.onClick?.(e);
+          handleClick(e);
+        },
+        "aria-expanded": isOpen,
+        "aria-haspopup": "dialog",
+        "aria-controls": isOpen ? popoverId : void 0
+      });
+    }
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      "button",
+      {
+        ref: handleRef,
+        type: "button",
+        onClick: handleClick,
+        "aria-expanded": isOpen,
+        "aria-haspopup": "dialog",
+        "aria-controls": isOpen ? popoverId : void 0,
+        ...props,
+        children
+      }
+    );
+  }
+);
+PopoverTrigger.displayName = "PopoverTrigger";
+var PopoverContent = import_react6.default.forwardRef(
+  ({
+    align = "end",
+    side = "bottom",
+    sideOffset = 6,
+    width = "auto",
+    portal = true,
+    className = "",
+    style,
+    children,
+    ...props
+  }, forwardedRef) => {
+    const context = usePopover();
+    const isOpen = context?.isOpen ?? true;
+    const closePopover = context?.closePopover ?? (() => {
+    });
+    const triggerRef = context?.triggerRef;
+    const contentRef = context?.contentRef;
+    const popoverId = context?.popoverId ?? "";
+    const [mounted, setMounted] = (0, import_react6.useState)(false);
+    const [positionStyle, setPositionStyle] = (0, import_react6.useState)({});
+    (0, import_react6.useEffect)(() => {
+      setMounted(true);
+    }, []);
+    const updatePosition = (0, import_react6.useCallback)(() => {
+      if (!triggerRef?.current || typeof window === "undefined") return;
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const viewportPadding = 8;
+      const windowWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
+      const windowHeight = Math.min(window.innerHeight, document.documentElement.clientHeight);
+      let top = 0;
+      let left = 0;
+      if (side === "bottom") {
+        top = triggerRect.bottom + sideOffset;
+      } else if (side === "top") {
+        top = triggerRect.top - sideOffset;
+      } else {
+        top = triggerRect.top;
+      }
+      if (align === "end") {
+        left = triggerRect.right;
+      } else if (align === "start") {
+        left = triggerRect.left;
+      } else {
+        left = triggerRect.left + triggerRect.width / 2;
+      }
+      let calculatedStyle = {
+        position: "fixed",
+        zIndex: 1e4,
+        margin: 0,
+        width: typeof width === "number" ? `${width}px` : width,
+        maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,
+        ...style
+      };
+      if (side === "bottom") {
+        if (top + 240 > windowHeight) {
+          calculatedStyle.bottom = `${windowHeight - triggerRect.top + sideOffset}px`;
+          calculatedStyle.top = "auto";
+        } else {
+          calculatedStyle.top = `${top}px`;
+          calculatedStyle.bottom = "auto";
+        }
+      } else if (side === "top") {
+        calculatedStyle.bottom = `${windowHeight - triggerRect.top + sideOffset}px`;
+        calculatedStyle.top = "auto";
+      } else {
+        calculatedStyle.top = `${top}px`;
+      }
+      if (align === "end") {
+        const rightOffset = windowWidth - triggerRect.right;
+        calculatedStyle.right = `${Math.max(viewportPadding, rightOffset)}px`;
+        calculatedStyle.left = "auto";
+      } else if (align === "start") {
+        calculatedStyle.left = `${Math.max(viewportPadding, left)}px`;
+        calculatedStyle.right = "auto";
+      } else {
+        calculatedStyle.left = `${Math.max(viewportPadding, left)}px`;
+        calculatedStyle.transform = "translateX(-50%)";
+        calculatedStyle.right = "auto";
+      }
+      setPositionStyle(calculatedStyle);
+    }, [triggerRef, align, side, sideOffset, width, style]);
+    (0, import_react6.useEffect)(() => {
+      if (isOpen && triggerRef?.current) {
+        updatePosition();
+        window.addEventListener("resize", updatePosition);
+        window.addEventListener("scroll", updatePosition, true);
+      }
+      return () => {
+        window.removeEventListener("resize", updatePosition);
+        window.removeEventListener("scroll", updatePosition, true);
+      };
+    }, [isOpen, triggerRef, updatePosition]);
+    (0, import_react6.useEffect)(() => {
+      if (!isOpen) return;
+      const handlePointerDown = (event) => {
+        const target = event.target;
+        if (contentRef?.current?.contains(target)) {
+          return;
+        }
+        if (triggerRef?.current?.contains(target)) {
+          return;
+        }
+        closePopover();
+      };
+      const handleKeyDown = (event) => {
+        if (event.key === "Escape") {
+          closePopover();
+          triggerRef?.current?.focus();
+        }
+      };
+      document.addEventListener("mousedown", handlePointerDown);
+      document.addEventListener("touchstart", handlePointerDown);
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("mousedown", handlePointerDown);
+        document.removeEventListener("touchstart", handlePointerDown);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [isOpen, closePopover, contentRef, triggerRef]);
+    if (!isOpen) return null;
+    const handleRef = (node) => {
+      if (contentRef) {
+        contentRef.current = node;
+      }
+      if (typeof forwardedRef === "function") {
+        forwardedRef(node);
+      } else if (forwardedRef) {
+        forwardedRef.current = node;
+      }
+    };
+    const contentNode = /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+      "div",
+      {
+        ref: handleRef,
+        id: popoverId,
+        role: "dialog",
+        "aria-modal": "true",
+        tabIndex: -1,
+        className: `rv-popoverContainer ${className}`.trim(),
+        style: triggerRef?.current ? positionStyle : style,
+        onClick: (e) => e.stopPropagation(),
+        ...props,
+        children
+      }
+    );
+    if (portal && mounted && typeof document !== "undefined") {
+      return (0, import_react_dom.createPortal)(contentNode, document.body);
+    }
+    return contentNode;
+  }
+);
+PopoverContent.displayName = "PopoverContent";
 var PopoverHeader = import_react6.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
     return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { ref, className: `rv-popoverHeader ${className}`.trim(), ...props, children });
@@ -495,12 +754,6 @@ var PopoverTitle = import_react6.default.forwardRef(
   }
 );
 PopoverTitle.displayName = "PopoverTitle";
-var PopoverContent = import_react6.default.forwardRef(
-  ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { ref, className: `rv-popoverContent ${className}`.trim(), ...props, children });
-  }
-);
-PopoverContent.displayName = "PopoverContent";
 var PopoverMenu = import_react6.default.forwardRef(
   ({ variant = "menu", ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(Popover, { ref, variant, ...props })
 );
@@ -508,7 +761,7 @@ PopoverMenu.displayName = "PopoverMenu";
 
 // src/components/overlays/Tooltip.tsx
 var import_react7 = require("react");
-var import_react_dom = require("react-dom");
+var import_react_dom2 = require("react-dom");
 var import_jsx_runtime8 = require("react/jsx-runtime");
 var Tooltip = ({
   content,
@@ -607,7 +860,7 @@ var Tooltip = ({
         children
       }
     ),
-    mounted && isVisible && (0, import_react_dom.createPortal)(
+    mounted && isVisible && (0, import_react_dom2.createPortal)(
       /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
         "div",
         {
@@ -625,7 +878,7 @@ var Tooltip = ({
 
 // src/components/overlays/Modal.tsx
 var import_react8 = __toESM(require("react"));
-var import_react_dom2 = require("react-dom");
+var import_react_dom3 = require("react-dom");
 var import_jsx_runtime9 = require("react/jsx-runtime");
 var Modal = import_react8.default.forwardRef(
   ({
@@ -681,7 +934,7 @@ var Modal = import_react8.default.forwardRef(
       ...style,
       ...width !== void 0 ? { width: typeof width === "number" ? `${width}px` : width } : {}
     };
-    return (0, import_react_dom2.createPortal)(
+    return (0, import_react_dom3.createPortal)(
       /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
         "div",
         {
@@ -850,7 +1103,7 @@ Dialog.displayName = "Dialog";
 
 // src/components/overlays/Menu.tsx
 var import_react10 = __toESM(require("react"));
-var import_react_dom3 = require("react-dom");
+var import_react_dom4 = require("react-dom");
 var import_jsx_runtime11 = require("react/jsx-runtime");
 var MenuContext = (0, import_react10.createContext)(null);
 function useMenu() {
@@ -1094,7 +1347,7 @@ var MenuContent = import_react10.default.forwardRef(
       }
     );
     if (portal && mounted && typeof document !== "undefined") {
-      return (0, import_react_dom3.createPortal)(contentNode, document.body);
+      return (0, import_react_dom4.createPortal)(contentNode, document.body);
     }
     return contentNode;
   }
@@ -1422,6 +1675,7 @@ var SplitButton = (0, import_react14.forwardRef)(
   PopoverHeader,
   PopoverMenu,
   PopoverTitle,
+  PopoverTrigger,
   ResizeHandle,
   Sidebar,
   SidebarBody,
@@ -1435,6 +1689,7 @@ var SplitButton = (0, import_react14.forwardRef)(
   TopbarLeft,
   TopbarLogo,
   TopbarRight,
-  useMenu
+  useMenu,
+  usePopover
 });
 //# sourceMappingURL=index.js.map
