@@ -466,8 +466,10 @@ form {
 .rv-listItemActive,
 .rv-listItemOpen,
 .rv-listItem.rv-isOpen,
-.rv-listItem:has([aria-expanded="true"]) {
-    background: var(--rv-neutral-400);
+.rv-listItem:has([aria-expanded="true"]),
+.rv-listItem[aria-expanded="true"],
+.rv-listItem.apl-isSubmenuActive {
+    background: rgba(255, 255, 255, 0.12);
     color: var(--rv-white);
 }
 
