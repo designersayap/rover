@@ -78,7 +78,7 @@
 
 /* Table Body & Rows */
 .rv-tableBody {
-  divide-y: 1px solid var(--rv-border-subtle);
+  /* Rows are separated by border-bottom */
 }
 
 .rv-tableRow {
