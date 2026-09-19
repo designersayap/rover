@@ -285,6 +285,13 @@
     transform: translateX(0);
 }
 
+@media (min-width: 1024px) {
+    .rv-mobileSidebarSideOverlay,
+    .rv-mobileSidebarOverlay {
+        display: none !important;
+    }
+}
+
 /* Parallax and Scroll Groups */
 .rv-parallaxGroup {
     position: relative;

@@ -445,13 +445,15 @@
 
 
 @media (max-width: 1023px) {
-    .rv-sidebarShell:not(.rv-mobileSidebar) {
+    .rv-mainContent > .rv-sidebarShell {
         display: none !important;
     }
 }
 
 @media (min-width: 1024px) {
-    .rv-mobileSidebar {
+    .rv-mobileSidebar,
+    .rv-mobileSidebarSideOverlay,
+    .rv-mobileSidebarOverlay {
         display: none !important;
     }
 }
