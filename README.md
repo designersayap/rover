@@ -94,6 +94,12 @@ If no `data-rv-brand` attribute is specified, Rover automatically defaults to th
 
 3. Import the file or include it in `index.css`.
 
+## Components & Primitives
+
+- **Shell & Navigation**: `AppShell`, `MainContent`, `Canvas`, `CanvasInner`, `CanvasScroll`, `Topbar`, `Sidebar`, `SidebarRail`, `SidebarBody`, `SidebarPanel`, `ResizeHandle`.
+- **Overlays & Dialogs**: `Popover`, `Tooltip`, `Modal`, `Dialog`, `Menu`.
+- **UI Primitives**: `MasonryGrid` (responsive column binning), `MediaCard` (dynamic aspect ratio & tile/list variants), `Chip` & `ChipGroup`, `Dropzone`, `SplitButton`.
+
 ## Project Structure
 
 - `src/tokens/`: Brand identity definitions (`lunar.css`, `apollo.css`, `template.css`) including spacing scale, layout dimensions, and component aliases.
@@ -102,6 +108,6 @@ If no `data-rv-brand` attribute is specified, Rover automatically defaults to th
 - `src/sidebar.css`: Floating sidebar, rails, tree layers, and tab modules.
 - `src/topbar.css`: Main navigation topbar.
 - `src/notification.css`: 3D card-to-card notification stacks.
-- `src/components.css`: Atomic UI building blocks (buttons, inputs, toggles, list items, cards, badges, loaders).
+- `src/components.css`: Atomic UI building blocks (buttons, inputs, toggles, list items, cards, badges, loaders, masonry grid).
 - `src/overlays.css`: Popovers, tooltips, selection overlay badges, floating action bars, and contextual toolbars.
 - `src/index.css`: Main bundle.

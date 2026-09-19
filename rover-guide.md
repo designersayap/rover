@@ -471,10 +471,25 @@ import { Dropzone } from 'rover';
 ```
 
 #### MediaCard
-Aspect-ratio media thumbnail card supporting both `'tile'` (grid card) and `'list'` (compact row) variants with hover action overlays, title, subtitle, and status badges.
+Aspect-ratio media thumbnail card supporting dynamic aspect ratios, `'tile'` (grid card), and `'list'` (compact row) variants with hover action overlays, title, subtitle, and status badges.
 
 ```tsx
 import { MediaCard } from 'rover';
+
+// Dynamic Aspect Ratio / Masonry Card:
+<MediaCard
+  aspectRatio="16:9" // or "9:16", "1:1", "4:5"
+  src="/mock/image.jpg"
+  alt="Sample Preview"
+  title="Hero Banner"
+  selected={isSelected}
+  badge={<span className="rv-badge">16:9</span>}
+  actions={
+    <button className="rv-btn rv-btnSecondary rv-btnIcon">
+      <Zap />
+    </button>
+  }
+/>
 
 // Tile Variant (Default / Grid):
 <MediaCard
@@ -496,6 +511,39 @@ import { MediaCard } from 'rover';
   subtitle="Header component"
   selected={isSelected}
   onClick={() => setSelectedId(id)}
+/>
+```
+
+#### MasonryGrid
+A responsive, zero-layout-shift column-binning grid component for dynamic aspect ratio card galleries and sidepanel drawers.
+
+```tsx
+import { MasonryGrid, MediaCard } from 'rover';
+
+// Responsive 1 to 6 column gallery:
+<MasonryGrid
+  items={templates}
+  keyExtractor={(item) => item.id}
+  gap="var(--rv-space-sm)" // default
+  columns="responsive"     // default: 1-6 cols based on container width
+  renderItem={(item) => (
+    <MediaCard
+      aspectRatio={item.ratio}
+      src={item.src}
+      alt={item.title}
+    />
+  )}
+/>
+
+// Fixed column count (e.g. 2-column sidepanel):
+<MasonryGrid
+  items={sessionImages}
+  keyExtractor={(item, index) => item.id || index}
+  columns={2}
+  gap={20}
+  renderItem={(item) => (
+    <MediaCard aspectRatio={item.ratio} src={item.src} />
+  )}
 />
 ```
 
