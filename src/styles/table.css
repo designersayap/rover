@@ -247,40 +247,33 @@ img.rv-brandLogo {
   padding: 2px 5px;
   border-radius: 4px;
   background: rgba(255, 255, 255, 0.08);
-  color: var(--rv-text-secondary);
+  color: var(--rv-neutral-75, #d1d1d1);
 }
 
+.rv-tokenQuotaBadge.rv-isDanger,
 .rv-tokenQuotaBadge.rv-isWarning {
-  background: rgba(245, 158, 11, 0.15);
-  color: #f59e0b;
-}
-
-.rv-tokenQuotaBadge.rv-isDanger {
   background: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
+  color: var(--rv-danger, #ef4444);
 }
 
 .rv-tokenProgressBar {
   width: 100%;
   height: 5px;
-  background: var(--rv-bg-surface-2);
+  background: var(--rv-bg-surface-2, rgba(255, 255, 255, 0.08));
   border-radius: 3px;
   overflow: hidden;
 }
 
 .rv-tokenProgressFill {
   height: 100%;
-  background: var(--rv-accent, #3b82f6);
+  background: var(--rv-neutral-100, #a0a0a0);
   border-radius: 3px;
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.rv-tokenProgressFill.rv-isDanger,
 .rv-tokenProgressFill.rv-isWarning {
-  background: #f59e0b;
-}
-
-.rv-tokenProgressFill.rv-isDanger {
-  background: #ef4444;
+  background: var(--rv-danger, #ef4444);
 }
 
 /* Brand Color Palette Swatches */
