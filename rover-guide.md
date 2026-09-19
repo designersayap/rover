@@ -207,9 +207,9 @@ import {
 
 ---
 
-### 3.3 Sidebar (`Sidebar`, `SidebarRail`, `SidebarBody`, `SidebarPanel`, `ResizeHandle`)
+### 3.3 Sidebar (`Sidebar`, `SidebarRail`, `SidebarBody`, `SidebarPanel`, `MobileSidebarDrawer`, `ResizeHandle`)
 
-Supports multi-state sidebars: full panel, icon-only rail, or completely collapsed.
+Supports multi-state sidebars: full panel, icon-only rail, completely collapsed, and responsive mobile off-canvas side drawers.
 
 ```tsx
 import {
@@ -217,6 +217,7 @@ import {
   SidebarRail,
   SidebarBody,
   SidebarPanel,
+  MobileSidebarDrawer,
 } from 'rover';
 
 <Sidebar
@@ -224,6 +225,10 @@ import {
   width={sidebarWidth}  // number in px or string
   resizable={true}
   onResize={(deltaX) => setSidebarWidth(prev => prev + deltaX)}
+  // Responsive Mobile Off-Canvas Drawer Support
+  mobileOpen={isMobileOpen}
+  onCloseMobile={() => setIsMobileOpen(false)}
+  mobileContent={/* Optional custom mobile navigation content */}
 >
   {/* Leftmost Icon Rail */}
   <SidebarRail
@@ -253,7 +258,17 @@ import {
   - `resizable?: boolean` (renders an interactive `ResizeHandle` on the edge)
   - `onResize?: (deltaX: number) => void`
   - `dataBuilderUi?: boolean` (default `true`)
+  - `mobileOpen?: boolean` (controls mobile off-canvas side drawer visibility)
+  - `onCloseMobile?: () => void` (triggered on backdrop click or `Escape` key)
+  - `mobileContent?: React.ReactNode` (custom mobile menu; defaults to rendering desktop sidebar children inside the drawer)
+  - `mobileDrawerWidth?: string | number`
+  - `mobileDrawerClassName?: string`
   - Extends: `React.HTMLAttributes<HTMLElement>`
+- `MobileSidebarDrawer`:
+  - `isOpen: boolean`
+  - `onClose: () => void`
+  - `children?: React.ReactNode`
+  - `width?: string | number`
 - `SidebarRail`:
   - `items: RailItem[]` (`{ id: string; label: string; icon?: React.ReactNode }`)
   - `activeTab?: string`
@@ -267,13 +282,24 @@ import {
 
 ---
 
-### 3.4 Topbar (`Topbar`, `TopbarLeft`, `TopbarRight`, `TopbarLogo`)
+### 3.4 Topbar (`Topbar`, `TopbarLeft`, `TopbarRight`, `TopbarLogo`, `SidebarToggle`)
 
 ```tsx
-import { Topbar, TopbarLeft, TopbarRight, TopbarLogo } from 'rover';
+import {
+  Topbar,
+  TopbarLeft,
+  TopbarRight,
+  TopbarLogo,
+  SidebarToggle,
+} from 'rover';
 
 <Topbar>
   <TopbarLeft>
+    <SidebarToggle
+      hideOnMobile={true} // Set to true to hide toggle on mobile/tablet (e.g. for Lunar bottom nav)
+      isOpen={isSidebarOpen}
+      onClick={toggleSidebar}
+    />
     <TopbarLogo>Lunar Studio</TopbarLogo>
     {/* Page selector or breadcrumbs */}
   </TopbarLeft>

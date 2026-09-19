@@ -96,7 +96,7 @@ If no `data-rv-brand` attribute is specified, Rover automatically defaults to th
 
 ## Components & Primitives
 
-- **Shell & Navigation**: `AppShell`, `MainContent`, `Canvas`, `CanvasInner`, `CanvasScroll`, `Topbar`, `Sidebar`, `SidebarRail`, `SidebarBody`, `SidebarPanel`, `ResizeHandle`.
+- **Shell & Navigation**: `AppShell`, `MainContent`, `Canvas`, `CanvasInner`, `CanvasScroll`, `Topbar`, `TopbarLeft`, `TopbarRight`, `TopbarLogo`, `SidebarToggle`, `Sidebar`, `SidebarRail`, `SidebarBody`, `SidebarPanel`, `MobileSidebarDrawer`, `ResizeHandle`.
 - **Overlays & Dialogs**: `Popover`, `Tooltip`, `Modal`, `Dialog`, `Menu`.
 - **UI Primitives**: `MasonryGrid` (responsive column binning), `MediaCard` (dynamic aspect ratio & tile/list variants), `Chip` & `ChipGroup`, `Dropzone`, `SplitButton`.
 
