@@ -119,6 +119,7 @@ interface SidebarToggleProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     className?: string;
     isOpen?: boolean;
     icon?: React.ReactNode;
+    hideOnMobile?: boolean;
 }
 declare const SidebarToggle: React.ForwardRefExoticComponent<SidebarToggleProps & React.RefAttributes<HTMLButtonElement>>;
 

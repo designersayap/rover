@@ -6,6 +6,7 @@ export interface SidebarToggleProps extends React.ButtonHTMLAttributes<HTMLButto
   className?: string;
   isOpen?: boolean;
   icon?: React.ReactNode;
+  hideOnMobile?: boolean;
 }
 
 export const SidebarToggle = React.forwardRef<HTMLButtonElement, SidebarToggleProps>(
@@ -14,6 +15,7 @@ export const SidebarToggle = React.forwardRef<HTMLButtonElement, SidebarTogglePr
       className = '',
       isOpen,
       icon,
+      hideOnMobile = false,
       type = 'button',
       'aria-label': ariaLabel = 'Toggle navigation',
       children,
@@ -21,11 +23,13 @@ export const SidebarToggle = React.forwardRef<HTMLButtonElement, SidebarTogglePr
     },
     ref
   ) => {
+    const hideMobileClass = hideOnMobile ? 'rv-sidebarToggleHideMobile' : '';
+
     return (
       <button
         ref={ref}
         type={type}
-        className={`rv-btn rv-btnGhost rv-btnIcon rv-sidebarToggle ${isOpen ? 'rv-btnGhostActive' : ''} ${className}`.trim()}
+        className={`rv-btn rv-btnGhost rv-btnIcon rv-sidebarToggle ${hideMobileClass} ${isOpen ? 'rv-btnGhostActive' : ''} ${className}`.trim()}
         aria-label={ariaLabel}
         aria-expanded={isOpen}
         {...props}

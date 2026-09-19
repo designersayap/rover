@@ -64,3 +64,9 @@
     color: inherit;
 }
 
+@media (max-width: 1023px) {
+    .rv-sidebarToggleHideMobile {
+        display: none !important;
+    }
+}
+

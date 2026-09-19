@@ -404,17 +404,19 @@ var SidebarToggle = import_react6.default.forwardRef(
     className = "",
     isOpen,
     icon,
+    hideOnMobile = false,
     type = "button",
     "aria-label": ariaLabel = "Toggle navigation",
     children,
     ...props
   }, ref) => {
+    const hideMobileClass = hideOnMobile ? "rv-sidebarToggleHideMobile" : "";
     return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
       "button",
       {
         ref,
         type,
-        className: `rv-btn rv-btnGhost rv-btnIcon rv-sidebarToggle ${isOpen ? "rv-btnGhostActive" : ""} ${className}`.trim(),
+        className: `rv-btn rv-btnGhost rv-btnIcon rv-sidebarToggle ${hideMobileClass} ${isOpen ? "rv-btnGhostActive" : ""} ${className}`.trim(),
         "aria-label": ariaLabel,
         "aria-expanded": isOpen,
         ...props,
