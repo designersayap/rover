@@ -1909,8 +1909,8 @@ function Sidepanel({
   ariaLabel = "Details Sidepanel",
   customHeader
 }) {
-  if (!open) return null;
   (0, import_react18.useEffect)(() => {
+    if (!open) return;
     const handleKeyDown = (e) => {
       if (e.key === "Escape" && onClose) {
         onClose();
@@ -1918,7 +1918,8 @@ function Sidepanel({
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [open, onClose]);
+  if (!open) return null;
   const style = width ? { "--rv-sidepanel-width": typeof width === "number" ? `${width}px` : width } : void 0;
   return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
     /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(

@@ -29,10 +29,9 @@ export function Sidepanel({
   ariaLabel = 'Details Sidepanel',
   customHeader,
 }: SidepanelProps) {
-  if (!open) return null;
-
-  // Handle ESC key to dismiss
+  // Handle ESC key to dismiss (called unconditionally before early return)
   useEffect(() => {
+    if (!open) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && onClose) {
         onClose();
@@ -40,7 +39,9 @@ export function Sidepanel({
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, [open, onClose]);
+
+  if (!open) return null;
 
   const style = width ? ({ '--rv-sidepanel-width': typeof width === 'number' ? `${width}px` : width } as React.CSSProperties) : undefined;
 
