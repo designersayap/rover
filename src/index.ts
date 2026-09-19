@@ -205,6 +205,16 @@ export type {
   SplitButtonVariant,
 } from './components/ui/SplitButton';
 
+export {
+  Sidepanel,
+  SidepanelHeader,
+  SidepanelBody,
+} from './components/overlays/Sidepanel';
+
+export type {
+  SidepanelProps,
+} from './components/overlays/Sidepanel';
+
 
 
 

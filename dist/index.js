@@ -68,6 +68,9 @@ __export(index_exports, {
   SidebarPanel: () => SidebarPanel,
   SidebarRail: () => SidebarRail,
   SidebarToggle: () => SidebarToggle,
+  Sidepanel: () => Sidepanel,
+  SidepanelBody: () => SidepanelBody,
+  SidepanelHeader: () => SidepanelHeader,
   SplitButton: () => SplitButton,
   SplitButtonMain: () => SplitButtonMain,
   SplitButtonToggle: () => SplitButtonToggle,
@@ -1889,6 +1892,90 @@ var SplitButton = (0, import_react17.forwardRef)(
     );
   }
 );
+
+// src/components/overlays/Sidepanel.tsx
+var import_react18 = require("react");
+var import_jsx_runtime19 = require("react/jsx-runtime");
+function Sidepanel({
+  open = true,
+  onClose,
+  title,
+  subtitle,
+  headerLeft,
+  headerRight,
+  width,
+  className = "",
+  children,
+  ariaLabel = "Details Sidepanel",
+  customHeader
+}) {
+  if (!open) return null;
+  (0, import_react18.useEffect)(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && onClose) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [onClose]);
+  const style = width ? { "--rv-sidepanel-width": typeof width === "number" ? `${width}px` : width } : void 0;
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(import_jsx_runtime19.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+      "div",
+      {
+        className: "rv-sidepanelBackdrop",
+        onClick: onClose,
+        "aria-hidden": "true"
+      }
+    ),
+    /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)(
+      "aside",
+      {
+        className: `rv-sidepanel ${className}`.trim(),
+        style,
+        "aria-label": ariaLabel,
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "rv-sidepanelGrabHandleWrap", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "rv-sidepanelGrabHandle" }) }),
+          customHeader ? customHeader : /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "rv-sidepanelHeader", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "rv-sidepanelHeaderLeft", children: [
+              headerLeft,
+              (title || subtitle) && /* @__PURE__ */ (0, import_jsx_runtime19.jsxs)("div", { className: "rv-sidepanelTitleWrap", children: [
+                title && (typeof title === "string" ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("h2", { className: "rv-sidepanelTitle", title, children: title }) : title),
+                subtitle && (typeof subtitle === "string" ? /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("span", { className: "rv-sidepanelSubtitle", children: subtitle }) : subtitle)
+              ] })
+            ] }),
+            headerRight,
+            onClose && /* @__PURE__ */ (0, import_jsx_runtime19.jsx)(
+              "button",
+              {
+                type: "button",
+                className: "rv-btn rv-btnGhost rv-btnIcon rv-sidepanelCloseBtn",
+                onClick: onClose,
+                "aria-label": "Close sidepanel",
+                title: "Close sidepanel",
+                children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("path", { d: "M18 6L6 18M6 6l12 12" }) })
+              }
+            )
+          ] }),
+          /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: "rv-sidepanelBody", children })
+        ]
+      }
+    )
+  ] });
+}
+function SidepanelHeader({
+  className = "",
+  children
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: `rv-sidepanelHeader ${className}`.trim(), children });
+}
+function SidepanelBody({
+  className = "",
+  children
+}) {
+  return /* @__PURE__ */ (0, import_jsx_runtime19.jsx)("div", { className: `rv-sidepanelBody ${className}`.trim(), children });
+}
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
   AppShell,
@@ -1928,6 +2015,9 @@ var SplitButton = (0, import_react17.forwardRef)(
   SidebarPanel,
   SidebarRail,
   SidebarToggle,
+  Sidepanel,
+  SidepanelBody,
+  SidepanelHeader,
   SplitButton,
   SplitButtonMain,
   SplitButtonToggle,
