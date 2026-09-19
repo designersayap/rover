@@ -76,10 +76,7 @@
   opacity: 1;
 }
 
-/* Table Body & Rows */
-.rv-tableBody {
-  /* Rows are separated by border-bottom */
-}
+/* Table Rows */
 
 .rv-tableRow {
   border-bottom: 1px solid var(--rv-border-subtle);
