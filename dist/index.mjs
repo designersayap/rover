@@ -316,8 +316,55 @@ var TopbarLogo = React5.forwardRef(
 );
 TopbarLogo.displayName = "TopbarLogo";
 
+// src/components/topbar/SidebarToggle.tsx
+import React6 from "react";
+import { jsx as jsx7, jsxs as jsxs3 } from "react/jsx-runtime";
+var SidebarToggle = React6.forwardRef(
+  ({
+    className = "",
+    isOpen,
+    icon,
+    type = "button",
+    "aria-label": ariaLabel = "Toggle navigation",
+    children,
+    ...props
+  }, ref) => {
+    return /* @__PURE__ */ jsx7(
+      "button",
+      {
+        ref,
+        type,
+        className: `rv-btn rv-btnGhost rv-btnIcon rv-sidebarToggle ${isOpen ? "rv-btnGhostActive" : ""} ${className}`.trim(),
+        "aria-label": ariaLabel,
+        "aria-expanded": isOpen,
+        ...props,
+        children: children ? children : icon ? icon : /* @__PURE__ */ jsxs3(
+          "svg",
+          {
+            width: "18",
+            height: "18",
+            viewBox: "0 0 24 24",
+            fill: "none",
+            stroke: "currentColor",
+            strokeWidth: "2",
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            className: "rv-sidebarToggleIcon",
+            children: [
+              /* @__PURE__ */ jsx7("line", { x1: "3", y1: "12", x2: "21", y2: "12" }),
+              /* @__PURE__ */ jsx7("line", { x1: "3", y1: "6", x2: "21", y2: "6" }),
+              /* @__PURE__ */ jsx7("line", { x1: "3", y1: "18", x2: "21", y2: "18" })
+            ]
+          }
+        )
+      }
+    );
+  }
+);
+SidebarToggle.displayName = "SidebarToggle";
+
 // src/components/overlays/Popover.tsx
-import React6, {
+import React7, {
   createContext,
   useContext,
   useState as useState2,
@@ -327,13 +374,13 @@ import React6, {
   useId
 } from "react";
 import { createPortal } from "react-dom";
-import { jsx as jsx7, jsxs as jsxs3 } from "react/jsx-runtime";
+import { jsx as jsx8, jsxs as jsxs4 } from "react/jsx-runtime";
 var PopoverContext = createContext(null);
 function usePopover() {
   const context = useContext(PopoverContext);
   return context;
 }
-var Popover = React6.forwardRef(
+var Popover = React7.forwardRef(
   ({
     // Compound props
     open: controlledOpen,
@@ -390,7 +437,7 @@ var Popover = React6.forwardRef(
       isCompound: !isExplicitLegacy
     };
     if (!isExplicitLegacy) {
-      return /* @__PURE__ */ jsx7(PopoverContext.Provider, { value: contextValue, children });
+      return /* @__PURE__ */ jsx8(PopoverContext.Provider, { value: contextValue, children });
     }
     if (!isOpen) return null;
     const isMenuVariant = variant === "menu";
@@ -437,8 +484,8 @@ var Popover = React6.forwardRef(
         };
       }
     }
-    return /* @__PURE__ */ jsxs3(PopoverContext.Provider, { value: contextValue, children: [
-      /* @__PURE__ */ jsx7(
+    return /* @__PURE__ */ jsxs4(PopoverContext.Provider, { value: contextValue, children: [
+      /* @__PURE__ */ jsx8(
         "div",
         {
           className: `rv-popoverOverlay ${overlayClassName}`.trim(),
@@ -447,7 +494,7 @@ var Popover = React6.forwardRef(
           "aria-hidden": "true"
         }
       ),
-      /* @__PURE__ */ jsx7(
+      /* @__PURE__ */ jsx8(
         "div",
         {
           ref,
@@ -465,7 +512,7 @@ var Popover = React6.forwardRef(
   }
 );
 Popover.displayName = "Popover";
-var PopoverTrigger = React6.forwardRef(
+var PopoverTrigger = React7.forwardRef(
   ({ asChild = false, children, onClick, ...props }, forwardedRef) => {
     const context = usePopover();
     const isOpen = context?.isOpen ?? false;
@@ -490,9 +537,9 @@ var PopoverTrigger = React6.forwardRef(
         forwardedRef.current = node;
       }
     };
-    if (asChild && React6.isValidElement(children)) {
+    if (asChild && React7.isValidElement(children)) {
       const child = children;
-      return React6.cloneElement(child, {
+      return React7.cloneElement(child, {
         ref: handleRef,
         onClick: (e) => {
           child.props.onClick?.(e);
@@ -503,7 +550,7 @@ var PopoverTrigger = React6.forwardRef(
         "aria-controls": isOpen ? popoverId : void 0
       });
     }
-    return /* @__PURE__ */ jsx7(
+    return /* @__PURE__ */ jsx8(
       "button",
       {
         ref: handleRef,
@@ -519,7 +566,7 @@ var PopoverTrigger = React6.forwardRef(
   }
 );
 PopoverTrigger.displayName = "PopoverTrigger";
-var PopoverContent = React6.forwardRef(
+var PopoverContent = React7.forwardRef(
   ({
     align = "end",
     side = "bottom",
@@ -650,7 +697,7 @@ var PopoverContent = React6.forwardRef(
         forwardedRef.current = node;
       }
     };
-    const contentNode = /* @__PURE__ */ jsx7(
+    const contentNode = /* @__PURE__ */ jsx8(
       "div",
       {
         ref: handleRef,
@@ -672,27 +719,27 @@ var PopoverContent = React6.forwardRef(
   }
 );
 PopoverContent.displayName = "PopoverContent";
-var PopoverHeader = React6.forwardRef(
+var PopoverHeader = React7.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ jsx7("div", { ref, className: `rv-popoverHeader ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ jsx8("div", { ref, className: `rv-popoverHeader ${className}`.trim(), ...props, children });
   }
 );
 PopoverHeader.displayName = "PopoverHeader";
-var PopoverTitle = React6.forwardRef(
+var PopoverTitle = React7.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ jsx7("span", { ref, className: `rv-popoverTitle ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ jsx8("span", { ref, className: `rv-popoverTitle ${className}`.trim(), ...props, children });
   }
 );
 PopoverTitle.displayName = "PopoverTitle";
-var PopoverMenu = React6.forwardRef(
-  ({ variant = "menu", ...props }, ref) => /* @__PURE__ */ jsx7(Popover, { ref, variant, ...props })
+var PopoverMenu = React7.forwardRef(
+  ({ variant = "menu", ...props }, ref) => /* @__PURE__ */ jsx8(Popover, { ref, variant, ...props })
 );
 PopoverMenu.displayName = "PopoverMenu";
 
 // src/components/overlays/Tooltip.tsx
 import { useState as useState3, useRef as useRef2, useEffect as useEffect3 } from "react";
 import { createPortal as createPortal2 } from "react-dom";
-import { Fragment, jsx as jsx8, jsxs as jsxs4 } from "react/jsx-runtime";
+import { Fragment, jsx as jsx9, jsxs as jsxs5 } from "react/jsx-runtime";
 var Tooltip = ({
   content,
   children,
@@ -778,9 +825,9 @@ var Tooltip = ({
     setIsVisible(false);
     setTooltipStyle({ top: -9999, left: -9999, opacity: 0 });
   };
-  if (!content) return /* @__PURE__ */ jsx8(Fragment, { children });
-  return /* @__PURE__ */ jsxs4(Fragment, { children: [
-    /* @__PURE__ */ jsx8(
+  if (!content) return /* @__PURE__ */ jsx9(Fragment, { children });
+  return /* @__PURE__ */ jsxs5(Fragment, { children: [
+    /* @__PURE__ */ jsx9(
       "div",
       {
         ref: triggerRef,
@@ -791,7 +838,7 @@ var Tooltip = ({
       }
     ),
     mounted && isVisible && createPortal2(
-      /* @__PURE__ */ jsx8(
+      /* @__PURE__ */ jsx9(
         "div",
         {
           ref: tooltipRef,
@@ -807,10 +854,10 @@ var Tooltip = ({
 };
 
 // src/components/overlays/Modal.tsx
-import React8, { useEffect as useEffect4, useState as useState4 } from "react";
+import React9, { useEffect as useEffect4, useState as useState4 } from "react";
 import { createPortal as createPortal3 } from "react-dom";
-import { jsx as jsx9, jsxs as jsxs5 } from "react/jsx-runtime";
-var Modal = React8.forwardRef(
+import { jsx as jsx10, jsxs as jsxs6 } from "react/jsx-runtime";
+var Modal = React9.forwardRef(
   ({
     isOpen = false,
     onClose,
@@ -865,7 +912,7 @@ var Modal = React8.forwardRef(
       ...width !== void 0 ? { width: typeof width === "number" ? `${width}px` : width } : {}
     };
     return createPortal3(
-      /* @__PURE__ */ jsx9(
+      /* @__PURE__ */ jsx10(
         "div",
         {
           className: `rv-modalOverlay ${overlayClassName}`.trim(),
@@ -875,7 +922,7 @@ var Modal = React8.forwardRef(
             }
           },
           "aria-hidden": "true",
-          children: /* @__PURE__ */ jsx9(
+          children: /* @__PURE__ */ jsx10(
             "div",
             {
               ref,
@@ -896,11 +943,11 @@ var Modal = React8.forwardRef(
   }
 );
 Modal.displayName = "Modal";
-var ModalHeader = React8.forwardRef(
+var ModalHeader = React9.forwardRef(
   ({ children, className = "", onClose, showCloseButton = false, ...props }, ref) => {
-    return /* @__PURE__ */ jsxs5("div", { ref, className: `rv-modalHeader ${className}`.trim(), ...props, children: [
-      /* @__PURE__ */ jsx9("div", { className: "rv-modalHeaderContent", children }),
-      showCloseButton && onClose && /* @__PURE__ */ jsx9(
+    return /* @__PURE__ */ jsxs6("div", { ref, className: `rv-modalHeader ${className}`.trim(), ...props, children: [
+      /* @__PURE__ */ jsx10("div", { className: "rv-modalHeaderContent", children }),
+      showCloseButton && onClose && /* @__PURE__ */ jsx10(
         "button",
         {
           type: "button",
@@ -915,34 +962,34 @@ var ModalHeader = React8.forwardRef(
   }
 );
 ModalHeader.displayName = "ModalHeader";
-var ModalTitle = React8.forwardRef(
+var ModalTitle = React9.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ jsx9("h3", { ref, className: `rv-modalTitle ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ jsx10("h3", { ref, className: `rv-modalTitle ${className}`.trim(), ...props, children });
   }
 );
 ModalTitle.displayName = "ModalTitle";
-var ModalDescription = React8.forwardRef(
+var ModalDescription = React9.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ jsx9("p", { ref, className: `rv-modalDescription ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ jsx10("p", { ref, className: `rv-modalDescription ${className}`.trim(), ...props, children });
   }
 );
 ModalDescription.displayName = "ModalDescription";
-var ModalBody = React8.forwardRef(
+var ModalBody = React9.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ jsx9("div", { ref, className: `rv-modalBody ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ jsx10("div", { ref, className: `rv-modalBody ${className}`.trim(), ...props, children });
   }
 );
 ModalBody.displayName = "ModalBody";
-var ModalFooter = React8.forwardRef(
+var ModalFooter = React9.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ jsx9("div", { ref, className: `rv-modalFooter ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ jsx10("div", { ref, className: `rv-modalFooter ${className}`.trim(), ...props, children });
   }
 );
 ModalFooter.displayName = "ModalFooter";
 
 // src/components/overlays/Dialog.tsx
-import React9 from "react";
-import { Fragment as Fragment2, jsx as jsx10, jsxs as jsxs6 } from "react/jsx-runtime";
+import React10 from "react";
+import { Fragment as Fragment2, jsx as jsx11, jsxs as jsxs7 } from "react/jsx-runtime";
 var variantClassMap = {
   primary: "rv-btnPrimary",
   brand: "rv-btnBrand",
@@ -950,7 +997,7 @@ var variantClassMap = {
   secondary: "rv-btnSecondary",
   ghost: "rv-btnGhost"
 };
-var Dialog = React9.forwardRef(
+var Dialog = React10.forwardRef(
   ({
     isOpen = false,
     onClose,
@@ -974,14 +1021,14 @@ var Dialog = React9.forwardRef(
   }, ref) => {
     const computedActionType = actionType || (onSubmit ? "submit" : "button");
     const actionClass = variantClassMap[actionVariant] || "rv-btnPrimary";
-    const dialogInner = /* @__PURE__ */ jsxs6(Fragment2, { children: [
-      /* @__PURE__ */ jsxs6(ModalHeader, { onClose, showCloseButton, children: [
-        /* @__PURE__ */ jsx10(ModalTitle, { children: title }),
-        children && description && /* @__PURE__ */ jsx10(ModalDescription, { children: description })
+    const dialogInner = /* @__PURE__ */ jsxs7(Fragment2, { children: [
+      /* @__PURE__ */ jsxs7(ModalHeader, { onClose, showCloseButton, children: [
+        /* @__PURE__ */ jsx11(ModalTitle, { children: title }),
+        children && description && /* @__PURE__ */ jsx11(ModalDescription, { children: description })
       ] }),
-      children ? /* @__PURE__ */ jsx10(ModalBody, { children }) : description ? /* @__PURE__ */ jsx10(ModalBody, { children: /* @__PURE__ */ jsx10("p", { className: "rv-modalDescription", style: { margin: 0 }, children: description }) }) : null,
-      footer !== void 0 ? footer : /* @__PURE__ */ jsxs6(ModalFooter, { children: [
-        showCancel && /* @__PURE__ */ jsx10(
+      children ? /* @__PURE__ */ jsx11(ModalBody, { children }) : description ? /* @__PURE__ */ jsx11(ModalBody, { children: /* @__PURE__ */ jsx11("p", { className: "rv-modalDescription", style: { margin: 0 }, children: description }) }) : null,
+      footer !== void 0 ? footer : /* @__PURE__ */ jsxs7(ModalFooter, { children: [
+        showCancel && /* @__PURE__ */ jsx11(
           "button",
           {
             type: "button",
@@ -991,7 +1038,7 @@ var Dialog = React9.forwardRef(
             children: cancelLabel
           }
         ),
-        /* @__PURE__ */ jsx10(
+        /* @__PURE__ */ jsx11(
           "button",
           {
             type: computedActionType,
@@ -1003,7 +1050,7 @@ var Dialog = React9.forwardRef(
         )
       ] })
     ] });
-    return /* @__PURE__ */ jsx10(
+    return /* @__PURE__ */ jsx11(
       Modal,
       {
         ref,
@@ -1011,7 +1058,7 @@ var Dialog = React9.forwardRef(
         onClose,
         size,
         ...modalProps,
-        children: onSubmit ? /* @__PURE__ */ jsx10(
+        children: onSubmit ? /* @__PURE__ */ jsx11(
           "form",
           {
             onSubmit,
@@ -1032,7 +1079,7 @@ var Dialog = React9.forwardRef(
 Dialog.displayName = "Dialog";
 
 // src/components/overlays/Menu.tsx
-import React10, {
+import React11, {
   createContext as createContext2,
   useContext as useContext2,
   useState as useState5,
@@ -1042,7 +1089,7 @@ import React10, {
   useId as useId2
 } from "react";
 import { createPortal as createPortal4 } from "react-dom";
-import { jsx as jsx11 } from "react/jsx-runtime";
+import { jsx as jsx12 } from "react/jsx-runtime";
 var MenuContext = createContext2(null);
 function useMenu() {
   const context = useContext2(MenuContext);
@@ -1079,7 +1126,7 @@ function Menu({
   const toggleMenu = useCallback3(() => {
     setIsOpen((prev) => !prev);
   }, [setIsOpen]);
-  return /* @__PURE__ */ jsx11(
+  return /* @__PURE__ */ jsx12(
     MenuContext.Provider,
     {
       value: {
@@ -1095,7 +1142,7 @@ function Menu({
     }
   );
 }
-var MenuTrigger = React10.forwardRef(
+var MenuTrigger = React11.forwardRef(
   ({ asChild = false, children, onClick, ...props }, forwardedRef) => {
     const { isOpen, toggleMenu, triggerRef, menuId } = useMenu();
     const handleClick = (e) => {
@@ -1113,9 +1160,9 @@ var MenuTrigger = React10.forwardRef(
         forwardedRef.current = node;
       }
     };
-    if (asChild && React10.isValidElement(children)) {
+    if (asChild && React11.isValidElement(children)) {
       const child = children;
-      return React10.cloneElement(child, {
+      return React11.cloneElement(child, {
         ref: handleRef,
         onClick: (e) => {
           child.props.onClick?.(e);
@@ -1126,7 +1173,7 @@ var MenuTrigger = React10.forwardRef(
         "aria-controls": isOpen ? menuId : void 0
       });
     }
-    return /* @__PURE__ */ jsx11(
+    return /* @__PURE__ */ jsx12(
       "button",
       {
         ref: handleRef,
@@ -1142,7 +1189,7 @@ var MenuTrigger = React10.forwardRef(
   }
 );
 MenuTrigger.displayName = "MenuTrigger";
-var MenuContent = React10.forwardRef(
+var MenuContent = React11.forwardRef(
   ({
     align = "end",
     side = "bottom",
@@ -1269,7 +1316,7 @@ var MenuContent = React10.forwardRef(
         forwardedRef.current = node;
       }
     };
-    const contentNode = /* @__PURE__ */ jsx11(
+    const contentNode = /* @__PURE__ */ jsx12(
       "div",
       {
         ref: handleRef,
@@ -1291,7 +1338,7 @@ var MenuContent = React10.forwardRef(
   }
 );
 MenuContent.displayName = "MenuContent";
-var MenuItem = React10.forwardRef(
+var MenuItem = React11.forwardRef(
   ({ preventClose = false, className = "", children, onClick, disabled, ...props }, ref) => {
     const { closeMenu } = useMenu();
     const handleClick = (e) => {
@@ -1301,7 +1348,7 @@ var MenuItem = React10.forwardRef(
         closeMenu();
       }
     };
-    return /* @__PURE__ */ jsx11(
+    return /* @__PURE__ */ jsx12(
       "button",
       {
         ref,
@@ -1320,7 +1367,7 @@ MenuItem.displayName = "MenuItem";
 
 // src/components/ui/Chip.tsx
 import { forwardRef } from "react";
-import { jsx as jsx12, jsxs as jsxs7 } from "react/jsx-runtime";
+import { jsx as jsx13, jsxs as jsxs8 } from "react/jsx-runtime";
 var Chip = forwardRef(function Chip2({
   active = false,
   icon,
@@ -1329,7 +1376,7 @@ var Chip = forwardRef(function Chip2({
   type = "button",
   ...props
 }, ref) {
-  return /* @__PURE__ */ jsxs7(
+  return /* @__PURE__ */ jsxs8(
     "button",
     {
       ref,
@@ -1337,14 +1384,14 @@ var Chip = forwardRef(function Chip2({
       className: `rv-chip ${active ? "rv-chipActive" : ""} ${className}`.trim(),
       ...props,
       children: [
-        icon && /* @__PURE__ */ jsx12("span", { className: "rv-chipIcon", children: icon }),
-        /* @__PURE__ */ jsx12("span", { children })
+        icon && /* @__PURE__ */ jsx13("span", { className: "rv-chipIcon", children: icon }),
+        /* @__PURE__ */ jsx13("span", { children })
       ]
     }
   );
 });
 var ChipGroup = forwardRef(function ChipGroup2({ children, className = "", ...props }, ref) {
-  return /* @__PURE__ */ jsx12("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
+  return /* @__PURE__ */ jsx13("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
 });
 
 // src/components/ui/Dropzone.tsx
@@ -1354,7 +1401,7 @@ import {
   useRef as useRef4,
   useImperativeHandle
 } from "react";
-import { Fragment as Fragment3, jsx as jsx13, jsxs as jsxs8 } from "react/jsx-runtime";
+import { Fragment as Fragment3, jsx as jsx14, jsxs as jsxs9 } from "react/jsx-runtime";
 var Dropzone = forwardRef2(function Dropzone2({
   onDropFiles,
   title = "Drag and drop media here",
@@ -1402,7 +1449,7 @@ var Dropzone = forwardRef2(function Dropzone2({
       onDropFiles?.(e.target.files);
     }
   };
-  return /* @__PURE__ */ jsxs8(
+  return /* @__PURE__ */ jsxs9(
     "div",
     {
       onClick: () => {
@@ -1418,7 +1465,7 @@ var Dropzone = forwardRef2(function Dropzone2({
       tabIndex: 0,
       ...props,
       children: [
-        /* @__PURE__ */ jsx13(
+        /* @__PURE__ */ jsx14(
           "input",
           {
             ref: inputRef,
@@ -1430,10 +1477,10 @@ var Dropzone = forwardRef2(function Dropzone2({
             style: { display: "none" }
           }
         ),
-        children ? children : /* @__PURE__ */ jsxs8(Fragment3, { children: [
-          icon && /* @__PURE__ */ jsx13("div", { className: "rv-dropzoneIcon", children: icon }),
-          /* @__PURE__ */ jsx13("div", { className: "rv-dropzoneTitle", children: title }),
-          /* @__PURE__ */ jsx13("div", { className: "rv-dropzoneHint", children: hint })
+        children ? children : /* @__PURE__ */ jsxs9(Fragment3, { children: [
+          icon && /* @__PURE__ */ jsx14("div", { className: "rv-dropzoneIcon", children: icon }),
+          /* @__PURE__ */ jsx14("div", { className: "rv-dropzoneTitle", children: title }),
+          /* @__PURE__ */ jsx14("div", { className: "rv-dropzoneHint", children: hint })
         ] })
       ]
     }
@@ -1442,7 +1489,7 @@ var Dropzone = forwardRef2(function Dropzone2({
 
 // src/components/ui/MediaCard.tsx
 import { forwardRef as forwardRef3 } from "react";
-import { jsx as jsx14, jsxs as jsxs9 } from "react/jsx-runtime";
+import { jsx as jsx15, jsxs as jsxs10 } from "react/jsx-runtime";
 var MediaCard = forwardRef3(function MediaCard2({
   src,
   alt = "Media thumbnail",
@@ -1462,7 +1509,7 @@ var MediaCard = forwardRef3(function MediaCard2({
 }, ref) {
   const isList = variant === "list";
   const computedAspectRatio = typeof aspectRatio === "string" && aspectRatio.includes(":") ? aspectRatio.replace(":", " / ") : aspectRatio;
-  return /* @__PURE__ */ jsxs9(
+  return /* @__PURE__ */ jsxs10(
     "div",
     {
       ref,
@@ -1475,24 +1522,24 @@ var MediaCard = forwardRef3(function MediaCard2({
       },
       ...props,
       children: [
-        /* @__PURE__ */ jsxs9(
+        /* @__PURE__ */ jsxs10(
           "div",
           {
             className: "rv-mediaCardThumbWrapper",
             style: !isList && computedAspectRatio ? { aspectRatio: computedAspectRatio } : void 0,
             children: [
-              mediaContent ? mediaContent : src ? /* @__PURE__ */ jsx14("img", { src, alt, className: "rv-mediaCardThumb", loading: "lazy" }) : null,
-              badge && /* @__PURE__ */ jsx14("div", { className: "rv-mediaCardBadge", children: badge }),
-              !isList && (overlay || actions) && /* @__PURE__ */ jsxs9("div", { className: "rv-mediaCardOverlay", children: [
+              mediaContent ? mediaContent : src ? /* @__PURE__ */ jsx15("img", { src, alt, className: "rv-mediaCardThumb", loading: "lazy" }) : null,
+              badge && /* @__PURE__ */ jsx15("div", { className: "rv-mediaCardBadge", children: badge }),
+              !isList && (overlay || actions) && /* @__PURE__ */ jsxs10("div", { className: "rv-mediaCardOverlay", children: [
                 overlay,
-                actions && /* @__PURE__ */ jsx14("div", { className: "rv-mediaCardActions", children: actions })
+                actions && /* @__PURE__ */ jsx15("div", { className: "rv-mediaCardActions", children: actions })
               ] })
             ]
           }
         ),
-        (title || subtitle || children) && /* @__PURE__ */ jsxs9("div", { className: "rv-mediaCardContent", children: [
-          title && /* @__PURE__ */ jsx14("div", { className: "rv-mediaCardTitle", children: title }),
-          subtitle && /* @__PURE__ */ jsx14("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
+        (title || subtitle || children) && /* @__PURE__ */ jsxs10("div", { className: "rv-mediaCardContent", children: [
+          title && /* @__PURE__ */ jsx15("div", { className: "rv-mediaCardTitle", children: title }),
+          subtitle && /* @__PURE__ */ jsx15("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
           children
         ] })
       ]
@@ -1502,7 +1549,7 @@ var MediaCard = forwardRef3(function MediaCard2({
 
 // src/components/ui/MasonryGrid.tsx
 import { useEffect as useEffect6, useMemo, useRef as useRef5, useState as useState7 } from "react";
-import { Fragment as Fragment4, jsx as jsx15 } from "react/jsx-runtime";
+import { Fragment as Fragment4, jsx as jsx16 } from "react/jsx-runtime";
 function MasonryGrid({
   items,
   renderItem,
@@ -1564,9 +1611,9 @@ function MasonryGrid({
     return bins;
   }, [items, columnCount]);
   if (items.length === 0 && emptyState) {
-    return /* @__PURE__ */ jsx15(Fragment4, { children: emptyState });
+    return /* @__PURE__ */ jsx16(Fragment4, { children: emptyState });
   }
-  return /* @__PURE__ */ jsx15(
+  return /* @__PURE__ */ jsx16(
     "div",
     {
       ref: containerRef,
@@ -1577,14 +1624,14 @@ function MasonryGrid({
         ...style
       },
       ...props,
-      children: columnBins.map((col, colIdx) => /* @__PURE__ */ jsx15(
+      children: columnBins.map((col, colIdx) => /* @__PURE__ */ jsx16(
         "div",
         {
           className: "rv-masonryCol",
           style: {
             gap: gap !== void 0 ? typeof gap === "number" ? `${gap}px` : gap : void 0
           },
-          children: col.map(({ item, originalIndex }) => /* @__PURE__ */ jsx15("div", { className: "rv-masonryItem", children: renderItem(item, originalIndex) }, keyExtractor(item, originalIndex)))
+          children: col.map(({ item, originalIndex }) => /* @__PURE__ */ jsx16("div", { className: "rv-masonryItem", children: renderItem(item, originalIndex) }, keyExtractor(item, originalIndex)))
         },
         colIdx
       ))
@@ -1593,8 +1640,8 @@ function MasonryGrid({
 }
 
 // src/components/ui/SplitButton.tsx
-import React15, { forwardRef as forwardRef4 } from "react";
-import { Fragment as Fragment5, jsx as jsx16, jsxs as jsxs10 } from "react/jsx-runtime";
+import React16, { forwardRef as forwardRef4 } from "react";
+import { Fragment as Fragment5, jsx as jsx17, jsxs as jsxs11 } from "react/jsx-runtime";
 var VARIANT_CLASS_MAP = {
   primary: "rv-btnPrimary",
   secondary: "rv-btnSecondary",
@@ -1602,7 +1649,7 @@ var VARIANT_CLASS_MAP = {
   danger: "rv-btnDanger",
   ghost: "rv-btnGhost"
 };
-var DefaultChevronDown = () => /* @__PURE__ */ jsx16(
+var DefaultChevronDown = () => /* @__PURE__ */ jsx17(
   "svg",
   {
     width: "14",
@@ -1614,13 +1661,13 @@ var DefaultChevronDown = () => /* @__PURE__ */ jsx16(
     strokeLinecap: "round",
     strokeLinejoin: "round",
     style: { display: "block" },
-    children: /* @__PURE__ */ jsx16("path", { d: "m6 9 6 6 6-6" })
+    children: /* @__PURE__ */ jsx17("path", { d: "m6 9 6 6 6-6" })
   }
 );
 var SplitButtonMain = forwardRef4(
   function SplitButtonMain2({ variant = "primary", className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ jsx16(
+    return /* @__PURE__ */ jsx17(
       "button",
       {
         ref,
@@ -1635,14 +1682,14 @@ var SplitButtonMain = forwardRef4(
 var SplitButtonToggle = forwardRef4(
   function SplitButtonToggle2({ variant = "primary", isActive = false, className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ jsx16(
+    return /* @__PURE__ */ jsx17(
       "button",
       {
         ref,
         type: "button",
         className: `rv-btn rv-btnIcon ${variantClass} rv-splitBtnToggle ${isActive ? "rv-btnActive" : ""} ${className}`.trim(),
         ...props,
-        children: children || /* @__PURE__ */ jsx16(DefaultChevronDown, {})
+        children: children || /* @__PURE__ */ jsx17(DefaultChevronDown, {})
       }
     );
   }
@@ -1662,15 +1709,15 @@ var SplitButton = forwardRef4(
     children,
     ...props
   }, ref) {
-    const isCustomChildren = React15.Children.count(children) > 1;
-    return /* @__PURE__ */ jsx16(
+    const isCustomChildren = React16.Children.count(children) > 1;
+    return /* @__PURE__ */ jsx17(
       "div",
       {
         ref,
         className: `rv-splitBtn ${className}`.trim(),
         ...props,
-        children: isCustomChildren ? children : /* @__PURE__ */ jsxs10(Fragment5, { children: [
-          /* @__PURE__ */ jsxs10(
+        children: isCustomChildren ? children : /* @__PURE__ */ jsxs11(Fragment5, { children: [
+          /* @__PURE__ */ jsxs11(
             SplitButtonMain,
             {
               variant,
@@ -1679,11 +1726,11 @@ var SplitButton = forwardRef4(
               "aria-label": actionAriaLabel,
               children: [
                 actionIcon,
-                children && /* @__PURE__ */ jsx16("span", { children })
+                children && /* @__PURE__ */ jsx17("span", { children })
               ]
             }
           ),
-          /* @__PURE__ */ jsx16(
+          /* @__PURE__ */ jsx17(
             SplitButtonToggle,
             {
               variant,
@@ -1735,6 +1782,7 @@ export {
   SidebarBody,
   SidebarPanel,
   SidebarRail,
+  SidebarToggle,
   SplitButton,
   SplitButtonMain,
   SplitButtonToggle,

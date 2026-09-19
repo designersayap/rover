@@ -55,10 +55,12 @@
 
 .rv-sidebarToggle {
     margin-right: var(--rv-space-sm);
+    flex-shrink: 0;
 }
 
-@media (max-width: 1023px) {
-    .rv-sidebarToggle {
-        display: none !important;
-    }
+.rv-sidebarToggleIcon {
+    width: 18px;
+    height: 18px;
+    color: inherit;
 }
+

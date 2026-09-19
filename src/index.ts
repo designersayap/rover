@@ -67,12 +67,20 @@ export {
   TopbarLogo,
 } from './components/topbar/Topbar';
 
+export {
+  SidebarToggle,
+} from './components/topbar/SidebarToggle';
+
 export type {
   TopbarProps,
   TopbarLeftProps,
   TopbarRightProps,
   TopbarLogoProps,
 } from './components/topbar/Topbar';
+
+export type {
+  SidebarToggleProps,
+} from './components/topbar/SidebarToggle';
 
 // Overlays exports
 export {
