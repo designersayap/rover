@@ -5,6 +5,8 @@
 
 .rv-sidebarShell {
     width: var(--rv-w-sidebar);
+    min-width: 0;
+    flex-shrink: 0;
     background: transparent;
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
         padding 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -31,12 +33,22 @@
 
 .rv-sidebarCollapsed {
     width: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
     opacity: 0 !important;
     overflow: hidden !important;
     border: none !important;
-    pointer-events: none;
+    pointer-events: none !important;
+    flex-shrink: 0 !important;
+}
+
+.rv-sidebarCollapsed .rv-sidebar {
+    margin: 0 !important;
+    opacity: 0 !important;
+    border: none !important;
+    pointer-events: none !important;
 }
 
 .rv-sidebar {

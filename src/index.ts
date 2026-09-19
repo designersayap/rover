@@ -28,11 +28,11 @@ export type {
   EmptyStateProps,
 } from './components/shell/Canvas';
 
-// Sidebar exports
 export {
   Sidebar,
   SidebarBody,
   SidebarPanel,
+  MobileSidebarDrawer,
 } from './components/sidebar/Sidebar';
 
 export type {
@@ -40,6 +40,7 @@ export type {
   SidebarState,
   SidebarBodyProps,
   SidebarPanelProps,
+  MobileSidebarDrawerProps,
 } from './components/sidebar/Sidebar';
 
 export {

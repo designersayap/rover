@@ -49,6 +49,7 @@ __export(index_exports, {
   MenuContent: () => MenuContent,
   MenuItem: () => MenuItem,
   MenuTrigger: () => MenuTrigger,
+  MobileSidebarDrawer: () => MobileSidebarDrawer,
   Modal: () => Modal,
   ModalBody: () => ModalBody,
   ModalDescription: () => ModalDescription,
@@ -205,7 +206,7 @@ var EmptyState = import_react2.default.forwardRef(
 EmptyState.displayName = "EmptyState";
 
 // src/components/sidebar/Sidebar.tsx
-var import_react4 = __toESM(require("react"));
+var import_react5 = __toESM(require("react"));
 
 // src/components/sidebar/ResizeHandle.tsx
 var import_react3 = require("react");
@@ -248,9 +249,70 @@ var ResizeHandle = ({
   );
 };
 
-// src/components/sidebar/Sidebar.tsx
+// src/components/sidebar/MobileSidebarDrawer.tsx
+var import_react4 = require("react");
+var import_react_dom = require("react-dom");
 var import_jsx_runtime4 = require("react/jsx-runtime");
-var Sidebar = import_react4.default.forwardRef(
+var MobileSidebarDrawer = ({
+  isOpen,
+  onClose,
+  children,
+  className = "",
+  overlayClassName = "",
+  drawerClassName = "",
+  width,
+  container,
+  style,
+  "aria-label": ariaLabel = "Mobile navigation drawer"
+}) => {
+  const [mounted, setMounted] = (0, import_react4.useState)(false);
+  (0, import_react4.useEffect)(() => {
+    setMounted(true);
+  }, []);
+  (0, import_react4.useEffect)(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+  if (!mounted || !isOpen) return null;
+  const target = container || (typeof document !== "undefined" ? document.body : null);
+  if (!target) return null;
+  const drawerStyle = {
+    ...width !== void 0 ? { width: typeof width === "number" ? `${width}px` : width } : {},
+    ...style
+  };
+  return (0, import_react_dom.createPortal)(
+    /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+      "div",
+      {
+        className: `rv-mobileSidebarSideOverlay rv-mobileSidebarOpen ${overlayClassName} ${className}`.trim(),
+        onClick: onClose,
+        role: "dialog",
+        "aria-modal": "true",
+        "aria-label": ariaLabel,
+        children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+          "div",
+          {
+            className: `rv-mobileSidebarSideDrawer rv-mobileSidebarSideDrawerOpen ${drawerClassName}`.trim(),
+            onClick: (e) => e.stopPropagation(),
+            style: drawerStyle,
+            children
+          }
+        )
+      }
+    ),
+    target
+  );
+};
+
+// src/components/sidebar/Sidebar.tsx
+var import_jsx_runtime5 = require("react/jsx-runtime");
+var Sidebar = import_react5.default.forwardRef(
   ({
     children,
     state = "full",
@@ -261,6 +323,12 @@ var Sidebar = import_react4.default.forwardRef(
     style,
     dataBuilderUi = true,
     innerClassName = "",
+    mobileOpen = false,
+    onCloseMobile,
+    mobileContent,
+    mobileDrawerClassName = "",
+    mobileOverlayClassName = "",
+    mobileDrawerWidth,
     ...props
   }, ref) => {
     const stateClass = state === "rail-only" ? "rv-sidebarRailOnly" : state === "collapsed" ? "rv-sidebarCollapsed" : "";
@@ -268,27 +336,41 @@ var Sidebar = import_react4.default.forwardRef(
       ...style,
       ...width !== void 0 && state === "full" ? { width: typeof width === "number" ? `${width}px` : width } : {}
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-      "aside",
-      {
-        ref,
-        className: `rv-sidebarShell ${stateClass} ${className}`.trim(),
-        style: inlineStyle,
-        "data-builder-ui": dataBuilderUi ? "true" : void 0,
-        ...props,
-        children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)("div", { className: `rv-sidebar ${innerClassName}`.trim(), children: [
-          children,
-          resizable && state === "full" && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(ResizeHandle, { onResize })
-        ] })
-      }
-    );
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(import_jsx_runtime5.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+        "aside",
+        {
+          ref,
+          className: `rv-sidebarShell ${stateClass} ${className}`.trim(),
+          style: inlineStyle,
+          "data-builder-ui": dataBuilderUi ? "true" : void 0,
+          ...props,
+          children: /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: `rv-sidebar ${innerClassName}`.trim(), children: [
+            children,
+            resizable && state === "full" && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(ResizeHandle, { onResize })
+          ] })
+        }
+      ),
+      mobileOpen && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+        MobileSidebarDrawer,
+        {
+          isOpen: mobileOpen,
+          onClose: onCloseMobile || (() => {
+          }),
+          className: mobileOverlayClassName,
+          drawerClassName: mobileDrawerClassName,
+          width: mobileDrawerWidth,
+          children: mobileContent !== void 0 ? mobileContent : /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: `rv-sidebarShell ${stateClass} ${className}`.trim(), style: { height: "100%", width: "100%", display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("div", { className: `rv-sidebar ${innerClassName}`.trim(), style: { height: "100%", margin: 0 }, children }) })
+        }
+      )
+    ] });
   }
 );
 Sidebar.displayName = "Sidebar";
-var SidebarBody = import_react4.default.forwardRef(
+var SidebarBody = import_react5.default.forwardRef(
   ({ children, className = "", open, ...props }, ref) => {
     const openClass = open ? "rv-sidebarBodyOpen" : "";
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
       "div",
       {
         ref,
@@ -300,9 +382,9 @@ var SidebarBody = import_react4.default.forwardRef(
   }
 );
 SidebarBody.displayName = "SidebarBody";
-var SidebarPanel = import_react4.default.forwardRef(
+var SidebarPanel = import_react5.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
       "div",
       {
         ref,
@@ -316,7 +398,7 @@ var SidebarPanel = import_react4.default.forwardRef(
 SidebarPanel.displayName = "SidebarPanel";
 
 // src/components/sidebar/SidebarRail.tsx
-var import_jsx_runtime5 = require("react/jsx-runtime");
+var import_jsx_runtime6 = require("react/jsx-runtime");
 var SidebarRail = ({
   items = [],
   activeTab,
@@ -327,8 +409,8 @@ var SidebarRail = ({
 }) => {
   const activeIndex = items.findIndex((item) => item.id === activeTab);
   const showIndicator = activeIndex >= 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)("div", { className: `rv-sidebarRail ${className}`.trim(), children: [
-    showIndicator && /* @__PURE__ */ (0, import_jsx_runtime5.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)("div", { className: `rv-sidebarRail ${className}`.trim(), children: [
+    showIndicator && /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
       "div",
       {
         className: "rv-sidebarRailIndicator",
@@ -340,7 +422,7 @@ var SidebarRail = ({
     ),
     items.map((item) => {
       const isActive = item.id === activeTab;
-      return /* @__PURE__ */ (0, import_jsx_runtime5.jsxs)(
+      return /* @__PURE__ */ (0, import_jsx_runtime6.jsxs)(
         "button",
         {
           type: "button",
@@ -349,7 +431,7 @@ var SidebarRail = ({
           "aria-selected": isActive,
           children: [
             item.icon,
-            /* @__PURE__ */ (0, import_jsx_runtime5.jsx)("span", { className: "rv-sidebarRailLabel", children: item.label })
+            /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("span", { className: "rv-sidebarRailLabel", children: item.label })
           ]
         },
         item.id
@@ -360,11 +442,11 @@ var SidebarRail = ({
 };
 
 // src/components/topbar/Topbar.tsx
-var import_react5 = __toESM(require("react"));
-var import_jsx_runtime6 = require("react/jsx-runtime");
-var Topbar = import_react5.default.forwardRef(
+var import_react6 = __toESM(require("react"));
+var import_jsx_runtime7 = require("react/jsx-runtime");
+var Topbar = import_react6.default.forwardRef(
   ({ children, className = "", dataBuilderUi = true, ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
       "header",
       {
         ref,
@@ -377,29 +459,29 @@ var Topbar = import_react5.default.forwardRef(
   }
 );
 Topbar.displayName = "Topbar";
-var TopbarLeft = import_react5.default.forwardRef(
+var TopbarLeft = import_react6.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { ref, className: `rv-topbarLeft ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { ref, className: `rv-topbarLeft ${className}`.trim(), ...props, children });
   }
 );
 TopbarLeft.displayName = "TopbarLeft";
-var TopbarRight = import_react5.default.forwardRef(
+var TopbarRight = import_react6.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("div", { ref, className: `rv-topbarRight ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("div", { ref, className: `rv-topbarRight ${className}`.trim(), ...props, children });
   }
 );
 TopbarRight.displayName = "TopbarRight";
-var TopbarLogo = import_react5.default.forwardRef(
+var TopbarLogo = import_react6.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime6.jsx)("h1", { ref, className: `rv-topbarLogo ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("h1", { ref, className: `rv-topbarLogo ${className}`.trim(), ...props, children });
   }
 );
 TopbarLogo.displayName = "TopbarLogo";
 
 // src/components/topbar/SidebarToggle.tsx
-var import_react6 = __toESM(require("react"));
-var import_jsx_runtime7 = require("react/jsx-runtime");
-var SidebarToggle = import_react6.default.forwardRef(
+var import_react7 = __toESM(require("react"));
+var import_jsx_runtime8 = require("react/jsx-runtime");
+var SidebarToggle = import_react7.default.forwardRef(
   ({
     className = "",
     isOpen,
@@ -411,7 +493,7 @@ var SidebarToggle = import_react6.default.forwardRef(
     ...props
   }, ref) => {
     const hideMobileClass = hideOnMobile ? "rv-sidebarToggleHideMobile" : "";
-    return /* @__PURE__ */ (0, import_jsx_runtime7.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
       "button",
       {
         ref,
@@ -420,7 +502,7 @@ var SidebarToggle = import_react6.default.forwardRef(
         "aria-label": ariaLabel,
         "aria-expanded": isOpen,
         ...props,
-        children: children ? children : icon ? icon : /* @__PURE__ */ (0, import_jsx_runtime7.jsxs)(
+        children: children ? children : icon ? icon : /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(
           "svg",
           {
             width: "18",
@@ -433,9 +515,9 @@ var SidebarToggle = import_react6.default.forwardRef(
             strokeLinejoin: "round",
             className: "rv-sidebarToggleIcon",
             children: [
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("line", { x1: "3", y1: "12", x2: "21", y2: "12" }),
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("line", { x1: "3", y1: "6", x2: "21", y2: "6" }),
-              /* @__PURE__ */ (0, import_jsx_runtime7.jsx)("line", { x1: "3", y1: "18", x2: "21", y2: "18" })
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("line", { x1: "3", y1: "12", x2: "21", y2: "12" }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("line", { x1: "3", y1: "6", x2: "21", y2: "6" }),
+              /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("line", { x1: "3", y1: "18", x2: "21", y2: "18" })
             ]
           }
         )
@@ -446,15 +528,15 @@ var SidebarToggle = import_react6.default.forwardRef(
 SidebarToggle.displayName = "SidebarToggle";
 
 // src/components/overlays/Popover.tsx
-var import_react7 = __toESM(require("react"));
-var import_react_dom = require("react-dom");
-var import_jsx_runtime8 = require("react/jsx-runtime");
-var PopoverContext = (0, import_react7.createContext)(null);
+var import_react8 = __toESM(require("react"));
+var import_react_dom2 = require("react-dom");
+var import_jsx_runtime9 = require("react/jsx-runtime");
+var PopoverContext = (0, import_react8.createContext)(null);
 function usePopover() {
-  const context = (0, import_react7.useContext)(PopoverContext);
+  const context = (0, import_react8.useContext)(PopoverContext);
   return context;
 }
-var Popover = import_react7.default.forwardRef(
+var Popover = import_react8.default.forwardRef(
   ({
     // Compound props
     open: controlledOpen,
@@ -475,13 +557,13 @@ var Popover = import_react7.default.forwardRef(
     ...props
   }, ref) => {
     const isExplicitLegacy = legacyIsOpen !== void 0 || position !== void 0 || onClose !== void 0;
-    const [uncontrolledOpen, setUncontrolledOpen] = (0, import_react7.useState)(defaultOpen);
-    const triggerRef = (0, import_react7.useRef)(null);
-    const contentRef = (0, import_react7.useRef)(null);
-    const popoverId = (0, import_react7.useId)();
+    const [uncontrolledOpen, setUncontrolledOpen] = (0, import_react8.useState)(defaultOpen);
+    const triggerRef = (0, import_react8.useRef)(null);
+    const contentRef = (0, import_react8.useRef)(null);
+    const popoverId = (0, import_react8.useId)();
     const isControlled = controlledOpen !== void 0;
     const isOpen = isControlled ? controlledOpen : isExplicitLegacy ? Boolean(legacyIsOpen) : uncontrolledOpen;
-    const setIsOpen = (0, import_react7.useCallback)(
+    const setIsOpen = (0, import_react8.useCallback)(
       (action) => {
         const nextOpen = typeof action === "function" ? action(isOpen) : action;
         if (!isControlled && !isExplicitLegacy) {
@@ -494,10 +576,10 @@ var Popover = import_react7.default.forwardRef(
       },
       [isControlled, isExplicitLegacy, isOpen, onOpenChange, onClose]
     );
-    const closePopover = (0, import_react7.useCallback)(() => {
+    const closePopover = (0, import_react8.useCallback)(() => {
       setIsOpen(false);
     }, [setIsOpen]);
-    const togglePopover = (0, import_react7.useCallback)(() => {
+    const togglePopover = (0, import_react8.useCallback)(() => {
       setIsOpen((prev) => !prev);
     }, [setIsOpen]);
     const contextValue = {
@@ -511,7 +593,7 @@ var Popover = import_react7.default.forwardRef(
       isCompound: !isExplicitLegacy
     };
     if (!isExplicitLegacy) {
-      return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(PopoverContext.Provider, { value: contextValue, children });
+      return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(PopoverContext.Provider, { value: contextValue, children });
     }
     if (!isOpen) return null;
     const isMenuVariant = variant === "menu";
@@ -558,8 +640,8 @@ var Popover = import_react7.default.forwardRef(
         };
       }
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsxs)(PopoverContext.Provider, { value: contextValue, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(PopoverContext.Provider, { value: contextValue, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
         "div",
         {
           className: `rv-popoverOverlay ${overlayClassName}`.trim(),
@@ -568,7 +650,7 @@ var Popover = import_react7.default.forwardRef(
           "aria-hidden": "true"
         }
       ),
-      /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
         "div",
         {
           ref,
@@ -586,7 +668,7 @@ var Popover = import_react7.default.forwardRef(
   }
 );
 Popover.displayName = "Popover";
-var PopoverTrigger = import_react7.default.forwardRef(
+var PopoverTrigger = import_react8.default.forwardRef(
   ({ asChild = false, children, onClick, ...props }, forwardedRef) => {
     const context = usePopover();
     const isOpen = context?.isOpen ?? false;
@@ -611,9 +693,9 @@ var PopoverTrigger = import_react7.default.forwardRef(
         forwardedRef.current = node;
       }
     };
-    if (asChild && import_react7.default.isValidElement(children)) {
+    if (asChild && import_react8.default.isValidElement(children)) {
       const child = children;
-      return import_react7.default.cloneElement(child, {
+      return import_react8.default.cloneElement(child, {
         ref: handleRef,
         onClick: (e) => {
           child.props.onClick?.(e);
@@ -624,7 +706,7 @@ var PopoverTrigger = import_react7.default.forwardRef(
         "aria-controls": isOpen ? popoverId : void 0
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
       "button",
       {
         ref: handleRef,
@@ -640,7 +722,7 @@ var PopoverTrigger = import_react7.default.forwardRef(
   }
 );
 PopoverTrigger.displayName = "PopoverTrigger";
-var PopoverContent = import_react7.default.forwardRef(
+var PopoverContent = import_react8.default.forwardRef(
   ({
     align = "end",
     side = "bottom",
@@ -659,12 +741,12 @@ var PopoverContent = import_react7.default.forwardRef(
     const triggerRef = context?.triggerRef;
     const contentRef = context?.contentRef;
     const popoverId = context?.popoverId ?? "";
-    const [mounted, setMounted] = (0, import_react7.useState)(false);
-    const [positionStyle, setPositionStyle] = (0, import_react7.useState)({});
-    (0, import_react7.useEffect)(() => {
+    const [mounted, setMounted] = (0, import_react8.useState)(false);
+    const [positionStyle, setPositionStyle] = (0, import_react8.useState)({});
+    (0, import_react8.useEffect)(() => {
       setMounted(true);
     }, []);
-    const updatePosition = (0, import_react7.useCallback)(() => {
+    const updatePosition = (0, import_react8.useCallback)(() => {
       if (!triggerRef?.current || typeof window === "undefined") return;
       const triggerRect = triggerRef.current.getBoundingClientRect();
       const viewportPadding = 8;
@@ -722,7 +804,7 @@ var PopoverContent = import_react7.default.forwardRef(
       }
       setPositionStyle(calculatedStyle);
     }, [triggerRef, align, side, sideOffset, width, style]);
-    (0, import_react7.useEffect)(() => {
+    (0, import_react8.useEffect)(() => {
       if (isOpen && triggerRef?.current) {
         updatePosition();
         window.addEventListener("resize", updatePosition);
@@ -733,7 +815,7 @@ var PopoverContent = import_react7.default.forwardRef(
         window.removeEventListener("scroll", updatePosition, true);
       };
     }, [isOpen, triggerRef, updatePosition]);
-    (0, import_react7.useEffect)(() => {
+    (0, import_react8.useEffect)(() => {
       if (!isOpen) return;
       const handlePointerDown = (event) => {
         const target = event.target;
@@ -771,7 +853,7 @@ var PopoverContent = import_react7.default.forwardRef(
         forwardedRef.current = node;
       }
     };
-    const contentNode = /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(
+    const contentNode = /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
       "div",
       {
         ref: handleRef,
@@ -787,33 +869,33 @@ var PopoverContent = import_react7.default.forwardRef(
       }
     );
     if (portal && mounted && typeof document !== "undefined") {
-      return (0, import_react_dom.createPortal)(contentNode, document.body);
+      return (0, import_react_dom2.createPortal)(contentNode, document.body);
     }
     return contentNode;
   }
 );
 PopoverContent.displayName = "PopoverContent";
-var PopoverHeader = import_react7.default.forwardRef(
+var PopoverHeader = import_react8.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("div", { ref, className: `rv-popoverHeader ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("div", { ref, className: `rv-popoverHeader ${className}`.trim(), ...props, children });
   }
 );
 PopoverHeader.displayName = "PopoverHeader";
-var PopoverTitle = import_react7.default.forwardRef(
+var PopoverTitle = import_react8.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime8.jsx)("span", { ref, className: `rv-popoverTitle ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)("span", { ref, className: `rv-popoverTitle ${className}`.trim(), ...props, children });
   }
 );
 PopoverTitle.displayName = "PopoverTitle";
-var PopoverMenu = import_react7.default.forwardRef(
-  ({ variant = "menu", ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime8.jsx)(Popover, { ref, variant, ...props })
+var PopoverMenu = import_react8.default.forwardRef(
+  ({ variant = "menu", ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(Popover, { ref, variant, ...props })
 );
 PopoverMenu.displayName = "PopoverMenu";
 
 // src/components/overlays/Tooltip.tsx
-var import_react8 = require("react");
-var import_react_dom2 = require("react-dom");
-var import_jsx_runtime9 = require("react/jsx-runtime");
+var import_react9 = require("react");
+var import_react_dom3 = require("react-dom");
+var import_jsx_runtime10 = require("react/jsx-runtime");
 var Tooltip = ({
   content,
   children,
@@ -822,17 +904,17 @@ var Tooltip = ({
   className = "",
   zIndex = 9999
 }) => {
-  const [isVisible, setIsVisible] = (0, import_react8.useState)(false);
-  const [tooltipStyle, setTooltipStyle] = (0, import_react8.useState)({
+  const [isVisible, setIsVisible] = (0, import_react9.useState)(false);
+  const [tooltipStyle, setTooltipStyle] = (0, import_react9.useState)({
     top: -9999,
     left: -9999,
     opacity: 0
   });
-  const triggerRef = (0, import_react8.useRef)(null);
-  const tooltipRef = (0, import_react8.useRef)(null);
-  const timeoutRef = (0, import_react8.useRef)(null);
-  const [mounted, setMounted] = (0, import_react8.useState)(false);
-  (0, import_react8.useEffect)(() => setMounted(true), []);
+  const triggerRef = (0, import_react9.useRef)(null);
+  const tooltipRef = (0, import_react9.useRef)(null);
+  const timeoutRef = (0, import_react9.useRef)(null);
+  const [mounted, setMounted] = (0, import_react9.useState)(false);
+  (0, import_react9.useEffect)(() => setMounted(true), []);
   const updatePosition = () => {
     if (!triggerRef.current || !tooltipRef.current || !isVisible) return;
     let triggerEl = triggerRef.current;
@@ -878,7 +960,7 @@ var Tooltip = ({
       transition: "opacity 0.15s ease"
     });
   };
-  (0, import_react8.useEffect)(() => {
+  (0, import_react9.useEffect)(() => {
     if (isVisible) {
       updatePosition();
       window.addEventListener("scroll", updatePosition, true);
@@ -899,9 +981,9 @@ var Tooltip = ({
     setIsVisible(false);
     setTooltipStyle({ top: -9999, left: -9999, opacity: 0 });
   };
-  if (!content) return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(import_jsx_runtime9.Fragment, { children });
-  return /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(import_jsx_runtime9.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+  if (!content) return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(import_jsx_runtime10.Fragment, { children });
+  return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)(import_jsx_runtime10.Fragment, { children: [
+    /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
       "div",
       {
         ref: triggerRef,
@@ -911,8 +993,8 @@ var Tooltip = ({
         children
       }
     ),
-    mounted && isVisible && (0, import_react_dom2.createPortal)(
-      /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
+    mounted && isVisible && (0, import_react_dom3.createPortal)(
+      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
         "div",
         {
           ref: tooltipRef,
@@ -928,10 +1010,10 @@ var Tooltip = ({
 };
 
 // src/components/overlays/Modal.tsx
-var import_react9 = __toESM(require("react"));
-var import_react_dom3 = require("react-dom");
-var import_jsx_runtime10 = require("react/jsx-runtime");
-var Modal = import_react9.default.forwardRef(
+var import_react10 = __toESM(require("react"));
+var import_react_dom4 = require("react-dom");
+var import_jsx_runtime11 = require("react/jsx-runtime");
+var Modal = import_react10.default.forwardRef(
   ({
     isOpen = false,
     onClose,
@@ -947,11 +1029,11 @@ var Modal = import_react9.default.forwardRef(
     style,
     ...props
   }, ref) => {
-    const [mounted, setMounted] = (0, import_react9.useState)(false);
-    (0, import_react9.useEffect)(() => {
+    const [mounted, setMounted] = (0, import_react10.useState)(false);
+    (0, import_react10.useEffect)(() => {
       setMounted(true);
     }, []);
-    (0, import_react9.useEffect)(() => {
+    (0, import_react10.useEffect)(() => {
       if (!isOpen || !closeOnEsc || !onClose) return;
       const handleKeyDown = (e) => {
         if (e.key === "Escape") {
@@ -962,7 +1044,7 @@ var Modal = import_react9.default.forwardRef(
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
     }, [isOpen, closeOnEsc, onClose]);
-    (0, import_react9.useEffect)(() => {
+    (0, import_react10.useEffect)(() => {
       if (!isOpen || typeof document === "undefined") return;
       const originalOverflow = document.body.style.overflow;
       document.body.style.overflow = "hidden";
@@ -985,8 +1067,8 @@ var Modal = import_react9.default.forwardRef(
       ...style,
       ...width !== void 0 ? { width: typeof width === "number" ? `${width}px` : width } : {}
     };
-    return (0, import_react_dom3.createPortal)(
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return (0, import_react_dom4.createPortal)(
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
         "div",
         {
           className: `rv-modalOverlay ${overlayClassName}`.trim(),
@@ -996,7 +1078,7 @@ var Modal = import_react9.default.forwardRef(
             }
           },
           "aria-hidden": "true",
-          children: /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+          children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
             "div",
             {
               ref,
@@ -1017,11 +1099,11 @@ var Modal = import_react9.default.forwardRef(
   }
 );
 Modal.displayName = "Modal";
-var ModalHeader = import_react9.default.forwardRef(
+var ModalHeader = import_react10.default.forwardRef(
   ({ children, className = "", onClose, showCloseButton = false, ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsxs)("div", { ref, className: `rv-modalHeader ${className}`.trim(), ...props, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { className: "rv-modalHeaderContent", children }),
-      showCloseButton && onClose && /* @__PURE__ */ (0, import_jsx_runtime10.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)("div", { ref, className: `rv-modalHeader ${className}`.trim(), ...props, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { className: "rv-modalHeaderContent", children }),
+      showCloseButton && onClose && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
         "button",
         {
           type: "button",
@@ -1036,34 +1118,34 @@ var ModalHeader = import_react9.default.forwardRef(
   }
 );
 ModalHeader.displayName = "ModalHeader";
-var ModalTitle = import_react9.default.forwardRef(
+var ModalTitle = import_react10.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("h3", { ref, className: `rv-modalTitle ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("h3", { ref, className: `rv-modalTitle ${className}`.trim(), ...props, children });
   }
 );
 ModalTitle.displayName = "ModalTitle";
-var ModalDescription = import_react9.default.forwardRef(
+var ModalDescription = import_react10.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("p", { ref, className: `rv-modalDescription ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { ref, className: `rv-modalDescription ${className}`.trim(), ...props, children });
   }
 );
 ModalDescription.displayName = "ModalDescription";
-var ModalBody = import_react9.default.forwardRef(
+var ModalBody = import_react10.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { ref, className: `rv-modalBody ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { ref, className: `rv-modalBody ${className}`.trim(), ...props, children });
   }
 );
 ModalBody.displayName = "ModalBody";
-var ModalFooter = import_react9.default.forwardRef(
+var ModalFooter = import_react10.default.forwardRef(
   ({ children, className = "", ...props }, ref) => {
-    return /* @__PURE__ */ (0, import_jsx_runtime10.jsx)("div", { ref, className: `rv-modalFooter ${className}`.trim(), ...props, children });
+    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("div", { ref, className: `rv-modalFooter ${className}`.trim(), ...props, children });
   }
 );
 ModalFooter.displayName = "ModalFooter";
 
 // src/components/overlays/Dialog.tsx
-var import_react10 = __toESM(require("react"));
-var import_jsx_runtime11 = require("react/jsx-runtime");
+var import_react11 = __toESM(require("react"));
+var import_jsx_runtime12 = require("react/jsx-runtime");
 var variantClassMap = {
   primary: "rv-btnPrimary",
   brand: "rv-btnBrand",
@@ -1071,7 +1153,7 @@ var variantClassMap = {
   secondary: "rv-btnSecondary",
   ghost: "rv-btnGhost"
 };
-var Dialog = import_react10.default.forwardRef(
+var Dialog = import_react11.default.forwardRef(
   ({
     isOpen = false,
     onClose,
@@ -1095,14 +1177,14 @@ var Dialog = import_react10.default.forwardRef(
   }, ref) => {
     const computedActionType = actionType || (onSubmit ? "submit" : "button");
     const actionClass = variantClassMap[actionVariant] || "rv-btnPrimary";
-    const dialogInner = /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(import_jsx_runtime11.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(ModalHeader, { onClose, showCloseButton, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ModalTitle, { children: title }),
-        children && description && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ModalDescription, { children: description })
+    const dialogInner = /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(ModalHeader, { onClose, showCloseButton, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ModalTitle, { children: title }),
+        children && description && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ModalDescription, { children: description })
       ] }),
-      children ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ModalBody, { children }) : description ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(ModalBody, { children: /* @__PURE__ */ (0, import_jsx_runtime11.jsx)("p", { className: "rv-modalDescription", style: { margin: 0 }, children: description }) }) : null,
-      footer !== void 0 ? footer : /* @__PURE__ */ (0, import_jsx_runtime11.jsxs)(ModalFooter, { children: [
-        showCancel && /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+      children ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ModalBody, { children }) : description ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ModalBody, { children: /* @__PURE__ */ (0, import_jsx_runtime12.jsx)("p", { className: "rv-modalDescription", style: { margin: 0 }, children: description }) }) : null,
+      footer !== void 0 ? footer : /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(ModalFooter, { children: [
+        showCancel && /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "button",
           {
             type: "button",
@@ -1112,7 +1194,7 @@ var Dialog = import_react10.default.forwardRef(
             children: cancelLabel
           }
         ),
-        /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "button",
           {
             type: computedActionType,
@@ -1124,7 +1206,7 @@ var Dialog = import_react10.default.forwardRef(
         )
       ] })
     ] });
-    return /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
       Modal,
       {
         ref,
@@ -1132,7 +1214,7 @@ var Dialog = import_react10.default.forwardRef(
         onClose,
         size,
         ...modalProps,
-        children: onSubmit ? /* @__PURE__ */ (0, import_jsx_runtime11.jsx)(
+        children: onSubmit ? /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
           "form",
           {
             onSubmit,
@@ -1153,12 +1235,12 @@ var Dialog = import_react10.default.forwardRef(
 Dialog.displayName = "Dialog";
 
 // src/components/overlays/Menu.tsx
-var import_react11 = __toESM(require("react"));
-var import_react_dom4 = require("react-dom");
-var import_jsx_runtime12 = require("react/jsx-runtime");
-var MenuContext = (0, import_react11.createContext)(null);
+var import_react12 = __toESM(require("react"));
+var import_react_dom5 = require("react-dom");
+var import_jsx_runtime13 = require("react/jsx-runtime");
+var MenuContext = (0, import_react12.createContext)(null);
 function useMenu() {
-  const context = (0, import_react11.useContext)(MenuContext);
+  const context = (0, import_react12.useContext)(MenuContext);
   if (!context) {
     throw new Error("useMenu must be used within a <Menu /> component");
   }
@@ -1170,13 +1252,13 @@ function Menu({
   onOpenChange,
   defaultOpen = false
 }) {
-  const [uncontrolledOpen, setUncontrolledOpen] = (0, import_react11.useState)(defaultOpen);
-  const triggerRef = (0, import_react11.useRef)(null);
-  const contentRef = (0, import_react11.useRef)(null);
-  const menuId = (0, import_react11.useId)();
+  const [uncontrolledOpen, setUncontrolledOpen] = (0, import_react12.useState)(defaultOpen);
+  const triggerRef = (0, import_react12.useRef)(null);
+  const contentRef = (0, import_react12.useRef)(null);
+  const menuId = (0, import_react12.useId)();
   const isControlled = controlledOpen !== void 0;
   const isOpen = isControlled ? controlledOpen : uncontrolledOpen;
-  const setIsOpen = (0, import_react11.useCallback)(
+  const setIsOpen = (0, import_react12.useCallback)(
     (action) => {
       const nextOpen = typeof action === "function" ? action(isOpen) : action;
       if (!isControlled) {
@@ -1186,13 +1268,13 @@ function Menu({
     },
     [isControlled, isOpen, onOpenChange]
   );
-  const closeMenu = (0, import_react11.useCallback)(() => {
+  const closeMenu = (0, import_react12.useCallback)(() => {
     setIsOpen(false);
   }, [setIsOpen]);
-  const toggleMenu = (0, import_react11.useCallback)(() => {
+  const toggleMenu = (0, import_react12.useCallback)(() => {
     setIsOpen((prev) => !prev);
   }, [setIsOpen]);
-  return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
     MenuContext.Provider,
     {
       value: {
@@ -1208,7 +1290,7 @@ function Menu({
     }
   );
 }
-var MenuTrigger = import_react11.default.forwardRef(
+var MenuTrigger = import_react12.default.forwardRef(
   ({ asChild = false, children, onClick, ...props }, forwardedRef) => {
     const { isOpen, toggleMenu, triggerRef, menuId } = useMenu();
     const handleClick = (e) => {
@@ -1226,9 +1308,9 @@ var MenuTrigger = import_react11.default.forwardRef(
         forwardedRef.current = node;
       }
     };
-    if (asChild && import_react11.default.isValidElement(children)) {
+    if (asChild && import_react12.default.isValidElement(children)) {
       const child = children;
-      return import_react11.default.cloneElement(child, {
+      return import_react12.default.cloneElement(child, {
         ref: handleRef,
         onClick: (e) => {
           child.props.onClick?.(e);
@@ -1239,7 +1321,7 @@ var MenuTrigger = import_react11.default.forwardRef(
         "aria-controls": isOpen ? menuId : void 0
       });
     }
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       "button",
       {
         ref: handleRef,
@@ -1255,7 +1337,7 @@ var MenuTrigger = import_react11.default.forwardRef(
   }
 );
 MenuTrigger.displayName = "MenuTrigger";
-var MenuContent = import_react11.default.forwardRef(
+var MenuContent = import_react12.default.forwardRef(
   ({
     align = "end",
     side = "bottom",
@@ -1268,12 +1350,12 @@ var MenuContent = import_react11.default.forwardRef(
     ...props
   }, forwardedRef) => {
     const { isOpen, closeMenu, triggerRef, contentRef, menuId } = useMenu();
-    const [mounted, setMounted] = (0, import_react11.useState)(false);
-    const [positionStyle, setPositionStyle] = (0, import_react11.useState)({});
-    (0, import_react11.useEffect)(() => {
+    const [mounted, setMounted] = (0, import_react12.useState)(false);
+    const [positionStyle, setPositionStyle] = (0, import_react12.useState)({});
+    (0, import_react12.useEffect)(() => {
       setMounted(true);
     }, []);
-    const updatePosition = (0, import_react11.useCallback)(() => {
+    const updatePosition = (0, import_react12.useCallback)(() => {
       if (!triggerRef.current || typeof window === "undefined") return;
       const triggerRect = triggerRef.current.getBoundingClientRect();
       const viewportPadding = 8;
@@ -1335,7 +1417,7 @@ var MenuContent = import_react11.default.forwardRef(
       }
       setPositionStyle(calculatedStyle);
     }, [triggerRef, align, side, sideOffset, width, style]);
-    (0, import_react11.useEffect)(() => {
+    (0, import_react12.useEffect)(() => {
       if (isOpen) {
         updatePosition();
         window.addEventListener("resize", updatePosition);
@@ -1346,7 +1428,7 @@ var MenuContent = import_react11.default.forwardRef(
         window.removeEventListener("scroll", updatePosition, true);
       };
     }, [isOpen, updatePosition]);
-    (0, import_react11.useEffect)(() => {
+    (0, import_react12.useEffect)(() => {
       if (!isOpen) return;
       const handlePointerDown = (event) => {
         const target = event.target;
@@ -1382,7 +1464,7 @@ var MenuContent = import_react11.default.forwardRef(
         forwardedRef.current = node;
       }
     };
-    const contentNode = /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    const contentNode = /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       "div",
       {
         ref: handleRef,
@@ -1398,13 +1480,13 @@ var MenuContent = import_react11.default.forwardRef(
       }
     );
     if (portal && mounted && typeof document !== "undefined") {
-      return (0, import_react_dom4.createPortal)(contentNode, document.body);
+      return (0, import_react_dom5.createPortal)(contentNode, document.body);
     }
     return contentNode;
   }
 );
 MenuContent.displayName = "MenuContent";
-var MenuItem = import_react11.default.forwardRef(
+var MenuItem = import_react12.default.forwardRef(
   ({ preventClose = false, className = "", children, onClick, disabled, ...props }, ref) => {
     const { closeMenu } = useMenu();
     const handleClick = (e) => {
@@ -1414,7 +1496,7 @@ var MenuItem = import_react11.default.forwardRef(
         closeMenu();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
       "button",
       {
         ref,
@@ -1432,9 +1514,9 @@ var MenuItem = import_react11.default.forwardRef(
 MenuItem.displayName = "MenuItem";
 
 // src/components/ui/Chip.tsx
-var import_react12 = require("react");
-var import_jsx_runtime13 = require("react/jsx-runtime");
-var Chip = (0, import_react12.forwardRef)(function Chip2({
+var import_react13 = require("react");
+var import_jsx_runtime14 = require("react/jsx-runtime");
+var Chip = (0, import_react13.forwardRef)(function Chip2({
   active = false,
   icon,
   children,
@@ -1442,7 +1524,7 @@ var Chip = (0, import_react12.forwardRef)(function Chip2({
   type = "button",
   ...props
 }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
     "button",
     {
       ref,
@@ -1450,20 +1532,20 @@ var Chip = (0, import_react12.forwardRef)(function Chip2({
       className: `rv-chip ${active ? "rv-chipActive" : ""} ${className}`.trim(),
       ...props,
       children: [
-        icon && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { className: "rv-chipIcon", children: icon }),
-        /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("span", { children })
+        icon && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { className: "rv-chipIcon", children: icon }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("span", { children })
       ]
     }
   );
 });
-var ChipGroup = (0, import_react12.forwardRef)(function ChipGroup2({ children, className = "", ...props }, ref) {
-  return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
+var ChipGroup = (0, import_react13.forwardRef)(function ChipGroup2({ children, className = "", ...props }, ref) {
+  return /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
 });
 
 // src/components/ui/Dropzone.tsx
-var import_react13 = require("react");
-var import_jsx_runtime14 = require("react/jsx-runtime");
-var Dropzone = (0, import_react13.forwardRef)(function Dropzone2({
+var import_react14 = require("react");
+var import_jsx_runtime15 = require("react/jsx-runtime");
+var Dropzone = (0, import_react14.forwardRef)(function Dropzone2({
   onDropFiles,
   title = "Drag and drop media here",
   hint = "or click to browse files",
@@ -1475,9 +1557,9 @@ var Dropzone = (0, import_react13.forwardRef)(function Dropzone2({
   children,
   ...props
 }, ref) {
-  const [isDragging, setIsDragging] = (0, import_react13.useState)(false);
-  const inputRef = (0, import_react13.useRef)(null);
-  (0, import_react13.useImperativeHandle)(ref, () => ({
+  const [isDragging, setIsDragging] = (0, import_react14.useState)(false);
+  const inputRef = (0, import_react14.useRef)(null);
+  (0, import_react14.useImperativeHandle)(ref, () => ({
     open: () => {
       if (!disabled) {
         inputRef.current?.click();
@@ -1510,7 +1592,7 @@ var Dropzone = (0, import_react13.forwardRef)(function Dropzone2({
       onDropFiles?.(e.target.files);
     }
   };
-  return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
     "div",
     {
       onClick: () => {
@@ -1526,7 +1608,7 @@ var Dropzone = (0, import_react13.forwardRef)(function Dropzone2({
       tabIndex: 0,
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsx)(
+        /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
           "input",
           {
             ref: inputRef,
@@ -1538,10 +1620,10 @@ var Dropzone = (0, import_react13.forwardRef)(function Dropzone2({
             style: { display: "none" }
           }
         ),
-        children ? children : /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(import_jsx_runtime14.Fragment, { children: [
-          icon && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-dropzoneIcon", children: icon }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-dropzoneTitle", children: title }),
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-dropzoneHint", children: hint })
+        children ? children : /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
+          icon && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "rv-dropzoneIcon", children: icon }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "rv-dropzoneTitle", children: title }),
+          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "rv-dropzoneHint", children: hint })
         ] })
       ]
     }
@@ -1549,9 +1631,9 @@ var Dropzone = (0, import_react13.forwardRef)(function Dropzone2({
 });
 
 // src/components/ui/MediaCard.tsx
-var import_react14 = require("react");
-var import_jsx_runtime15 = require("react/jsx-runtime");
-var MediaCard = (0, import_react14.forwardRef)(function MediaCard2({
+var import_react15 = require("react");
+var import_jsx_runtime16 = require("react/jsx-runtime");
+var MediaCard = (0, import_react15.forwardRef)(function MediaCard2({
   src,
   alt = "Media thumbnail",
   variant = "tile",
@@ -1570,7 +1652,7 @@ var MediaCard = (0, import_react14.forwardRef)(function MediaCard2({
 }, ref) {
   const isList = variant === "list";
   const computedAspectRatio = typeof aspectRatio === "string" && aspectRatio.includes(":") ? aspectRatio.replace(":", " / ") : aspectRatio;
-  return /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+  return /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
     "div",
     {
       ref,
@@ -1583,24 +1665,24 @@ var MediaCard = (0, import_react14.forwardRef)(function MediaCard2({
       },
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+        /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
           "div",
           {
             className: "rv-mediaCardThumbWrapper",
             style: !isList && computedAspectRatio ? { aspectRatio: computedAspectRatio } : void 0,
             children: [
-              mediaContent ? mediaContent : src ? /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("img", { src, alt, className: "rv-mediaCardThumb", loading: "lazy" }) : null,
-              badge && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
-              !isList && (overlay || actions) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "rv-mediaCardOverlay", children: [
+              mediaContent ? mediaContent : src ? /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("img", { src, alt, className: "rv-mediaCardThumb", loading: "lazy" }) : null,
+              badge && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
+              !isList && (overlay || actions) && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "rv-mediaCardOverlay", children: [
                 overlay,
-                actions && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "rv-mediaCardActions", children: actions })
+                actions && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "rv-mediaCardActions", children: actions })
               ] })
             ]
           }
         ),
-        (title || subtitle || children) && /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)("div", { className: "rv-mediaCardContent", children: [
-          title && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "rv-mediaCardTitle", children: title }),
-          subtitle && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
+        (title || subtitle || children) && /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)("div", { className: "rv-mediaCardContent", children: [
+          title && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "rv-mediaCardTitle", children: title }),
+          subtitle && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
           children
         ] })
       ]
@@ -1609,8 +1691,8 @@ var MediaCard = (0, import_react14.forwardRef)(function MediaCard2({
 });
 
 // src/components/ui/MasonryGrid.tsx
-var import_react15 = require("react");
-var import_jsx_runtime16 = require("react/jsx-runtime");
+var import_react16 = require("react");
+var import_jsx_runtime17 = require("react/jsx-runtime");
 function MasonryGrid({
   items,
   renderItem,
@@ -1622,12 +1704,12 @@ function MasonryGrid({
   emptyState,
   ...props
 }) {
-  const containerRef = (0, import_react15.useRef)(null);
-  const [columnCount, setColumnCount] = (0, import_react15.useState)(() => {
+  const containerRef = (0, import_react16.useRef)(null);
+  const [columnCount, setColumnCount] = (0, import_react16.useState)(() => {
     if (typeof columns === "number") return columns;
     return 4;
   });
-  (0, import_react15.useEffect)(() => {
+  (0, import_react16.useEffect)(() => {
     if (typeof columns === "number") {
       setColumnCount(columns);
       return;
@@ -1663,7 +1745,7 @@ function MasonryGrid({
       return () => window.removeEventListener("resize", updateColumns);
     }
   }, [columns]);
-  const columnBins = (0, import_react15.useMemo)(() => {
+  const columnBins = (0, import_react16.useMemo)(() => {
     const validCols = Math.max(1, columnCount);
     const bins = Array.from({ length: validCols }, () => []);
     items.forEach((item, idx) => {
@@ -1672,9 +1754,9 @@ function MasonryGrid({
     return bins;
   }, [items, columnCount]);
   if (items.length === 0 && emptyState) {
-    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(import_jsx_runtime16.Fragment, { children: emptyState });
+    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(import_jsx_runtime17.Fragment, { children: emptyState });
   }
-  return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+  return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
     "div",
     {
       ref: containerRef,
@@ -1685,14 +1767,14 @@ function MasonryGrid({
         ...style
       },
       ...props,
-      children: columnBins.map((col, colIdx) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
+      children: columnBins.map((col, colIdx) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
         "div",
         {
           className: "rv-masonryCol",
           style: {
             gap: gap !== void 0 ? typeof gap === "number" ? `${gap}px` : gap : void 0
           },
-          children: col.map(({ item, originalIndex }) => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("div", { className: "rv-masonryItem", children: renderItem(item, originalIndex) }, keyExtractor(item, originalIndex)))
+          children: col.map(({ item, originalIndex }) => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "rv-masonryItem", children: renderItem(item, originalIndex) }, keyExtractor(item, originalIndex)))
         },
         colIdx
       ))
@@ -1701,8 +1783,8 @@ function MasonryGrid({
 }
 
 // src/components/ui/SplitButton.tsx
-var import_react16 = __toESM(require("react"));
-var import_jsx_runtime17 = require("react/jsx-runtime");
+var import_react17 = __toESM(require("react"));
+var import_jsx_runtime18 = require("react/jsx-runtime");
 var VARIANT_CLASS_MAP = {
   primary: "rv-btnPrimary",
   secondary: "rv-btnSecondary",
@@ -1710,7 +1792,7 @@ var VARIANT_CLASS_MAP = {
   danger: "rv-btnDanger",
   ghost: "rv-btnGhost"
 };
-var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
   "svg",
   {
     width: "14",
@@ -1722,13 +1804,13 @@ var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
     strokeLinecap: "round",
     strokeLinejoin: "round",
     style: { display: "block" },
-    children: /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("path", { d: "m6 9 6 6 6-6" })
+    children: /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("path", { d: "m6 9 6 6 6-6" })
   }
 );
-var SplitButtonMain = (0, import_react16.forwardRef)(
+var SplitButtonMain = (0, import_react17.forwardRef)(
   function SplitButtonMain2({ variant = "primary", className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       "button",
       {
         ref,
@@ -1740,22 +1822,22 @@ var SplitButtonMain = (0, import_react16.forwardRef)(
     );
   }
 );
-var SplitButtonToggle = (0, import_react16.forwardRef)(
+var SplitButtonToggle = (0, import_react17.forwardRef)(
   function SplitButtonToggle2({ variant = "primary", isActive = false, className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       "button",
       {
         ref,
         type: "button",
         className: `rv-btn rv-btnIcon ${variantClass} rv-splitBtnToggle ${isActive ? "rv-btnActive" : ""} ${className}`.trim(),
         ...props,
-        children: children || /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(DefaultChevronDown, {})
+        children: children || /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(DefaultChevronDown, {})
       }
     );
   }
 );
-var SplitButton = (0, import_react16.forwardRef)(
+var SplitButton = (0, import_react17.forwardRef)(
   function SplitButton2({
     variant = "primary",
     disabled = false,
@@ -1770,15 +1852,15 @@ var SplitButton = (0, import_react16.forwardRef)(
     children,
     ...props
   }, ref) {
-    const isCustomChildren = import_react16.default.Children.count(children) > 1;
-    return /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+    const isCustomChildren = import_react17.default.Children.count(children) > 1;
+    return /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
       "div",
       {
         ref,
         className: `rv-splitBtn ${className}`.trim(),
         ...props,
-        children: isCustomChildren ? children : /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(import_jsx_runtime17.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
+        children: isCustomChildren ? children : /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(import_jsx_runtime18.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsxs)(
             SplitButtonMain,
             {
               variant,
@@ -1787,11 +1869,11 @@ var SplitButton = (0, import_react16.forwardRef)(
               "aria-label": actionAriaLabel,
               children: [
                 actionIcon,
-                children && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("span", { children })
+                children && /* @__PURE__ */ (0, import_jsx_runtime18.jsx)("span", { children })
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime17.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime18.jsx)(
             SplitButtonToggle,
             {
               variant,
@@ -1827,6 +1909,7 @@ var SplitButton = (0, import_react16.forwardRef)(
   MenuContent,
   MenuItem,
   MenuTrigger,
+  MobileSidebarDrawer,
   Modal,
   ModalBody,
   ModalDescription,

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { ResizeHandle } from './ResizeHandle';
+import { MobileSidebarDrawer } from './MobileSidebarDrawer';
 
 export type SidebarState = 'full' | 'rail-only' | 'collapsed';
 
@@ -14,6 +15,15 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   resizable?: boolean;
   dataBuilderUi?: boolean;
   innerClassName?: string;
+  /**
+   * Responsive Mobile Off-Canvas Drawer Support
+   */
+  mobileOpen?: boolean;
+  onCloseMobile?: () => void;
+  mobileContent?: React.ReactNode;
+  mobileDrawerClassName?: string;
+  mobileOverlayClassName?: string;
+  mobileDrawerWidth?: string | number;
 }
 
 export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
@@ -28,6 +38,12 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
       style,
       dataBuilderUi = true,
       innerClassName = '',
+      mobileOpen = false,
+      onCloseMobile,
+      mobileContent,
+      mobileDrawerClassName = '',
+      mobileOverlayClassName = '',
+      mobileDrawerWidth,
       ...props
     },
     ref
@@ -47,18 +63,41 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
     };
 
     return (
-      <aside
-        ref={ref}
-        className={`rv-sidebarShell ${stateClass} ${className}`.trim()}
-        style={inlineStyle}
-        data-builder-ui={dataBuilderUi ? 'true' : undefined}
-        {...props}
-      >
-        <div className={`rv-sidebar ${innerClassName}`.trim()}>
-          {children}
-          {resizable && state === 'full' && <ResizeHandle onResize={onResize} />}
-        </div>
-      </aside>
+      <>
+        <aside
+          ref={ref}
+          className={`rv-sidebarShell ${stateClass} ${className}`.trim()}
+          style={inlineStyle}
+          data-builder-ui={dataBuilderUi ? 'true' : undefined}
+          {...props}
+        >
+          <div className={`rv-sidebar ${innerClassName}`.trim()}>
+            {children}
+            {resizable && state === 'full' && <ResizeHandle onResize={onResize} />}
+          </div>
+        </aside>
+
+        {/* Standard Responsive Mobile Drawer */}
+        {mobileOpen && (
+          <MobileSidebarDrawer
+            isOpen={mobileOpen}
+            onClose={onCloseMobile || (() => {})}
+            className={mobileOverlayClassName}
+            drawerClassName={mobileDrawerClassName}
+            width={mobileDrawerWidth}
+          >
+            {mobileContent !== undefined ? (
+              mobileContent
+            ) : (
+              <div className={`rv-sidebarShell ${stateClass} ${className}`.trim()} style={{ height: '100%', width: '100%', display: 'flex' }}>
+                <div className={`rv-sidebar ${innerClassName}`.trim()} style={{ height: '100%', margin: 0 }}>
+                  {children}
+                </div>
+              </div>
+            )}
+          </MobileSidebarDrawer>
+        )}
+      </>
     );
   }
 );
@@ -105,3 +144,6 @@ export const SidebarPanel = React.forwardRef<HTMLDivElement, SidebarPanelProps>(
   }
 );
 SidebarPanel.displayName = 'SidebarPanel';
+
+export { MobileSidebarDrawer };
+export type { MobileSidebarDrawerProps } from './MobileSidebarDrawer';
