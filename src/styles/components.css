@@ -972,7 +972,7 @@ form {
 
 /* Tile Variant (Default) */
 .rv-mediaCardTile {
-    border-radius: var(--rv-radius-sm);
+    border-radius: var(--rv-radius-md);
     overflow: hidden;
     border: 1px solid var(--rv-bdr);
     background: var(--rv-neutral-500);
@@ -987,8 +987,14 @@ form {
     transform: translateY(-1px);
 }
 
-.rv-mediaCardSelected {
-    border: 2px solid var(--rv-brand-primary) !important;
+.rv-mediaCardTile.rv-mediaCardAspect {
+    aspect-ratio: unset;
+    height: auto;
+}
+
+.rv-mediaCard.rv-mediaCardSelected {
+    border-color: var(--rv-brand-primary);
+    box-shadow: 0 0 0 1px var(--rv-brand-primary);
 }
 
 .rv-mediaCardThumbWrapper {
@@ -1018,26 +1024,71 @@ form {
     align-items: center;
     justify-content: center;
     gap: var(--rv-space-sm);
+    z-index: 2;
 }
 
-.rv-mediaCard:hover .rv-mediaCardOverlay {
+.rv-mediaCard:hover .rv-mediaCardOverlay,
+.rv-mediaCard:has([data-state="open"]) .rv-mediaCardOverlay,
+.rv-mediaCard:has(.apl-menuOpen) .rv-mediaCardOverlay,
+.rv-mediaCard:has(.rv-menuOpen) .rv-mediaCardOverlay {
     opacity: 1;
+}
+
+.rv-mediaCardActions {
+    position: absolute;
+    bottom: var(--rv-space-xs);
+    right: var(--rv-space-xs);
+    display: flex;
+    align-items: center;
+    gap: var(--rv-space-xs);
+    z-index: 3;
 }
 
 .rv-mediaCardBadge {
     position: absolute;
-    top: 6px;
-    right: 6px;
+    top: 8px;
+    right: 8px;
     background: var(--rv-brand-primary);
     color: var(--rv-white);
-    width: 18px;
-    height: 18px;
     border-radius: var(--rv-radius-round);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 11px;
     z-index: 2;
+}
+
+/* ==========================================================================
+   Masonry Grid Component (.rv-masonry)
+   ========================================================================== */
+
+.rv-masonry {
+    display: grid;
+    width: 100%;
+    gap: var(--rv-space-sm);
+    align-items: start;
+    box-sizing: border-box;
+}
+
+.rv-masonryCol {
+    display: flex;
+    flex-direction: column;
+    gap: var(--rv-space-sm);
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rv-masonryItem {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.rv-masonryItem:has(.apl-menuOpen),
+.rv-masonryItem:has(.rv-menuOpen),
+.rv-masonryItem:has([data-state="open"]) {
+    z-index: 60;
 }
 
 /* List Variant */

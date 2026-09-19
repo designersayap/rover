@@ -334,16 +334,38 @@ interface DropzoneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onDrop'> {
 declare const Dropzone: React.ForwardRefExoticComponent<DropzoneProps & React.RefAttributes<DropzoneRef>>;
 
 interface MediaCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
-    src: string;
+    src?: string;
     alt?: string;
     variant?: 'tile' | 'list';
+    aspectRatio?: string | number;
     title?: React.ReactNode;
     subtitle?: React.ReactNode;
     selected?: boolean;
     badge?: React.ReactNode;
     overlay?: React.ReactNode;
+    actions?: React.ReactNode;
+    mediaContent?: React.ReactNode;
 }
 declare const MediaCard: React.ForwardRefExoticComponent<MediaCardProps & React.RefAttributes<HTMLDivElement>>;
+
+type MasonryColumns = number | 'responsive' | {
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+    xxl?: number;
+    xxxl?: number;
+};
+interface MasonryGridProps<T = any> extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
+    items: T[];
+    renderItem: (item: T, index: number) => React.ReactNode;
+    keyExtractor?: (item: T, index: number) => string | number;
+    columns?: MasonryColumns;
+    gap?: string | number;
+    className?: string;
+    emptyState?: React.ReactNode;
+}
+declare function MasonryGrid<T = any>({ items, renderItem, keyExtractor, columns, gap, className, style, emptyState, ...props }: MasonryGridProps<T>): React.JSX.Element;
 
 type SplitButtonVariant = 'primary' | 'secondary' | 'brand' | 'danger' | 'ghost';
 interface SplitButtonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onToggle'> {
@@ -369,4 +391,4 @@ interface SplitButtonToggleProps extends ButtonHTMLAttributes<HTMLButtonElement>
 declare const SplitButtonToggle: React.ForwardRefExoticComponent<SplitButtonToggleProps & React.RefAttributes<HTMLButtonElement>>;
 declare const SplitButton: React.ForwardRefExoticComponent<SplitButtonProps & React.RefAttributes<HTMLDivElement>>;
 
-export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, MediaCard, type MediaCardProps, Menu, MenuContent, type MenuContentProps, MenuItem, type MenuItemProps, type MenuProps, MenuTrigger, type MenuTriggerProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, PopoverMenu, type PopoverMenuProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, PopoverTrigger, type PopoverTriggerProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps, useMenu, usePopover };
+export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, type MasonryColumns, MasonryGrid, type MasonryGridProps, MediaCard, type MediaCardProps, Menu, MenuContent, type MenuContentProps, MenuItem, type MenuItemProps, type MenuProps, MenuTrigger, type MenuTriggerProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, PopoverMenu, type PopoverMenuProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, PopoverTrigger, type PopoverTriggerProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps, useMenu, usePopover };

@@ -43,6 +43,7 @@ __export(index_exports, {
   Dropzone: () => Dropzone,
   EmptyState: () => EmptyState,
   MainContent: () => MainContent,
+  MasonryGrid: () => MasonryGrid,
   MediaCard: () => MediaCard,
   Menu: () => Menu,
   MenuContent: () => MenuContent,
@@ -1504,30 +1505,49 @@ var MediaCard = (0, import_react13.forwardRef)(function MediaCard2({
   src,
   alt = "Media thumbnail",
   variant = "tile",
+  aspectRatio,
   title,
   subtitle,
   selected = false,
   badge,
   overlay,
+  actions,
+  mediaContent,
   className = "",
+  style,
   children,
   ...props
 }, ref) {
   const isList = variant === "list";
+  const computedAspectRatio = typeof aspectRatio === "string" && aspectRatio.includes(":") ? aspectRatio.replace(":", " / ") : aspectRatio;
   return /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
     "div",
     {
       ref,
-      className: `rv-mediaCard ${isList ? "rv-mediaCardList" : "rv-mediaCardTile"} ${selected ? "rv-mediaCardSelected" : ""} ${className}`.trim(),
+      className: `rv-mediaCard ${isList ? "rv-mediaCardList" : "rv-mediaCardTile"} ${aspectRatio ? "rv-mediaCardAspect" : ""} ${selected ? "rv-mediaCardSelected" : ""} ${className}`.trim(),
       role: "button",
       tabIndex: 0,
+      style: {
+        ...!isList && computedAspectRatio ? { aspectRatio: computedAspectRatio } : {},
+        ...style
+      },
       ...props,
       children: [
-        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "rv-mediaCardThumbWrapper", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("img", { src, alt, className: "rv-mediaCardThumb" }),
-          badge && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
-          !isList && overlay && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardOverlay", children: overlay })
-        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)(
+          "div",
+          {
+            className: "rv-mediaCardThumbWrapper",
+            style: !isList && computedAspectRatio ? { aspectRatio: computedAspectRatio } : void 0,
+            children: [
+              mediaContent ? mediaContent : src ? /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("img", { src, alt, className: "rv-mediaCardThumb", loading: "lazy" }) : null,
+              badge && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
+              !isList && (overlay || actions) && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "rv-mediaCardOverlay", children: [
+                overlay,
+                actions && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardActions", children: actions })
+              ] })
+            ]
+          }
+        ),
         (title || subtitle || children) && /* @__PURE__ */ (0, import_jsx_runtime14.jsxs)("div", { className: "rv-mediaCardContent", children: [
           title && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardTitle", children: title }),
           subtitle && /* @__PURE__ */ (0, import_jsx_runtime14.jsx)("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
@@ -1538,9 +1558,101 @@ var MediaCard = (0, import_react13.forwardRef)(function MediaCard2({
   );
 });
 
-// src/components/ui/SplitButton.tsx
-var import_react14 = __toESM(require("react"));
+// src/components/ui/MasonryGrid.tsx
+var import_react14 = require("react");
 var import_jsx_runtime15 = require("react/jsx-runtime");
+function MasonryGrid({
+  items,
+  renderItem,
+  keyExtractor = (_item, idx) => idx,
+  columns = "responsive",
+  gap,
+  className = "",
+  style,
+  emptyState,
+  ...props
+}) {
+  const containerRef = (0, import_react14.useRef)(null);
+  const [columnCount, setColumnCount] = (0, import_react14.useState)(() => {
+    if (typeof columns === "number") return columns;
+    return 4;
+  });
+  (0, import_react14.useEffect)(() => {
+    if (typeof columns === "number") {
+      setColumnCount(columns);
+      return;
+    }
+    const el = containerRef.current;
+    if (!el) return;
+    const updateColumns = () => {
+      const w = el.getBoundingClientRect().width || el.clientWidth;
+      if (w <= 0) return;
+      if (typeof columns === "object") {
+        if (w < 520 && columns.sm) setColumnCount(columns.sm);
+        else if (w < 820 && columns.md) setColumnCount(columns.md);
+        else if (w < 1180 && columns.lg) setColumnCount(columns.lg);
+        else if (w < 1520 && columns.xl) setColumnCount(columns.xl);
+        else if (w < 1860 && columns.xxl) setColumnCount(columns.xxl);
+        else if (columns.xxxl) setColumnCount(columns.xxxl);
+        return;
+      }
+      if (w < 520) setColumnCount(1);
+      else if (w < 820) setColumnCount(2);
+      else if (w < 1180) setColumnCount(3);
+      else if (w < 1520) setColumnCount(4);
+      else if (w < 1860) setColumnCount(5);
+      else setColumnCount(6);
+    };
+    updateColumns();
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(updateColumns);
+      ro.observe(el);
+      return () => ro.disconnect();
+    } else {
+      window.addEventListener("resize", updateColumns);
+      return () => window.removeEventListener("resize", updateColumns);
+    }
+  }, [columns]);
+  const columnBins = (0, import_react14.useMemo)(() => {
+    const validCols = Math.max(1, columnCount);
+    const bins = Array.from({ length: validCols }, () => []);
+    items.forEach((item, idx) => {
+      bins[idx % validCols].push({ item, originalIndex: idx });
+    });
+    return bins;
+  }, [items, columnCount]);
+  if (items.length === 0 && emptyState) {
+    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(import_jsx_runtime15.Fragment, { children: emptyState });
+  }
+  return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    "div",
+    {
+      ref: containerRef,
+      className: `rv-masonry ${className}`.trim(),
+      style: {
+        gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))`,
+        gap: gap !== void 0 ? typeof gap === "number" ? `${gap}px` : gap : void 0,
+        ...style
+      },
+      ...props,
+      children: columnBins.map((col, colIdx) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+        "div",
+        {
+          className: "rv-masonryCol",
+          style: {
+            gap: gap !== void 0 ? typeof gap === "number" ? `${gap}px` : gap : void 0
+          },
+          children: col.map(({ item, originalIndex }) => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("div", { className: "rv-masonryItem", children: renderItem(item, originalIndex) }, keyExtractor(item, originalIndex)))
+        },
+        colIdx
+      ))
+    }
+  );
+}
+
+// src/components/ui/SplitButton.tsx
+var import_react15 = __toESM(require("react"));
+var import_jsx_runtime16 = require("react/jsx-runtime");
 var VARIANT_CLASS_MAP = {
   primary: "rv-btnPrimary",
   secondary: "rv-btnSecondary",
@@ -1548,7 +1660,7 @@ var VARIANT_CLASS_MAP = {
   danger: "rv-btnDanger",
   ghost: "rv-btnGhost"
 };
-var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
   "svg",
   {
     width: "14",
@@ -1560,13 +1672,13 @@ var DefaultChevronDown = () => /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
     strokeLinecap: "round",
     strokeLinejoin: "round",
     style: { display: "block" },
-    children: /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("path", { d: "m6 9 6 6 6-6" })
+    children: /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("path", { d: "m6 9 6 6 6-6" })
   }
 );
-var SplitButtonMain = (0, import_react14.forwardRef)(
+var SplitButtonMain = (0, import_react15.forwardRef)(
   function SplitButtonMain2({ variant = "primary", className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
       "button",
       {
         ref,
@@ -1578,22 +1690,22 @@ var SplitButtonMain = (0, import_react14.forwardRef)(
     );
   }
 );
-var SplitButtonToggle = (0, import_react14.forwardRef)(
+var SplitButtonToggle = (0, import_react15.forwardRef)(
   function SplitButtonToggle2({ variant = "primary", isActive = false, className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
       "button",
       {
         ref,
         type: "button",
         className: `rv-btn rv-btnIcon ${variantClass} rv-splitBtnToggle ${isActive ? "rv-btnActive" : ""} ${className}`.trim(),
         ...props,
-        children: children || /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(DefaultChevronDown, {})
+        children: children || /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(DefaultChevronDown, {})
       }
     );
   }
 );
-var SplitButton = (0, import_react14.forwardRef)(
+var SplitButton = (0, import_react15.forwardRef)(
   function SplitButton2({
     variant = "primary",
     disabled = false,
@@ -1608,15 +1720,15 @@ var SplitButton = (0, import_react14.forwardRef)(
     children,
     ...props
   }, ref) {
-    const isCustomChildren = import_react14.default.Children.count(children) > 1;
-    return /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+    const isCustomChildren = import_react15.default.Children.count(children) > 1;
+    return /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
       "div",
       {
         ref,
         className: `rv-splitBtn ${className}`.trim(),
         ...props,
-        children: isCustomChildren ? children : /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(import_jsx_runtime15.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsxs)(
+        children: isCustomChildren ? children : /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(import_jsx_runtime16.Fragment, { children: [
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsxs)(
             SplitButtonMain,
             {
               variant,
@@ -1625,11 +1737,11 @@ var SplitButton = (0, import_react14.forwardRef)(
               "aria-label": actionAriaLabel,
               children: [
                 actionIcon,
-                children && /* @__PURE__ */ (0, import_jsx_runtime15.jsx)("span", { children })
+                children && /* @__PURE__ */ (0, import_jsx_runtime16.jsx)("span", { children })
               ]
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime15.jsx)(
+          /* @__PURE__ */ (0, import_jsx_runtime16.jsx)(
             SplitButtonToggle,
             {
               variant,
@@ -1659,6 +1771,7 @@ var SplitButton = (0, import_react14.forwardRef)(
   Dropzone,
   EmptyState,
   MainContent,
+  MasonryGrid,
   MediaCard,
   Menu,
   MenuContent,
