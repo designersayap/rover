@@ -84,6 +84,7 @@
     /* 7b. SEMANTIC SURFACE TOKENS */
     --rv-bg-base: var(--rv-neutral-500);
     --rv-bg-card: var(--rv-neutral-400);
+    --rv-bg-layer: var(--rv-neutral-300);
     --rv-bg-active: var(--rv-neutral-300);
     --rv-border-subtle: var(--rv-neutral-300);
 
