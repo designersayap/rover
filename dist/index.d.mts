@@ -62,15 +62,19 @@ interface MobileSidebarDrawerProps {
 declare const MobileSidebarDrawer: React.FC<MobileSidebarDrawerProps>;
 
 type SidebarState = 'full' | 'rail-only' | 'collapsed';
+type SidebarVariant = 'in-flow' | 'floating';
 interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
     children?: React.ReactNode;
     state?: SidebarState;
+    variant?: SidebarVariant;
+    floating?: boolean;
     className?: string;
     width?: number | string;
     onResize?: (deltaX: number) => void;
     resizable?: boolean;
     dataBuilderUi?: boolean;
     innerClassName?: string;
+    onClose?: () => void;
     /**
      * Responsive Mobile Off-Canvas Drawer Support
      */

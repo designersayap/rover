@@ -5,16 +5,20 @@ import { ResizeHandle } from './ResizeHandle';
 import { MobileSidebarDrawer } from './MobileSidebarDrawer';
 
 export type SidebarState = 'full' | 'rail-only' | 'collapsed';
+export type SidebarVariant = 'in-flow' | 'floating';
 
 export interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
   state?: SidebarState;
+  variant?: SidebarVariant;
+  floating?: boolean;
   className?: string;
   width?: number | string;
   onResize?: (deltaX: number) => void;
   resizable?: boolean;
   dataBuilderUi?: boolean;
   innerClassName?: string;
+  onClose?: () => void;
   /**
    * Responsive Mobile Off-Canvas Drawer Support
    */
@@ -31,6 +35,8 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
     {
       children,
       state = 'full',
+      variant = 'in-flow',
+      floating = false,
       className = '',
       width,
       onResize,
@@ -38,6 +44,7 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
       style,
       dataBuilderUi = true,
       innerClassName = '',
+      onClose,
       mobileOpen = false,
       onCloseMobile,
       mobileContent,
@@ -48,12 +55,47 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
     },
     ref
   ) => {
+    const internalRef = React.useRef<HTMLElement | null>(null);
+    React.useImperativeHandle(ref, () => internalRef.current as HTMLElement);
+
+    const isFloating = floating || variant === 'floating';
+    const variantClass = isFloating ? 'rv-sidebarShellFloating' : '';
+
     const stateClass =
       state === 'rail-only'
         ? 'rv-sidebarRailOnly'
         : state === 'collapsed'
         ? 'rv-sidebarCollapsed'
         : '';
+
+    // Handle outside click & Escape key dismissal for floating sidebar
+    React.useEffect(() => {
+      if (!isFloating || state === 'collapsed' || !onClose) return;
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          onClose();
+        }
+      };
+
+      const handlePointerDown = (e: MouseEvent | TouchEvent) => {
+        if (
+          internalRef.current &&
+          !internalRef.current.contains(e.target as Node)
+        ) {
+          const targetEl = e.target as HTMLElement;
+          if (targetEl.closest?.('.rv-sidebarToggle')) return;
+          onClose();
+        }
+      };
+
+      window.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('pointerdown', handlePointerDown);
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('pointerdown', handlePointerDown);
+      };
+    }, [isFloating, state, onClose]);
 
     const inlineStyle: React.CSSProperties = {
       ...style,
@@ -65,8 +107,8 @@ export const Sidebar = React.forwardRef<HTMLElement, SidebarProps>(
     return (
       <>
         <aside
-          ref={ref}
-          className={`rv-sidebarShell ${stateClass} ${className}`.trim()}
+          ref={internalRef}
+          className={`rv-sidebarShell ${variantClass} ${stateClass} ${className}`.trim()}
           style={inlineStyle}
           data-builder-ui={dataBuilderUi ? 'true' : undefined}
           {...props}

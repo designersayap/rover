@@ -235,6 +235,8 @@ var Sidebar = React5.forwardRef(
   ({
     children,
     state = "full",
+    variant = "in-flow",
+    floating = false,
     className = "",
     width,
     onResize,
@@ -242,6 +244,7 @@ var Sidebar = React5.forwardRef(
     style,
     dataBuilderUi = true,
     innerClassName = "",
+    onClose,
     mobileOpen = false,
     onCloseMobile,
     mobileContent,
@@ -250,7 +253,32 @@ var Sidebar = React5.forwardRef(
     mobileDrawerWidth,
     ...props
   }, ref) => {
+    const internalRef = React5.useRef(null);
+    React5.useImperativeHandle(ref, () => internalRef.current);
+    const isFloating = floating || variant === "floating";
+    const variantClass = isFloating ? "rv-sidebarShellFloating" : "";
     const stateClass = state === "rail-only" ? "rv-sidebarRailOnly" : state === "collapsed" ? "rv-sidebarCollapsed" : "";
+    React5.useEffect(() => {
+      if (!isFloating || state === "collapsed" || !onClose) return;
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") {
+          onClose();
+        }
+      };
+      const handlePointerDown = (e) => {
+        if (internalRef.current && !internalRef.current.contains(e.target)) {
+          const targetEl = e.target;
+          if (targetEl.closest?.(".rv-sidebarToggle")) return;
+          onClose();
+        }
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      document.addEventListener("pointerdown", handlePointerDown);
+      return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+        document.removeEventListener("pointerdown", handlePointerDown);
+      };
+    }, [isFloating, state, onClose]);
     const inlineStyle = {
       ...style,
       ...width !== void 0 && state === "full" ? { width: typeof width === "number" ? `${width}px` : width } : {}
@@ -259,8 +287,8 @@ var Sidebar = React5.forwardRef(
       /* @__PURE__ */ jsx5(
         "aside",
         {
-          ref,
-          className: `rv-sidebarShell ${stateClass} ${className}`.trim(),
+          ref: internalRef,
+          className: `rv-sidebarShell ${variantClass} ${stateClass} ${className}`.trim(),
           style: inlineStyle,
           "data-builder-ui": dataBuilderUi ? "true" : void 0,
           ...props,
