@@ -274,7 +274,7 @@ interface DialogProps extends Omit<ModalProps, 'title' | 'onSubmit'> {
     showCancel?: boolean;
     /** Text or element for the primary action button. Defaults to 'Confirm'. */
     actionLabel?: React.ReactNode;
-    /** Visual variant of the primary action button. Defaults to 'primary'. */
+    /** Visual variant of the primary action button. Defaults to 'brand'. */
     actionVariant?: DialogActionVariant;
     /** Type attribute of the primary action button. Defaults to 'submit' if onSubmit is set, else 'button'. */
     actionType?: 'button' | 'submit';
@@ -294,9 +294,9 @@ interface DialogProps extends Omit<ModalProps, 'title' | 'onSubmit'> {
 /**
  * Standardized Dialog layout component for Rover.
  * Follows Rover dialog format rules:
- * 1. Clean Title with no close button by default
- * 2. Flexible body hosting form inputs or description
- * 3. Standardized footer with Cancel button and primary action
+ * - Clean title & description layout
+ * - Body container for inputs or messages
+ * - Standardized footer with Cancel (`rv-btnGhost`) + Primary action (`rv-btnBrand`)
  */
 declare const Dialog: React.ForwardRefExoticComponent<DialogProps & React.RefAttributes<HTMLDivElement>>;
 

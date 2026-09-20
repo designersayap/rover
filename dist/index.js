@@ -1150,8 +1150,8 @@ ModalFooter.displayName = "ModalFooter";
 var import_react11 = __toESM(require("react"));
 var import_jsx_runtime12 = require("react/jsx-runtime");
 var variantClassMap = {
-  primary: "rv-btnPrimary",
   brand: "rv-btnBrand",
+  primary: "rv-btnPrimary",
   danger: "rv-btnDanger",
   secondary: "rv-btnSecondary",
   ghost: "rv-btnGhost"
@@ -1167,7 +1167,7 @@ var Dialog = import_react11.default.forwardRef(
     onCancel,
     showCancel = true,
     actionLabel = "Confirm",
-    actionVariant = "primary",
+    actionVariant = "brand",
     actionType,
     onAction,
     isActionLoading = false,
@@ -1179,7 +1179,7 @@ var Dialog = import_react11.default.forwardRef(
     ...modalProps
   }, ref) => {
     const computedActionType = actionType || (onSubmit ? "submit" : "button");
-    const actionClass = variantClassMap[actionVariant] || "rv-btnPrimary";
+    const actionClass = variantClassMap[actionVariant] || "rv-btnBrand";
     const dialogInner = /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(import_jsx_runtime12.Fragment, { children: [
       /* @__PURE__ */ (0, import_jsx_runtime12.jsxs)(ModalHeader, { onClose, showCloseButton, children: [
         /* @__PURE__ */ (0, import_jsx_runtime12.jsx)(ModalTitle, { children: title }),
