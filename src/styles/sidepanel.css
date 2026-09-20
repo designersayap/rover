@@ -164,7 +164,7 @@
   min-width: 0;
   padding: 16px 20px;
   border-bottom: 1px solid var(--rv-border-subtle);
-  background: var(--rv-bg-surface-2, rgba(255, 255, 255, 0.03));
+  background: var(--rv-bg-card, rgba(255, 255, 255, 0.03));
   flex-shrink: 0;
   gap: 12px;
   box-sizing: border-box;

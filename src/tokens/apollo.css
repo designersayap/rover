@@ -81,9 +81,9 @@
     --rv-text-muted: var(--rv-neutral-100);
 
     /* 7b. SEMANTIC SURFACE TOKENS */
-    --rv-bg-surface-1: var(--rv-neutral-500);
-    --rv-bg-surface-2: var(--rv-neutral-400);
-    --rv-bg-surface-active: var(--rv-neutral-300);
+    --rv-bg-base: var(--rv-neutral-500);
+    --rv-bg-card: var(--rv-neutral-400);
+    --rv-bg-active: var(--rv-neutral-300);
     --rv-border-subtle: var(--rv-neutral-300);
 
     /* 7c. TYPOGRAPHY ALIASES */
