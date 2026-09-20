@@ -91,7 +91,8 @@
 /* Core HTML Table */
 .rv-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   text-align: left;
   font-family: var(--rv-font-family, inherit);
   font-size: var(--rv-font-size-sm, 13px);
@@ -101,7 +102,6 @@
 /* Table Header */
 .rv-tableHead {
   background: var(--rv-bg-surface-2);
-  border-bottom: 1px solid var(--rv-border-subtle);
   position: sticky;
   top: 0;
   z-index: 2;
@@ -116,6 +116,7 @@
   letter-spacing: 0.05em;
   white-space: nowrap;
   user-select: none;
+  border-bottom: 1px solid var(--rv-border-subtle);
 }
 
 /* Sortable column header */
@@ -154,21 +155,29 @@
 /* Table Rows */
 
 .rv-tableRow {
-  border-bottom: 1px solid var(--rv-border-subtle);
   transition: background-color 0.15s ease;
   cursor: pointer;
 }
 
-.rv-tableRow:last-child {
-  border-bottom: none;
-}
-
-.rv-tableRow:hover {
+.rv-tableRow:hover .rv-tableTd {
   background-color: var(--rv-bg-surface-2);
 }
 
-.rv-tableRow.rv-isSelected {
-  background-color: var(--rv-bg-surface-active, rgba(255, 255, 255, 0.06));
+.rv-tableRow.rv-isSelected .rv-tableTd {
+  background-color: var(--rv-bg-surface-active, rgba(255, 255, 255, 0.08));
+}
+
+/* Rounded Row Corners on Hover & Active/Selected */
+.rv-tableRow:hover .rv-tableTd:first-child,
+.rv-tableRow.rv-isSelected .rv-tableTd:first-child {
+  border-top-left-radius: var(--rv-radius-md, 8px);
+  border-bottom-left-radius: var(--rv-radius-md, 8px);
+}
+
+.rv-tableRow:hover .rv-tableTd:last-child,
+.rv-tableRow.rv-isSelected .rv-tableTd:last-child {
+  border-top-right-radius: var(--rv-radius-md, 8px);
+  border-bottom-right-radius: var(--rv-radius-md, 8px);
 }
 
 /* Table Cells */
@@ -176,6 +185,12 @@
   padding: 14px 16px;
   color: var(--rv-text-primary);
   vertical-align: middle;
+  border-bottom: 1px solid var(--rv-border-subtle);
+  transition: background-color 0.15s ease, border-radius 0.15s ease;
+}
+
+.rv-tableRow:last-child .rv-tableTd {
+  border-bottom: none;
 }
 
 /* Brand Identifier Cell */
