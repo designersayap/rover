@@ -279,15 +279,15 @@ img.rv-brandLogo {
 }
 
 /* Cluster overlap and stacking */
-.rv-thumbGroup > *,
+.rv-thumbGroup>*,
 .rv-thumbGroup .rv-thumb,
 .rv-thumbGroup .rv-avatar,
 .rv-thumbGroup .rv-colorSwatch,
 .rv-thumbGroup .rv-thumbMore,
 .rv-thumbGroup .rv-avatarMore,
-.rv-thumbnailGroup > *,
+.rv-thumbnailGroup>*,
 .rv-thumbnailGroup .rv-thumb,
-.rv-avatarGroup > *,
+.rv-avatarGroup>*,
 .rv-avatarGroup .rv-avatar,
 .rv-avatarGroup .rv-avatarMore {
   box-sizing: border-box !important;
@@ -303,14 +303,14 @@ img.rv-brandLogo {
   transition: transform 0.15s ease, z-index 0.15s ease;
 }
 
-.rv-thumbGroup > *:first-child,
-.rv-thumbGroup > *:first-child .rv-thumb,
-.rv-thumbGroup > *:first-child .rv-avatar,
-.rv-thumbGroup > *:first-child .rv-colorSwatch,
-.rv-thumbnailGroup > *:first-child,
-.rv-thumbnailGroup > *:first-child .rv-thumb,
-.rv-avatarGroup > *:first-child,
-.rv-avatarGroup > *:first-child .rv-avatar {
+.rv-thumbGroup>*:first-child,
+.rv-thumbGroup>*:first-child .rv-thumb,
+.rv-thumbGroup>*:first-child .rv-avatar,
+.rv-thumbGroup>*:first-child .rv-colorSwatch,
+.rv-thumbnailGroup>*:first-child,
+.rv-thumbnailGroup>*:first-child .rv-thumb,
+.rv-avatarGroup>*:first-child,
+.rv-avatarGroup>*:first-child .rv-avatar {
   margin-left: 0;
 }
 
@@ -347,7 +347,7 @@ img.rv-brandLogo {
 .rv-avatarMore,
 .rv-thumbGroupMore,
 .rv-avatarGroupMore {
-  background: var(--rv-bg-surface-3, rgba(255, 255, 255, 0.12));
+  background: var(--rv-neutral-300);
   color: var(--rv-text-secondary);
   font-size: 11px;
   font-weight: 600;
