@@ -470,16 +470,16 @@ input[type="number"] {
 
 /* Color Swatches & Selectors */
 .rv-colorSwatch {
-    width: 20px;
-    height: 20px;
-    border-radius: var(--rv-radius-xs, 4px);
+    width: 28px;
+    height: 28px;
+    border-radius: 6px !important;
     cursor: pointer;
     border: 2px solid transparent;
-    transition: transform 0.1s;
+    transition: transform 0.1s, border-color 0.1s;
 }
 
 .rv-colorSwatch:hover {
-    transform: scale(1.2);
+    transform: scale(1.15);
     border-color: rgba(255, 255, 255, 0.5);
 }
 
