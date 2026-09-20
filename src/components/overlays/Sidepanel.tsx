@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 export interface SidepanelProps {
   open?: boolean;
@@ -29,6 +30,12 @@ export function Sidepanel({
   ariaLabel = 'Details Sidepanel',
   customHeader,
 }: SidepanelProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Handle ESC key to dismiss (called unconditionally before early return)
   useEffect(() => {
     if (!open) return;
@@ -41,11 +48,11 @@ export function Sidepanel({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
   const style = width ? ({ '--rv-sidepanel-width': typeof width === 'number' ? `${width}px` : width } as React.CSSProperties) : undefined;
 
-  return (
+  return createPortal(
     <>
       {/* Mobile Backdrop Overlay */}
       <div
@@ -116,7 +123,8 @@ export function Sidepanel({
           {children}
         </div>
       </aside>
-    </>
+    </>,
+    document.body
   );
 }
 
