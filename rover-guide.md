@@ -483,16 +483,27 @@ import { Chip, ChipGroup } from 'rover';
 ```
 
 #### Dropzone
-Drag-and-drop file uploader with built-in input triggering, drag-over highlights, and thumbnail management.
+Drag-and-drop file uploader with built-in input triggering, drag-over highlights, and built-in uploaded preview card (`.rv-dropzoneCard`) with zero layout shift.
 
 ```tsx
 import { Dropzone } from 'rover';
 
+// 1. Standard Upload Mode
 <Dropzone
   accept="image/*"
   onDropFiles={(files) => handleUpload(files)}
-  title="Drop images here, or browse files"
-  hint="Supports JPG, PNG, WebP up to 25MB"
+  title="Upload Brand Logo"
+  hint="Drag & drop image here or click to browse (PNG, JPG, SVG, WEBP)"
+/>
+
+// 2. Uploaded Preview Mode (retains dashed dropzone with inner .rv-dropzoneCard surface)
+<Dropzone
+  accept="image/*"
+  previewUrl={logoUrl}
+  previewTitle="Logo uploaded"
+  previewHint="Drag new file or click trash to remove"
+  onRemove={() => setLogoUrl('')}
+  onDropFiles={(files) => handleUpload(files)}
 />
 ```
 
