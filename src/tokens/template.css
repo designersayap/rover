@@ -109,7 +109,6 @@
       Three-layer elevation system — base → card → active. */
    --rv-bg-base: var(--rv-neutral-500);         /* Deepest bg: page canvas, containers */
    --rv-bg-card: var(--rv-neutral-400);         /* Raised bg: cards, panels, table rows */
-   --rv-bg-layer: var(--rv-neutral-300);        /* Nested/highlighted layer above card */
    --rv-bg-active: var(--rv-neutral-300);       /* Interactive: hover/active states */
    --rv-border-subtle: var(--rv-neutral-300);   /* Subtle dividers and separators */
 
