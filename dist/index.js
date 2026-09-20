@@ -2028,6 +2028,7 @@ var SplitButton = (0, import_react18.forwardRef)(
 
 // src/components/overlays/Sidepanel.tsx
 var import_react19 = require("react");
+var import_react_dom6 = require("react-dom");
 var import_jsx_runtime20 = require("react/jsx-runtime");
 function Sidepanel({
   open = true,
@@ -2042,6 +2043,10 @@ function Sidepanel({
   ariaLabel = "Details Sidepanel",
   customHeader
 }) {
+  const [mounted, setMounted] = (0, import_react19.useState)(false);
+  (0, import_react19.useEffect)(() => {
+    setMounted(true);
+  }, []);
   (0, import_react19.useEffect)(() => {
     if (!open) return;
     const handleKeyDown = (e) => {
@@ -2052,51 +2057,54 @@ function Sidepanel({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, onClose]);
-  if (!open) return null;
+  if (!open || !mounted) return null;
   const style = width ? { "--rv-sidepanel-width": typeof width === "number" ? `${width}px` : width } : void 0;
-  return /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
-      "div",
-      {
-        className: "rv-sidepanelBackdrop",
-        onClick: onClose,
-        "aria-hidden": "true"
-      }
-    ),
-    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
-      "aside",
-      {
-        className: `rv-sidepanel ${className}`.trim(),
-        style,
-        "aria-label": ariaLabel,
-        children: [
-          /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "rv-sidepanelGrabHandleWrap", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "rv-sidepanelGrabHandle" }) }),
-          customHeader ? customHeader : /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "rv-sidepanelHeader", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "rv-sidepanelHeaderLeft", children: [
-              headerLeft,
-              (title || subtitle) && /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "rv-sidepanelTitleWrap", children: [
-                title && (typeof title === "string" ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("h2", { className: "rv-sidepanelTitle", title, children: title }) : title),
-                subtitle && (typeof subtitle === "string" ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { className: "rv-sidepanelSubtitle", children: subtitle }) : subtitle)
-              ] })
+  return (0, import_react_dom6.createPortal)(
+    /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(import_jsx_runtime20.Fragment, { children: [
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+        "div",
+        {
+          className: "rv-sidepanelBackdrop",
+          onClick: onClose,
+          "aria-hidden": "true"
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)(
+        "aside",
+        {
+          className: `rv-sidepanel ${className}`.trim(),
+          style,
+          "aria-label": ariaLabel,
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "rv-sidepanelGrabHandleWrap", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "rv-sidepanelGrabHandle" }) }),
+            customHeader ? customHeader : /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "rv-sidepanelHeader", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "rv-sidepanelHeaderLeft", children: [
+                headerLeft,
+                (title || subtitle) && /* @__PURE__ */ (0, import_jsx_runtime20.jsxs)("div", { className: "rv-sidepanelTitleWrap", children: [
+                  title && (typeof title === "string" ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("h2", { className: "rv-sidepanelTitle", title, children: title }) : title),
+                  subtitle && (typeof subtitle === "string" ? /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("span", { className: "rv-sidepanelSubtitle", children: subtitle }) : subtitle)
+                ] })
+              ] }),
+              headerRight,
+              onClose && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
+                "button",
+                {
+                  type: "button",
+                  className: "rv-btn rv-btnGhost rv-btnIcon rv-sidepanelCloseBtn",
+                  onClick: onClose,
+                  "aria-label": "Close sidepanel",
+                  title: "Close sidepanel",
+                  children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { d: "M18 6L6 18M6 6l12 12" }) })
+                }
+              )
             ] }),
-            headerRight,
-            onClose && /* @__PURE__ */ (0, import_jsx_runtime20.jsx)(
-              "button",
-              {
-                type: "button",
-                className: "rv-btn rv-btnGhost rv-btnIcon rv-sidepanelCloseBtn",
-                onClick: onClose,
-                "aria-label": "Close sidepanel",
-                title: "Close sidepanel",
-                children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("path", { d: "M18 6L6 18M6 6l12 12" }) })
-              }
-            )
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "rv-sidepanelBody", children })
-        ]
-      }
-    )
-  ] });
+            /* @__PURE__ */ (0, import_jsx_runtime20.jsx)("div", { className: "rv-sidepanelBody", children })
+          ]
+        }
+      )
+    ] }),
+    document.body
+  );
 }
 function SidepanelHeader({
   className = "",

@@ -463,7 +463,7 @@ interface SidepanelProps {
     ariaLabel?: string;
     customHeader?: React.ReactNode;
 }
-declare function Sidepanel({ open, onClose, title, subtitle, headerLeft, headerRight, width, className, children, ariaLabel, customHeader, }: SidepanelProps): React.JSX.Element | null;
+declare function Sidepanel({ open, onClose, title, subtitle, headerLeft, headerRight, width, className, children, ariaLabel, customHeader, }: SidepanelProps): React.ReactPortal | null;
 declare function SidepanelHeader({ className, children, }: {
     className?: string;
     children: React.ReactNode;
