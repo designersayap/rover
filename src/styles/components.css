@@ -934,7 +934,7 @@ input[type="number"] {
     gap: var(--rv-space-md);
     width: 100%;
     padding: var(--rv-space-sm) var(--rv-space-md);
-    background: var(--rv-neutral-500);
+    background: var(--rv-neutral-300);
     border: 1px solid var(--rv-neutral-300);
     border-radius: var(--rv-radius-md);
     box-sizing: border-box;
@@ -1345,12 +1345,30 @@ input[type="number"] {
     width: 100%;
     aspect-ratio: 16 / 9;
 }
-.rv-aspectRatioBox[data-ratio="1:1"] { aspect-ratio: 1 / 1; }
-.rv-aspectRatioBox[data-ratio="9:16"] { aspect-ratio: 9 / 16; }
-.rv-aspectRatioBox[data-ratio="16:9"] { aspect-ratio: 16 / 9; }
-.rv-aspectRatioBox[data-ratio="4:5"] { aspect-ratio: 4 / 5; }
-.rv-aspectRatioBox[data-ratio="3:4"] { aspect-ratio: 3 / 4; }
-.rv-aspectRatioBox[data-ratio="21:9"] { aspect-ratio: 21 / 9; }
+
+.rv-aspectRatioBox[data-ratio="1:1"] {
+    aspect-ratio: 1 / 1;
+}
+
+.rv-aspectRatioBox[data-ratio="9:16"] {
+    aspect-ratio: 9 / 16;
+}
+
+.rv-aspectRatioBox[data-ratio="16:9"] {
+    aspect-ratio: 16 / 9;
+}
+
+.rv-aspectRatioBox[data-ratio="4:5"] {
+    aspect-ratio: 4 / 5;
+}
+
+.rv-aspectRatioBox[data-ratio="3:4"] {
+    aspect-ratio: 3 / 4;
+}
+
+.rv-aspectRatioBox[data-ratio="21:9"] {
+    aspect-ratio: 21 / 9;
+}
 
 /* ==========================================================================
    PURPOSE: Dashboard & Panel Section Headers

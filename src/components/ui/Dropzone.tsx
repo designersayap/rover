@@ -135,20 +135,6 @@ export const Dropzone = forwardRef<DropzoneRef, DropzoneProps>(function Dropzone
             <span className="rv-dropzoneCardHint">{previewHint}</span>
           </div>
           <div className="rv-dropzoneCardActions">
-            <button
-              type="button"
-              className="rv-btn rv-btnGhost rv-btnSm"
-              onClick={(e) => {
-                e.stopPropagation();
-                if (onReplace) {
-                  onReplace();
-                } else {
-                  inputRef.current?.click();
-                }
-              }}
-            >
-              {replaceLabel}
-            </button>
             {onRemove && (
               <button
                 type="button"
