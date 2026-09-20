@@ -235,12 +235,16 @@ img.rv-brandLogo {
   flex-direction: row;
 }
 
-/* Base item sizing for all clustered icons/thumbnails */
+/* Base item sizing for all thumbnails, avatars, swatches & +N badges */
 .rv-avatar,
 .rv-avatarSm,
 .rv-thumb,
 .rv-thumbnail,
-.rv-colorSwatch {
+.rv-colorSwatch,
+.rv-thumbMore,
+.rv-avatarMore,
+.rv-thumbGroupMore,
+.rv-avatarGroupMore {
   width: 28px !important;
   height: 28px !important;
   min-width: 28px !important;
@@ -250,6 +254,13 @@ img.rv-brandLogo {
   box-sizing: border-box !important;
   object-fit: cover;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
 }
 
 /* Cluster overlap and stacking */
@@ -266,13 +277,6 @@ img.rv-brandLogo {
   border: 2px solid var(--rv-bg-surface-1);
   margin-left: -8px;
   transition: transform 0.15s ease, z-index 0.15s ease;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  vertical-align: middle;
-  flex-shrink: 0;
 }
 
 .rv-thumbGroup > *:first-child,
@@ -292,7 +296,8 @@ img.rv-brandLogo {
 .rv-avatar,
 .rv-avatarSm,
 .rv-avatarCircle,
-.rv-thumbCircle {
+.rv-thumbCircle,
+.rv-avatarMore {
   border-radius: var(--rv-radius-full, 9999px) !important;
 }
 
@@ -300,28 +305,25 @@ img.rv-brandLogo {
 .rv-thumbnail,
 .rv-thumbSquare,
 .rv-avatarSquare,
-.rv-colorSwatch {
+.rv-colorSwatch,
+.rv-thumbMore {
   border-radius: var(--rv-radius-sm, 6px) !important;
 }
 
-/* Cluster Overflow Counter (+N badge) */
+/* +N Overflow Badge background & text styling */
+.rv-thumbMore,
+.rv-avatarMore,
 .rv-thumbGroupMore,
 .rv-avatarGroupMore {
-  border-radius: var(--rv-radius-full, 9999px);
   background: var(--rv-bg-surface-3, rgba(255, 255, 255, 0.12));
   color: var(--rv-text-secondary);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
-  user-select: none;
+  text-align: center;
 }
 
-.rv-thumbGroupMore.rv-thumbSquare,
-.rv-avatarGroupMore.rv-avatarSquare,
-.rv-thumbGroupMore.rv-thumb,
-.rv-avatarGroupMore.rv-thumb {
-  border-radius: var(--rv-radius-sm, 6px) !important;
-}
-
+.rv-thumbMore:hover,
+.rv-avatarMore:hover,
 .rv-thumbGroupMore:hover,
 .rv-avatarGroupMore:hover {
   background: var(--rv-bg-surface-active, rgba(255, 255, 255, 0.2));
