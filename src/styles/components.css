@@ -205,7 +205,7 @@ form {
     font-family: var(--rv-font-family-default) !important;
     outline: none;
     transition: all .2s;
-    background: var(--rv-neutral-500);
+    background: color-mix(in srgb, var(--rv-neutral-400) 25%, transparent);
     color: var(--rv-white);
     border: 1px solid var(--rv-bdr);
     box-shadow: none;
@@ -237,6 +237,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .rv-formInput[type="number"],
 input[type="number"] {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 .rv-numberInputWrap {
@@ -321,6 +322,7 @@ input[type="number"] {
     font-family: inherit;
     padding: var(--rv-space-sm) var(--rv-space-md);
     min-height: 120px;
+    background: color-mix(in srgb, var(--rv-neutral-400) 25%, transparent);
 }
 
 .rv-formSelect {
@@ -328,7 +330,7 @@ input[type="number"] {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-color: var(--rv-neutral-400);
+    background-color: color-mix(in srgb, var(--rv-neutral-400) 25%, transparent);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a0a0a0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 10px center;
@@ -861,7 +863,7 @@ input[type="number"] {
     justify-content: center;
     gap: var(--rv-space-sm);
     cursor: pointer;
-    background: color-mix(in srgb, var(--rv-neutral-500) 40%, transparent);
+    background: color-mix(in srgb, var(--rv-neutral-400) 25%, transparent);
     transition: border-color 0.2s ease, background 0.2s ease;
     text-align: center;
     width: 100%;
