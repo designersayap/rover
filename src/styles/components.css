@@ -632,6 +632,116 @@ input[type="number"] {
     padding: 0;
 }
 
+/* ==========================================================================
+   PURPOSE: Card Rows (Sidepanels, Directories, Resource Lists)
+   Elevated card item with left asset, flexible info, and slide-in actions.
+   ========================================================================== */
+
+.rv-cardRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    background: var(--rv-neutral-400);
+    border: 1px solid var(--rv-border-color);
+    border-radius: var(--rv-radius-md);
+    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.rv-cardRow:hover,
+.rv-cardRow:has([data-state="open"]),
+.rv-cardRow:has(.rv-menuOpen),
+.rv-cardRow:has(.apl-menuOpen),
+.rv-cardRow:has([aria-expanded="true"]),
+.rv-cardRow.rv-cardRowSelected {
+    background: var(--rv-neutral-300);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.rv-cardRowLeft {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+}
+
+.rv-cardRowContent {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 2px;
+}
+
+.rv-cardRowTitle {
+    font-size: var(--rv-font-size-sm);
+    font-weight: var(--rv-font-weight-bold);
+    color: var(--rv-white);
+    line-height: var(--rv-lh-tight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rv-cardRowSubtitle {
+    font-size: var(--rv-font-size-xs);
+    color: var(--rv-neutral-100);
+    line-height: var(--rv-lh-tight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rv-cardRowRight {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.rv-cardRowAction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-left: 0;
+    transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.18s ease,
+                margin-left 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rv-cardRow:hover .rv-cardRowAction,
+.rv-cardRow:has([data-state="open"]) .rv-cardRowAction,
+.rv-cardRow:has(.rv-menuOpen) .rv-cardRowAction,
+.rv-cardRow:has(.apl-menuOpen) .rv-cardRowAction,
+.rv-cardRow:has([aria-expanded="true"]) .rv-cardRowAction,
+.rv-cardRow.rv-cardRowSelected .rv-cardRowAction {
+    width: 28px;
+    opacity: 1;
+    margin-left: var(--rv-space-sm);
+}
+
+.rv-cardRowAction .rv-btn {
+    width: 28px;
+    height: 28px;
+    min-height: 28px;
+    padding: 0;
+}
+
+@media (hover: none) {
+    .rv-cardRowAction {
+        width: 28px;
+        opacity: 1;
+        margin-left: var(--rv-space-sm);
+    }
+}
+
 
 /* Picker Cards & Items */
 .rv-popoverCard {
