@@ -381,10 +381,14 @@ img.rv-brandLogo {
   color: var(--rv-neutral-75);
 }
 
-.rv-tokenQuotaBadge.rv-isDanger,
-.rv-tokenQuotaBadge.rv-isWarning {
+.rv-tokenQuotaBadge.rv-isDanger {
   background: color-mix(in srgb, var(--rv-danger) 15%, transparent);
   color: var(--rv-danger);
+}
+
+.rv-tokenQuotaBadge.rv-isWarning {
+  background: color-mix(in srgb, var(--rv-warning) 15%, transparent);
+  color: var(--rv-warning);
 }
 
 .rv-tokenProgressBar {
@@ -402,9 +406,12 @@ img.rv-brandLogo {
   transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.rv-tokenProgressFill.rv-isDanger,
-.rv-tokenProgressFill.rv-isWarning {
+.rv-tokenProgressFill.rv-isDanger {
   background: var(--rv-danger);
+}
+
+.rv-tokenProgressFill.rv-isWarning {
+  background: var(--rv-warning);
 }
 
 /* Color Swatches Standalone */
