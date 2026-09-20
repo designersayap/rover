@@ -13,6 +13,9 @@ export interface MediaCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'ti
   badge?: React.ReactNode;
   overlay?: React.ReactNode;
   actions?: React.ReactNode;
+  actionsPosition?: 'top-right' | 'bottom-right' | 'top-left' | 'bottom-left';
+  bottomContent?: React.ReactNode;
+  bottomContentPosition?: 'left' | 'right' | 'between' | 'center';
   mediaContent?: React.ReactNode;
 }
 
@@ -28,6 +31,9 @@ export const MediaCard = forwardRef<HTMLDivElement, MediaCardProps>(function Med
     badge,
     overlay,
     actions,
+    actionsPosition = 'top-right',
+    bottomContent,
+    bottomContentPosition = 'right',
     mediaContent,
     className = '',
     style,
@@ -42,6 +48,22 @@ export const MediaCard = forwardRef<HTMLDivElement, MediaCardProps>(function Med
   const computedAspectRatio = typeof aspectRatio === 'string' && aspectRatio.includes(':')
     ? aspectRatio.replace(':', ' / ')
     : aspectRatio;
+
+  const actionsClass = actionsPosition === 'bottom-right'
+    ? 'rv-actions-bottom-right'
+    : actionsPosition === 'top-left'
+    ? 'rv-actions-top-left'
+    : actionsPosition === 'bottom-left'
+    ? 'rv-actions-bottom-left'
+    : 'rv-actions-top-right';
+
+  const bottomClass = bottomContentPosition === 'left'
+    ? 'rv-bottom-left'
+    : bottomContentPosition === 'between'
+    ? 'rv-bottom-between'
+    : bottomContentPosition === 'center'
+    ? 'rv-bottom-center'
+    : 'rv-bottom-right';
 
   return (
     <div
@@ -67,10 +89,15 @@ export const MediaCard = forwardRef<HTMLDivElement, MediaCardProps>(function Med
 
         {badge && <div className="rv-mediaCardBadge">{badge}</div>}
 
-        {!isList && (overlay || actions) && (
+        {!isList && (overlay || actions || bottomContent) && (
           <div className="rv-mediaCardOverlay">
             {overlay}
-            {actions && <div className="rv-mediaCardActions">{actions}</div>}
+            {actions && <div className={`rv-mediaCardActions ${actionsClass}`}>{actions}</div>}
+            {bottomContent && (
+              <div className={`rv-mediaCardBottomBar ${bottomClass}`}>
+                {bottomContent}
+              </div>
+            )}
           </div>
         )}
       </div>

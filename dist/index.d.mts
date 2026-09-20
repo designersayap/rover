@@ -402,6 +402,9 @@ interface MediaCardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
     badge?: React.ReactNode;
     overlay?: React.ReactNode;
     actions?: React.ReactNode;
+    actionsPosition?: 'top-right' | 'bottom-right' | 'top-left' | 'bottom-left';
+    bottomContent?: React.ReactNode;
+    bottomContentPosition?: 'left' | 'right' | 'between' | 'center';
     mediaContent?: React.ReactNode;
 }
 declare const MediaCard: React.ForwardRefExoticComponent<MediaCardProps & React.RefAttributes<HTMLDivElement>>;
