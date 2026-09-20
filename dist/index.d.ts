@@ -361,6 +361,14 @@ interface DropzoneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onDrop'> {
     accept?: string;
     multiple?: boolean;
     disabled?: boolean;
+    previewUrl?: string;
+    previewTitle?: string;
+    previewHint?: string;
+    onReplace?: () => void;
+    onRemove?: () => void;
+    replaceLabel?: string;
+    removeLabel?: string;
+    removeIcon?: React.ReactNode;
 }
 declare const Dropzone: React.ForwardRefExoticComponent<DropzoneProps & React.RefAttributes<DropzoneRef>>;
 

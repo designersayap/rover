@@ -885,7 +885,8 @@ input[type="number"] {
 .rv-dropzone {
     border: 1px dashed var(--rv-neutral-200);
     border-radius: var(--rv-radius-md);
-    padding: var(--rv-space-xl);
+    padding: var(--rv-space-lg);
+    min-height: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -924,6 +925,69 @@ input[type="number"] {
 .rv-dropzoneHint {
     font-size: var(--rv-font-size-sm);
     color: var(--rv-neutral-100);
+}
+
+/* Inner Asset Preview Card */
+.rv-dropzoneCard {
+    display: flex;
+    align-items: center;
+    gap: var(--rv-space-md);
+    width: 100%;
+    padding: var(--rv-space-sm) var(--rv-space-md);
+    background: var(--rv-neutral-500);
+    border: 1px solid var(--rv-neutral-300);
+    border-radius: var(--rv-radius-md);
+    box-sizing: border-box;
+    text-align: left;
+    cursor: default;
+    transition: border-color 0.2s ease;
+}
+
+.rv-dropzoneCard:hover {
+    border-color: var(--rv-neutral-200);
+}
+
+.rv-dropzoneCardThumb {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--rv-radius-sm);
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid var(--rv-neutral-300);
+}
+
+.rv-dropzoneCardMeta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.rv-dropzoneCardTitle {
+    font-size: var(--rv-font-size-md);
+    font-weight: var(--rv-font-weight-medium);
+    color: var(--rv-white);
+    line-height: var(--rv-lh-tight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rv-dropzoneCardHint {
+    font-size: var(--rv-font-size-sm);
+    color: var(--rv-neutral-100);
+    line-height: var(--rv-lh-tight);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rv-dropzoneCardActions {
+    display: flex;
+    align-items: center;
+    gap: var(--rv-space-xs);
+    flex-shrink: 0;
 }
 
 .rv-uploadedThumbnailsRow {
