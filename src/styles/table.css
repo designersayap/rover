@@ -234,59 +234,66 @@ img.rv-brandLogo {
   height: 28px !important;
   min-width: 28px !important;
   min-height: 28px !important;
+  max-width: 28px !important;
+  max-height: 28px !important;
+  box-sizing: border-box !important;
   border-radius: 9999px;
   object-fit: cover;
 }
 
-.rv-avatarSquare {
+.rv-avatarSquare,
+.rv-avatarGroup .rv-avatarSquare {
   border-radius: 6px !important;
 }
 
 .rv-avatarGroup .rv-avatar,
-.rv-avatarGroup .rv-avatarSm {
+.rv-avatarGroup .rv-avatarSm,
+.rv-avatarGroup .rv-colorSwatch,
+.rv-avatarGroup .rv-avatarGroupMore {
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+  max-width: 28px !important;
+  max-height: 28px !important;
+  box-sizing: border-box !important;
   border: 2px solid var(--rv-bg-surface-1);
   margin-left: -8px;
   transition: transform 0.15s ease, z-index 0.15s ease;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .rv-avatarGroup .rv-avatar:first-child,
-.rv-avatarGroup .rv-avatarSm:first-child {
+.rv-avatarGroup .rv-avatarSm:first-child,
+.rv-avatarGroup .rv-colorSwatch:first-child {
   margin-left: 0;
 }
 
 .rv-avatarGroup .rv-avatar:hover,
-.rv-avatarGroup .rv-avatarSm:hover {
+.rv-avatarGroup .rv-avatarSm:hover,
+.rv-avatarGroup .rv-colorSwatch:hover,
+.rv-avatarGroup .rv-avatarGroupMore:hover {
   transform: translateY(-2px);
   z-index: 10;
 }
 
-.rv-avatarSquare {
-  border-radius: 6px !important;
-}
-
 .rv-avatarGroupMore {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 26px;
-  height: 26px;
-  padding: 0 6px;
   border-radius: var(--rv-radius-full, 9999px);
   background: var(--rv-bg-surface-3, rgba(255, 255, 255, 0.12));
-  border: 2px solid var(--rv-bg-surface-1);
   color: var(--rv-text-secondary);
   font-size: 10px;
   font-weight: 600;
-  margin-left: -6px;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
 .rv-avatarGroupMore:hover {
   background: var(--rv-bg-surface-active, rgba(255, 255, 255, 0.2));
   color: var(--rv-text-primary);
-  transform: translateY(-2px);
 }
 
 /* Token Quota Progress Cell */
