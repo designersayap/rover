@@ -472,7 +472,7 @@ input[type="number"] {
 .rv-colorSwatch {
     width: 20px;
     height: 20px;
-    border-radius: 50%;
+    border-radius: var(--rv-radius-xs, 4px);
     cursor: pointer;
     border: 2px solid transparent;
     transition: transform 0.1s;

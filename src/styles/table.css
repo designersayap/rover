@@ -361,7 +361,7 @@ img.rv-brandLogo {
 .rv-colorSwatch {
   width: 18px;
   height: 18px;
-  border-radius: var(--rv-radius-full, 9999px);
+  border-radius: var(--rv-radius-xs, 4px);
   border: 1.5px solid rgba(255, 255, 255, 0.25);
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
