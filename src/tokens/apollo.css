@@ -32,7 +32,7 @@
     --rv-warning: #eab308;
 
     /* 4. BRAND TYPOGRAPHY */
-    --rv-font-family-default: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --rv-font-family-default: var(--font-plus-jakarta, 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif);
     --rv-font-family-mono: 'SF Mono', 'Menlo', monospace;
     --rv-brand-font: var(--rv-font-family-default);
     --rv-font-family-body: var(--rv-font-family-default);
