@@ -456,12 +456,6 @@
 }
 
 
-@media (max-width: 1023px) {
-    .rv-mainContent > .rv-sidebarShell {
-        display: none !important;
-    }
-}
-
 @media (min-width: 1024px) {
     .rv-mobileSidebar,
     .rv-mobileSidebarSideOverlay,
