@@ -109,7 +109,7 @@
 
 .rv-tableTh {
   padding: 12px 16px;
-  font-size: var(--rv-font-size-xs, 11px);
+  font-size: var(--rv-font-size-sm);
   font-weight: 600;
   color: var(--rv-text-muted);
   text-transform: uppercase;
@@ -223,7 +223,7 @@ img.rv-brandLogo {
 }
 
 .rv-brandTitle {
-  font-size: var(--rv-font-size-sm, 13px);
+  font-size: var(--rv-font-size-md);
   font-weight: 600;
   color: var(--rv-text-primary);
   white-space: nowrap;
@@ -232,7 +232,7 @@ img.rv-brandLogo {
 }
 
 .rv-brandSubtitle {
-  font-size: var(--rv-font-size-xs, 11px);
+  font-size: var(--rv-font-size-sm);
   color: var(--rv-text-muted);
   white-space: nowrap;
 }
@@ -358,7 +358,7 @@ img.rv-brandLogo {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: var(--rv-font-size-xs, 11px);
+  font-size: var(--rv-font-size-sm);
   line-height: 1;
 }
 
