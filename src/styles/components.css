@@ -37,7 +37,10 @@
 }
 
 .rv-btnPrimary:active:not(:disabled),
-.rv-btnPrimaryActive {
+.rv-btnPrimaryActive,
+.rv-btnPrimary.rv-isActive,
+.rv-btnPrimary.rv-btnActive,
+.rv-btnPrimary[aria-expanded="true"] {
     background-color: var(--rv-neutral-400);
     box-shadow: var(--rv-shd-active);
     transform: translateY(1px);
@@ -54,7 +57,10 @@
 }
 
 .rv-btnSecondary:active:not(:disabled),
-.rv-btnSecondaryActive {
+.rv-btnSecondaryActive,
+.rv-btnSecondary.rv-isActive,
+.rv-btnSecondary.rv-btnActive,
+.rv-btnSecondary[aria-expanded="true"] {
     background-color: var(--rv-neutral-500);
     box-shadow: var(--rv-shd-active);
     transform: translateY(1px);
@@ -70,7 +76,10 @@
 }
 
 .rv-btnBrand:active:not(:disabled),
-.rv-btnBrandActive {
+.rv-btnBrandActive,
+.rv-btnBrand.rv-isActive,
+.rv-btnBrand.rv-btnActive,
+.rv-btnBrand[aria-expanded="true"] {
     background-color: var(--rv-brand-primary-active);
     box-shadow: var(--rv-shd-active);
     transform: translateY(1px);
@@ -88,7 +97,10 @@
 }
 
 .rv-btnDanger:active:not(:disabled),
-.rv-btnDangerActive {
+.rv-btnDangerActive,
+.rv-btnDanger.rv-isActive,
+.rv-btnDanger.rv-btnActive,
+.rv-btnDanger[aria-expanded="true"] {
     background-color: var(--rv-danger-active);
     box-shadow: var(--rv-shd-active);
     color: var(--rv-white);
@@ -106,11 +118,13 @@
 }
 
 .rv-btnGhost:active:not(:disabled),
-.rv-btnGhostActive {
+.rv-btnGhostActive,
+.rv-btnGhost.rv-isActive,
+.rv-btnGhost.rv-btnActive,
+.rv-btnGhost[aria-expanded="true"] {
     background: var(--rv-neutral-400);
     box-shadow: inset 0 2px var(--rv-space-xs) 0 rgba(0, 0, 0, 0.25);
     color: var(--rv-white);
-    transform: translateY(1px);
 }
 
 /* Button & Icon Helpers */

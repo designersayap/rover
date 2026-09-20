@@ -246,6 +246,9 @@ export const PopoverTrigger = React.forwardRef<HTMLElement, PopoverTriggerProps>
 
     if (asChild && React.isValidElement(children)) {
       const child = children as React.ReactElement<any>;
+      const existingClassName = child.props.className || '';
+      const activeClass = isOpen ? 'rv-btnActive rv-isActive' : '';
+      const combinedClassName = `${existingClassName} ${activeClass}`.trim();
 
       return React.cloneElement(child, {
         ref: handleRef,
@@ -256,8 +259,12 @@ export const PopoverTrigger = React.forwardRef<HTMLElement, PopoverTriggerProps>
         'aria-expanded': isOpen,
         'aria-haspopup': 'dialog',
         'aria-controls': isOpen ? popoverId : undefined,
+        className: combinedClassName || undefined,
       } as any);
     }
+
+    const defaultActiveClass = isOpen ? 'rv-btnActive rv-isActive' : '';
+    const buttonClassName = `${props.className || ''} ${defaultActiveClass}`.trim();
 
     return (
       <button
@@ -267,6 +274,7 @@ export const PopoverTrigger = React.forwardRef<HTMLElement, PopoverTriggerProps>
         aria-expanded={isOpen}
         aria-haspopup="dialog"
         aria-controls={isOpen ? popoverId : undefined}
+        className={buttonClassName || undefined}
         {...props}
       >
         {children}

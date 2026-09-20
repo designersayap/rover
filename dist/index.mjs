@@ -622,6 +622,9 @@ var PopoverTrigger = React8.forwardRef(
     };
     if (asChild && React8.isValidElement(children)) {
       const child = children;
+      const existingClassName = child.props.className || "";
+      const activeClass = isOpen ? "rv-btnActive rv-isActive" : "";
+      const combinedClassName = `${existingClassName} ${activeClass}`.trim();
       return React8.cloneElement(child, {
         ref: handleRef,
         onClick: (e) => {
@@ -630,9 +633,12 @@ var PopoverTrigger = React8.forwardRef(
         },
         "aria-expanded": isOpen,
         "aria-haspopup": "dialog",
-        "aria-controls": isOpen ? popoverId : void 0
+        "aria-controls": isOpen ? popoverId : void 0,
+        className: combinedClassName || void 0
       });
     }
+    const defaultActiveClass = isOpen ? "rv-btnActive rv-isActive" : "";
+    const buttonClassName = `${props.className || ""} ${defaultActiveClass}`.trim();
     return /* @__PURE__ */ jsx9(
       "button",
       {
@@ -642,6 +648,7 @@ var PopoverTrigger = React8.forwardRef(
         "aria-expanded": isOpen,
         "aria-haspopup": "dialog",
         "aria-controls": isOpen ? popoverId : void 0,
+        className: buttonClassName || void 0,
         ...props,
         children
       }
@@ -1245,6 +1252,9 @@ var MenuTrigger = React12.forwardRef(
     };
     if (asChild && React12.isValidElement(children)) {
       const child = children;
+      const existingClassName = child.props.className || "";
+      const activeClass = isOpen ? "rv-btnActive rv-isActive" : "";
+      const combinedClassName = `${existingClassName} ${activeClass}`.trim();
       return React12.cloneElement(child, {
         ref: handleRef,
         onClick: (e) => {
@@ -1253,9 +1263,12 @@ var MenuTrigger = React12.forwardRef(
         },
         "aria-expanded": isOpen,
         "aria-haspopup": "menu",
-        "aria-controls": isOpen ? menuId : void 0
+        "aria-controls": isOpen ? menuId : void 0,
+        className: combinedClassName || void 0
       });
     }
+    const defaultActiveClass = isOpen ? "rv-btnActive rv-isActive" : "";
+    const buttonClassName = `${props.className || ""} ${defaultActiveClass}`.trim();
     return /* @__PURE__ */ jsx13(
       "button",
       {
@@ -1265,6 +1278,7 @@ var MenuTrigger = React12.forwardRef(
         "aria-expanded": isOpen,
         "aria-haspopup": "menu",
         "aria-controls": isOpen ? menuId : void 0,
+        className: buttonClassName || void 0,
         ...props,
         children
       }

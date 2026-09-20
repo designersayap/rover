@@ -116,6 +116,9 @@ export const MenuTrigger = React.forwardRef<HTMLElement, MenuTriggerProps>(
 
     if (asChild && React.isValidElement(children)) {
       const child = children as React.ReactElement<any>;
+      const existingClassName = child.props.className || '';
+      const activeClass = isOpen ? 'rv-btnActive rv-isActive' : '';
+      const combinedClassName = `${existingClassName} ${activeClass}`.trim();
 
       return React.cloneElement(child, {
         ref: handleRef,
@@ -126,8 +129,12 @@ export const MenuTrigger = React.forwardRef<HTMLElement, MenuTriggerProps>(
         'aria-expanded': isOpen,
         'aria-haspopup': 'menu',
         'aria-controls': isOpen ? menuId : undefined,
+        className: combinedClassName || undefined,
       } as any);
     }
+
+    const defaultActiveClass = isOpen ? 'rv-btnActive rv-isActive' : '';
+    const buttonClassName = `${props.className || ''} ${defaultActiveClass}`.trim();
 
     return (
       <button
@@ -137,6 +144,7 @@ export const MenuTrigger = React.forwardRef<HTMLElement, MenuTriggerProps>(
         aria-expanded={isOpen}
         aria-haspopup="menu"
         aria-controls={isOpen ? menuId : undefined}
+        className={buttonClassName || undefined}
         {...props}
       >
         {children}
