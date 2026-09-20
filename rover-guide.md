@@ -653,6 +653,39 @@ When crafting controls, toolbars, and popover bodies, use Rover's built-in utili
 - `.rv-badge`: Status badge (pill-shaped indicator).
 - `.rv-spinner`: Standard CSS loader spinner.
 
+### 4.6 Dividers & Separation
+- `.rv-horizontalDivider`: Standard full-width horizontal divider with subtle border color (`var(--rv-bdr)`) and vertical margins (`var(--rv-space-sm) 0`).
+- `.rv-verticalDivider`: Vertical separator line sized to `var(--rv-space-lg)`.
+
+### 4.7 Card Rows & Entity Cards
+- `.rv-cardRow`: Plain, transparent base row container with flex layout, hover effects, and automatic slide-in action button support.
+- `.rv-cardRowLeft`: Container for thumbnail, avatar, or icon.
+- `.rv-cardRowContent`: Flex column containing title (`.rv-cardRowTitle`, bold/semi-bold) and subtitle (`.rv-cardRowSubtitle`, muted).
+- `.rv-cardRowRight`: Right-aligned status, meta info, or action buttons.
+- `.rv-cardRowAction`: Action buttons container that smoothly slides/fades in on card hover (`opacity: 1`, `transform: translateX(0)`).
+
+### 4.8 Table & Data Grid System
+- `.rv-tableContainer`: Responsive, horizontally scrollable container with surface background, subtle border, and rounded corners.
+- `.rv-table`: Core table element with clean border-spacing, collapsed borders, and standardized line height.
+- `.rv-tableHead`: Sticky header row with surface background.
+- `.rv-tableTh`: Table header cell with `font-size: var(--rv-font-size-sm)`, uppercase tracking, muted text color, and bottom border.
+- `.rv-tableSortBtn`: Button inside `.rv-tableTh` for column sorting.
+- `.rv-tableRow`: Table body row with hover highlight and selection state (`.rv-isSelected`).
+- `.rv-tableTd`: Table data cell. First and last cells in hover/active rows automatically receive rounded corners (`var(--rv-radius-md)`).
+- `.rv-brandCell`: Identifier cell grouping `.rv-brandLogo`, `.rv-brandTitle` (`var(--rv-font-size-md)`), and `.rv-brandSubtitle` (`var(--rv-font-size-sm)`).
+- `.rv-tokenQuotaCell`: Token quota usage cell with text (`.rv-tokenQuotaText`, `var(--rv-font-size-sm)`), used number (`.rv-tokenQuotaUsed`), total (`.rv-tokenQuotaTotal`), and percentage pill (`.rv-tokenQuotaBadge`).
+- `.rv-tokenProgressBar`: Track for token consumption.
+- `.rv-tokenProgressFill`: Animated fill bar. Supports `.rv-isWarning` for non-destructive alerts ($\ge 80\%$) using `var(--rv-warning)` and `.rv-isDanger` for exhausted quotas using `var(--rv-danger)`.
+
+### 4.9 Thumbnails, Avatars & Overlapping Groups
+- `.rv-avatar`: 50% circular user/member avatar (`28px × 28px` by default).
+- `.rv-thumb` / `.rv-thumbSquare`: 6px rounded square asset/product thumbnail (`28px × 28px` by default).
+- `.rv-colorSwatch`: 6px rounded square color swatch thumbnail.
+- `.rv-avatarGroup`: Overlapping cluster group for circular avatars.
+- `.rv-thumbGroup`: Overlapping cluster group for square asset thumbnails.
+- `.rv-avatarMore` / `.rv-thumbMore`: +N overflow badge for cluster groups.
+- `.rv-btnAvatar`: Avatar button container in topbars and menus with `overflow: visible` to support status badges.
+
 ---
 
 ## 5. Complete Implementation Example
