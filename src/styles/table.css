@@ -425,15 +425,14 @@ img.rv-brandLogo {
   border: 2px solid var(--rv-bg-surface-1);
   box-shadow: var(--rv-shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.3));
   padding: 0;
-  display: inline-block;
+  display: inline-flex;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, z-index 0.15s ease;
 }
 
 .rv-colorSwatch:hover {
-  transform: scale(1.15);
-  border-color: var(--rv-white);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  z-index: 10;
 }
 
 .rv-colorMoreBadge {
