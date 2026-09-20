@@ -1220,25 +1220,6 @@ input[type="number"] {
     z-index: 3;
 }
 
-.rv-mediaCardActions.rv-actions-bottom-right {
-    top: auto;
-    bottom: var(--rv-space-xs);
-    right: var(--rv-space-xs);
-}
-
-.rv-mediaCardActions.rv-actions-top-left {
-    top: var(--rv-space-xs);
-    left: var(--rv-space-xs);
-    right: auto;
-}
-
-.rv-mediaCardActions.rv-actions-bottom-left {
-    top: auto;
-    bottom: var(--rv-space-xs);
-    left: var(--rv-space-xs);
-    right: auto;
-}
-
 .rv-mediaCardBottomBar {
     position: absolute;
     bottom: 0;
@@ -1251,22 +1232,6 @@ input[type="number"] {
     z-index: 2;
     pointer-events: auto;
     box-sizing: border-box;
-}
-
-.rv-mediaCardBottomBar.rv-bottom-left {
-    justify-content: flex-start;
-}
-
-.rv-mediaCardBottomBar.rv-bottom-right {
-    justify-content: flex-end;
-}
-
-.rv-mediaCardBottomBar.rv-bottom-between {
-    justify-content: space-between;
-}
-
-.rv-mediaCardBottomBar.rv-bottom-center {
-    justify-content: center;
 }
 
 .rv-mediaCardCaption {

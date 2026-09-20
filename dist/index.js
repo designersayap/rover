@@ -1778,9 +1778,7 @@ var MediaCard = (0, import_react16.forwardRef)(function MediaCard2({
   badge,
   overlay,
   actions,
-  actionsPosition = "top-right",
   bottomContent,
-  bottomContentPosition = "right",
   mediaContent,
   className = "",
   style,
@@ -1789,8 +1787,6 @@ var MediaCard = (0, import_react16.forwardRef)(function MediaCard2({
 }, ref) {
   const isList = variant === "list";
   const computedAspectRatio = typeof aspectRatio === "string" && aspectRatio.includes(":") ? aspectRatio.replace(":", " / ") : aspectRatio;
-  const actionsClass = actionsPosition === "bottom-right" ? "rv-actions-bottom-right" : actionsPosition === "top-left" ? "rv-actions-top-left" : actionsPosition === "bottom-left" ? "rv-actions-bottom-left" : "rv-actions-top-right";
-  const bottomClass = bottomContentPosition === "left" ? "rv-bottom-left" : bottomContentPosition === "between" ? "rv-bottom-between" : bottomContentPosition === "center" ? "rv-bottom-center" : "rv-bottom-right";
   return /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)(
     "div",
     {
@@ -1814,8 +1810,8 @@ var MediaCard = (0, import_react16.forwardRef)(function MediaCard2({
               badge && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "rv-mediaCardBadge", children: badge }),
               !isList && (overlay || actions || bottomContent) && /* @__PURE__ */ (0, import_jsx_runtime17.jsxs)("div", { className: "rv-mediaCardOverlay", children: [
                 overlay,
-                actions && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: `rv-mediaCardActions ${actionsClass}`, children: actions }),
-                bottomContent && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: `rv-mediaCardBottomBar ${bottomClass}`, children: bottomContent })
+                actions && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "rv-mediaCardActions", children: actions }),
+                bottomContent && /* @__PURE__ */ (0, import_jsx_runtime17.jsx)("div", { className: "rv-mediaCardBottomBar", children: bottomContent })
               ] })
             ]
           }

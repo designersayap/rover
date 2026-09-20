@@ -1712,9 +1712,7 @@ var MediaCard = forwardRef4(function MediaCard2({
   badge,
   overlay,
   actions,
-  actionsPosition = "top-right",
   bottomContent,
-  bottomContentPosition = "right",
   mediaContent,
   className = "",
   style,
@@ -1723,8 +1721,6 @@ var MediaCard = forwardRef4(function MediaCard2({
 }, ref) {
   const isList = variant === "list";
   const computedAspectRatio = typeof aspectRatio === "string" && aspectRatio.includes(":") ? aspectRatio.replace(":", " / ") : aspectRatio;
-  const actionsClass = actionsPosition === "bottom-right" ? "rv-actions-bottom-right" : actionsPosition === "top-left" ? "rv-actions-top-left" : actionsPosition === "bottom-left" ? "rv-actions-bottom-left" : "rv-actions-top-right";
-  const bottomClass = bottomContentPosition === "left" ? "rv-bottom-left" : bottomContentPosition === "between" ? "rv-bottom-between" : bottomContentPosition === "center" ? "rv-bottom-center" : "rv-bottom-right";
   return /* @__PURE__ */ jsxs11(
     "div",
     {
@@ -1748,8 +1744,8 @@ var MediaCard = forwardRef4(function MediaCard2({
               badge && /* @__PURE__ */ jsx17("div", { className: "rv-mediaCardBadge", children: badge }),
               !isList && (overlay || actions || bottomContent) && /* @__PURE__ */ jsxs11("div", { className: "rv-mediaCardOverlay", children: [
                 overlay,
-                actions && /* @__PURE__ */ jsx17("div", { className: `rv-mediaCardActions ${actionsClass}`, children: actions }),
-                bottomContent && /* @__PURE__ */ jsx17("div", { className: `rv-mediaCardBottomBar ${bottomClass}`, children: bottomContent })
+                actions && /* @__PURE__ */ jsx17("div", { className: "rv-mediaCardActions", children: actions }),
+                bottomContent && /* @__PURE__ */ jsx17("div", { className: "rv-mediaCardBottomBar", children: bottomContent })
               ] })
             ]
           }
