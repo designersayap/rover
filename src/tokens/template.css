@@ -93,7 +93,7 @@
    /* --------------------------------------------------------------------------
        7. SYSTEM & COMPONENT ALIASES
        -------------------------------------------------------------------------- */
-   --rv-bdr: var(--rv-neutral-400);
+   --rv-bdr: var(--rv-neutral-300);
    --rv-border-color: var(--rv-bdr);
    --rv-text-default: var(--rv-white);
    --rv-color-primary: var(--rv-brand-primary);
