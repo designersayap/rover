@@ -171,7 +171,7 @@ var ResizeHandle = ({
 // src/components/sidebar/MobileSidebarDrawer.tsx
 import { useEffect as useEffect2, useState as useState2 } from "react";
 import { createPortal } from "react-dom";
-import { jsx as jsx4, jsxs } from "react/jsx-runtime";
+import { jsx as jsx4 } from "react/jsx-runtime";
 var MobileSidebarDrawer = ({
   isOpen,
   onClose,
@@ -182,8 +182,7 @@ var MobileSidebarDrawer = ({
   width,
   container,
   style,
-  "aria-label": ariaLabel = "Mobile navigation menu",
-  showGrabHandle = true
+  "aria-label": ariaLabel = "Navigation drawer"
 }) => {
   const [mounted, setMounted] = useState2(false);
   useEffect2(() => {
@@ -215,16 +214,13 @@ var MobileSidebarDrawer = ({
         role: "dialog",
         "aria-modal": "true",
         "aria-label": ariaLabel,
-        children: /* @__PURE__ */ jsxs(
+        children: /* @__PURE__ */ jsx4(
           "div",
           {
-            className: `rv-mobileSidebarBottomSheet rv-mobileSidebarBottomSheetOpen ${drawerClassName}`.trim(),
+            className: `rv-mobileSidebarDrawer rv-mobileSidebarDrawerOpen ${drawerClassName}`.trim(),
             onClick: (e) => e.stopPropagation(),
             style: drawerStyle,
-            children: [
-              showGrabHandle && /* @__PURE__ */ jsx4("div", { className: "rv-sidepanelGrabHandleWrap", style: { display: "flex" }, children: /* @__PURE__ */ jsx4("div", { className: "rv-sidepanelGrabHandle" }) }),
-              children
-            ]
+            children
           }
         )
       }
@@ -234,7 +230,7 @@ var MobileSidebarDrawer = ({
 };
 
 // src/components/sidebar/Sidebar.tsx
-import { Fragment, jsx as jsx5, jsxs as jsxs2 } from "react/jsx-runtime";
+import { Fragment, jsx as jsx5, jsxs } from "react/jsx-runtime";
 var Sidebar = React5.forwardRef(
   ({
     children,
@@ -259,7 +255,7 @@ var Sidebar = React5.forwardRef(
       ...style,
       ...width !== void 0 && state === "full" ? { width: typeof width === "number" ? `${width}px` : width } : {}
     };
-    return /* @__PURE__ */ jsxs2(Fragment, { children: [
+    return /* @__PURE__ */ jsxs(Fragment, { children: [
       /* @__PURE__ */ jsx5(
         "aside",
         {
@@ -268,7 +264,7 @@ var Sidebar = React5.forwardRef(
           style: inlineStyle,
           "data-builder-ui": dataBuilderUi ? "true" : void 0,
           ...props,
-          children: /* @__PURE__ */ jsxs2("div", { className: `rv-sidebar ${innerClassName}`.trim(), children: [
+          children: /* @__PURE__ */ jsxs("div", { className: `rv-sidebar ${innerClassName}`.trim(), children: [
             children,
             resizable && state === "full" && /* @__PURE__ */ jsx5(ResizeHandle, { onResize })
           ] })
@@ -321,7 +317,7 @@ var SidebarPanel = React5.forwardRef(
 SidebarPanel.displayName = "SidebarPanel";
 
 // src/components/sidebar/SidebarRail.tsx
-import { jsx as jsx6, jsxs as jsxs3 } from "react/jsx-runtime";
+import { jsx as jsx6, jsxs as jsxs2 } from "react/jsx-runtime";
 var SidebarRail = ({
   items = [],
   activeTab,
@@ -332,7 +328,7 @@ var SidebarRail = ({
 }) => {
   const activeIndex = items.findIndex((item) => item.id === activeTab);
   const showIndicator = activeIndex >= 0;
-  return /* @__PURE__ */ jsxs3("div", { className: `rv-sidebarRail ${className}`.trim(), children: [
+  return /* @__PURE__ */ jsxs2("div", { className: `rv-sidebarRail ${className}`.trim(), children: [
     showIndicator && /* @__PURE__ */ jsx6(
       "div",
       {
@@ -345,7 +341,7 @@ var SidebarRail = ({
     ),
     items.map((item) => {
       const isActive = item.id === activeTab;
-      return /* @__PURE__ */ jsxs3(
+      return /* @__PURE__ */ jsxs2(
         "button",
         {
           type: "button",
@@ -403,7 +399,7 @@ TopbarLogo.displayName = "TopbarLogo";
 
 // src/components/topbar/SidebarToggle.tsx
 import React7 from "react";
-import { jsx as jsx8, jsxs as jsxs4 } from "react/jsx-runtime";
+import { jsx as jsx8, jsxs as jsxs3 } from "react/jsx-runtime";
 var SidebarToggle = React7.forwardRef(
   ({
     className = "",
@@ -425,7 +421,7 @@ var SidebarToggle = React7.forwardRef(
         "aria-label": ariaLabel,
         "aria-expanded": isOpen,
         ...props,
-        children: children ? children : icon ? icon : /* @__PURE__ */ jsxs4(
+        children: children ? children : icon ? icon : /* @__PURE__ */ jsxs3(
           "svg",
           {
             width: "18",
@@ -461,7 +457,7 @@ import React8, {
   useId
 } from "react";
 import { createPortal as createPortal2 } from "react-dom";
-import { jsx as jsx9, jsxs as jsxs5 } from "react/jsx-runtime";
+import { jsx as jsx9, jsxs as jsxs4 } from "react/jsx-runtime";
 var PopoverContext = createContext(null);
 function usePopover() {
   const context = useContext(PopoverContext);
@@ -571,7 +567,7 @@ var Popover = React8.forwardRef(
         };
       }
     }
-    return /* @__PURE__ */ jsxs5(PopoverContext.Provider, { value: contextValue, children: [
+    return /* @__PURE__ */ jsxs4(PopoverContext.Provider, { value: contextValue, children: [
       /* @__PURE__ */ jsx9(
         "div",
         {
@@ -833,7 +829,7 @@ PopoverMenu.displayName = "PopoverMenu";
 // src/components/overlays/Tooltip.tsx
 import { useState as useState4, useRef as useRef2, useEffect as useEffect4 } from "react";
 import { createPortal as createPortal3 } from "react-dom";
-import { Fragment as Fragment2, jsx as jsx10, jsxs as jsxs6 } from "react/jsx-runtime";
+import { Fragment as Fragment2, jsx as jsx10, jsxs as jsxs5 } from "react/jsx-runtime";
 var Tooltip = ({
   content,
   children,
@@ -920,7 +916,7 @@ var Tooltip = ({
     setTooltipStyle({ top: -9999, left: -9999, opacity: 0 });
   };
   if (!content) return /* @__PURE__ */ jsx10(Fragment2, { children });
-  return /* @__PURE__ */ jsxs6(Fragment2, { children: [
+  return /* @__PURE__ */ jsxs5(Fragment2, { children: [
     /* @__PURE__ */ jsx10(
       "div",
       {
@@ -950,7 +946,7 @@ var Tooltip = ({
 // src/components/overlays/Modal.tsx
 import React10, { useEffect as useEffect5, useState as useState5 } from "react";
 import { createPortal as createPortal4 } from "react-dom";
-import { jsx as jsx11, jsxs as jsxs7 } from "react/jsx-runtime";
+import { jsx as jsx11, jsxs as jsxs6 } from "react/jsx-runtime";
 var Modal = React10.forwardRef(
   ({
     isOpen = false,
@@ -1039,7 +1035,7 @@ var Modal = React10.forwardRef(
 Modal.displayName = "Modal";
 var ModalHeader = React10.forwardRef(
   ({ children, className = "", onClose, showCloseButton = false, ...props }, ref) => {
-    return /* @__PURE__ */ jsxs7("div", { ref, className: `rv-modalHeader ${className}`.trim(), ...props, children: [
+    return /* @__PURE__ */ jsxs6("div", { ref, className: `rv-modalHeader ${className}`.trim(), ...props, children: [
       /* @__PURE__ */ jsx11("div", { className: "rv-modalHeaderContent", children }),
       showCloseButton && onClose && /* @__PURE__ */ jsx11(
         "button",
@@ -1083,7 +1079,7 @@ ModalFooter.displayName = "ModalFooter";
 
 // src/components/overlays/Dialog.tsx
 import React11 from "react";
-import { Fragment as Fragment3, jsx as jsx12, jsxs as jsxs8 } from "react/jsx-runtime";
+import { Fragment as Fragment3, jsx as jsx12, jsxs as jsxs7 } from "react/jsx-runtime";
 var variantClassMap = {
   brand: "rv-btnBrand",
   primary: "rv-btnPrimary",
@@ -1115,13 +1111,13 @@ var Dialog = React11.forwardRef(
   }, ref) => {
     const computedActionType = actionType || (onSubmit ? "submit" : "button");
     const actionClass = variantClassMap[actionVariant] || "rv-btnBrand";
-    const dialogInner = /* @__PURE__ */ jsxs8(Fragment3, { children: [
-      /* @__PURE__ */ jsxs8(ModalHeader, { onClose, showCloseButton, children: [
+    const dialogInner = /* @__PURE__ */ jsxs7(Fragment3, { children: [
+      /* @__PURE__ */ jsxs7(ModalHeader, { onClose, showCloseButton, children: [
         /* @__PURE__ */ jsx12(ModalTitle, { children: title }),
         children && description && /* @__PURE__ */ jsx12(ModalDescription, { children: description })
       ] }),
       children ? /* @__PURE__ */ jsx12(ModalBody, { children }) : description ? /* @__PURE__ */ jsx12(ModalBody, { children: /* @__PURE__ */ jsx12("p", { className: "rv-modalDescription", style: { margin: 0 }, children: description }) }) : null,
-      footer !== void 0 ? footer : /* @__PURE__ */ jsxs8(ModalFooter, { children: [
+      footer !== void 0 ? footer : /* @__PURE__ */ jsxs7(ModalFooter, { children: [
         showCancel && /* @__PURE__ */ jsx12(
           "button",
           {
@@ -1468,7 +1464,7 @@ MenuItem.displayName = "MenuItem";
 
 // src/components/ui/Chip.tsx
 import { forwardRef } from "react";
-import { jsx as jsx14, jsxs as jsxs9 } from "react/jsx-runtime";
+import { jsx as jsx14, jsxs as jsxs8 } from "react/jsx-runtime";
 var Chip = forwardRef(function Chip2({
   active = false,
   icon,
@@ -1477,7 +1473,7 @@ var Chip = forwardRef(function Chip2({
   type = "button",
   ...props
 }, ref) {
-  return /* @__PURE__ */ jsxs9(
+  return /* @__PURE__ */ jsxs8(
     "button",
     {
       ref,
@@ -1502,7 +1498,7 @@ import {
   useRef as useRef4,
   useImperativeHandle
 } from "react";
-import { Fragment as Fragment4, jsx as jsx15, jsxs as jsxs10 } from "react/jsx-runtime";
+import { Fragment as Fragment4, jsx as jsx15, jsxs as jsxs9 } from "react/jsx-runtime";
 var Dropzone = forwardRef2(function Dropzone2({
   onDropFiles,
   title = "Drag and drop media here",
@@ -1558,7 +1554,7 @@ var Dropzone = forwardRef2(function Dropzone2({
       onDropFiles?.(e.target.files);
     }
   };
-  return /* @__PURE__ */ jsxs10(
+  return /* @__PURE__ */ jsxs9(
     "div",
     {
       onClick: () => {
@@ -1586,7 +1582,7 @@ var Dropzone = forwardRef2(function Dropzone2({
             style: { display: "none" }
           }
         ),
-        previewUrl ? /* @__PURE__ */ jsxs10(
+        previewUrl ? /* @__PURE__ */ jsxs9(
           "div",
           {
             className: "rv-dropzoneCard",
@@ -1595,7 +1591,7 @@ var Dropzone = forwardRef2(function Dropzone2({
             },
             children: [
               /* @__PURE__ */ jsx15("img", { src: previewUrl, alt: previewTitle, className: "rv-dropzoneCardThumb" }),
-              /* @__PURE__ */ jsxs10("div", { className: "rv-dropzoneCardMeta", children: [
+              /* @__PURE__ */ jsxs9("div", { className: "rv-dropzoneCardMeta", children: [
                 /* @__PURE__ */ jsx15("span", { className: "rv-dropzoneCardTitle", children: previewTitle }),
                 /* @__PURE__ */ jsx15("span", { className: "rv-dropzoneCardHint", children: previewHint })
               ] }),
@@ -1610,7 +1606,7 @@ var Dropzone = forwardRef2(function Dropzone2({
                     onRemove();
                   },
                   title: removeLabel || "Remove file",
-                  children: removeIcon || /* @__PURE__ */ jsxs10("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+                  children: removeIcon || /* @__PURE__ */ jsxs9("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
                     /* @__PURE__ */ jsx15("path", { d: "M3 6h18" }),
                     /* @__PURE__ */ jsx15("path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" }),
                     /* @__PURE__ */ jsx15("path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" }),
@@ -1621,7 +1617,7 @@ var Dropzone = forwardRef2(function Dropzone2({
               ) })
             ]
           }
-        ) : children ? children : /* @__PURE__ */ jsxs10(Fragment4, { children: [
+        ) : children ? children : /* @__PURE__ */ jsxs9(Fragment4, { children: [
           icon && /* @__PURE__ */ jsx15("div", { className: "rv-dropzoneIcon", children: icon }),
           /* @__PURE__ */ jsx15("div", { className: "rv-dropzoneTitle", children: title }),
           /* @__PURE__ */ jsx15("div", { className: "rv-dropzoneHint", children: hint })
@@ -1633,7 +1629,7 @@ var Dropzone = forwardRef2(function Dropzone2({
 
 // src/components/ui/MediaCard.tsx
 import { forwardRef as forwardRef3 } from "react";
-import { jsx as jsx16, jsxs as jsxs11 } from "react/jsx-runtime";
+import { jsx as jsx16, jsxs as jsxs10 } from "react/jsx-runtime";
 var MediaCard = forwardRef3(function MediaCard2({
   src,
   alt = "Media thumbnail",
@@ -1653,7 +1649,7 @@ var MediaCard = forwardRef3(function MediaCard2({
 }, ref) {
   const isList = variant === "list";
   const computedAspectRatio = typeof aspectRatio === "string" && aspectRatio.includes(":") ? aspectRatio.replace(":", " / ") : aspectRatio;
-  return /* @__PURE__ */ jsxs11(
+  return /* @__PURE__ */ jsxs10(
     "div",
     {
       ref,
@@ -1666,7 +1662,7 @@ var MediaCard = forwardRef3(function MediaCard2({
       },
       ...props,
       children: [
-        /* @__PURE__ */ jsxs11(
+        /* @__PURE__ */ jsxs10(
           "div",
           {
             className: "rv-mediaCardThumbWrapper",
@@ -1674,14 +1670,14 @@ var MediaCard = forwardRef3(function MediaCard2({
             children: [
               mediaContent ? mediaContent : src ? /* @__PURE__ */ jsx16("img", { src, alt, className: "rv-mediaCardThumb", loading: "lazy" }) : null,
               badge && /* @__PURE__ */ jsx16("div", { className: "rv-mediaCardBadge", children: badge }),
-              !isList && (overlay || actions) && /* @__PURE__ */ jsxs11("div", { className: "rv-mediaCardOverlay", children: [
+              !isList && (overlay || actions) && /* @__PURE__ */ jsxs10("div", { className: "rv-mediaCardOverlay", children: [
                 overlay,
                 actions && /* @__PURE__ */ jsx16("div", { className: "rv-mediaCardActions", children: actions })
               ] })
             ]
           }
         ),
-        (title || subtitle || children) && /* @__PURE__ */ jsxs11("div", { className: "rv-mediaCardContent", children: [
+        (title || subtitle || children) && /* @__PURE__ */ jsxs10("div", { className: "rv-mediaCardContent", children: [
           title && /* @__PURE__ */ jsx16("div", { className: "rv-mediaCardTitle", children: title }),
           subtitle && /* @__PURE__ */ jsx16("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
           children
@@ -1785,7 +1781,7 @@ function MasonryGrid({
 
 // src/components/ui/SplitButton.tsx
 import React17, { forwardRef as forwardRef4 } from "react";
-import { Fragment as Fragment6, jsx as jsx18, jsxs as jsxs12 } from "react/jsx-runtime";
+import { Fragment as Fragment6, jsx as jsx18, jsxs as jsxs11 } from "react/jsx-runtime";
 var VARIANT_CLASS_MAP = {
   primary: "rv-btnPrimary",
   secondary: "rv-btnSecondary",
@@ -1860,8 +1856,8 @@ var SplitButton = forwardRef4(
         ref,
         className: `rv-splitBtn ${className}`.trim(),
         ...props,
-        children: isCustomChildren ? children : /* @__PURE__ */ jsxs12(Fragment6, { children: [
-          /* @__PURE__ */ jsxs12(
+        children: isCustomChildren ? children : /* @__PURE__ */ jsxs11(Fragment6, { children: [
+          /* @__PURE__ */ jsxs11(
             SplitButtonMain,
             {
               variant,
@@ -1893,7 +1889,7 @@ var SplitButton = forwardRef4(
 
 // src/components/overlays/Sidepanel.tsx
 import { useEffect as useEffect8 } from "react";
-import { Fragment as Fragment7, jsx as jsx19, jsxs as jsxs13 } from "react/jsx-runtime";
+import { Fragment as Fragment7, jsx as jsx19, jsxs as jsxs12 } from "react/jsx-runtime";
 function Sidepanel({
   open = true,
   onClose,
@@ -1919,7 +1915,7 @@ function Sidepanel({
   }, [open, onClose]);
   if (!open) return null;
   const style = width ? { "--rv-sidepanel-width": typeof width === "number" ? `${width}px` : width } : void 0;
-  return /* @__PURE__ */ jsxs13(Fragment7, { children: [
+  return /* @__PURE__ */ jsxs12(Fragment7, { children: [
     /* @__PURE__ */ jsx19(
       "div",
       {
@@ -1928,7 +1924,7 @@ function Sidepanel({
         "aria-hidden": "true"
       }
     ),
-    /* @__PURE__ */ jsxs13(
+    /* @__PURE__ */ jsxs12(
       "aside",
       {
         className: `rv-sidepanel ${className}`.trim(),
@@ -1936,10 +1932,10 @@ function Sidepanel({
         "aria-label": ariaLabel,
         children: [
           /* @__PURE__ */ jsx19("div", { className: "rv-sidepanelGrabHandleWrap", children: /* @__PURE__ */ jsx19("div", { className: "rv-sidepanelGrabHandle" }) }),
-          customHeader ? customHeader : /* @__PURE__ */ jsxs13("div", { className: "rv-sidepanelHeader", children: [
-            /* @__PURE__ */ jsxs13("div", { className: "rv-sidepanelHeaderLeft", children: [
+          customHeader ? customHeader : /* @__PURE__ */ jsxs12("div", { className: "rv-sidepanelHeader", children: [
+            /* @__PURE__ */ jsxs12("div", { className: "rv-sidepanelHeaderLeft", children: [
               headerLeft,
-              (title || subtitle) && /* @__PURE__ */ jsxs13("div", { className: "rv-sidepanelTitleWrap", children: [
+              (title || subtitle) && /* @__PURE__ */ jsxs12("div", { className: "rv-sidepanelTitleWrap", children: [
                 title && (typeof title === "string" ? /* @__PURE__ */ jsx19("h2", { className: "rv-sidepanelTitle", title, children: title }) : title),
                 subtitle && (typeof subtitle === "string" ? /* @__PURE__ */ jsx19("span", { className: "rv-sidepanelSubtitle", children: subtitle }) : subtitle)
               ] })

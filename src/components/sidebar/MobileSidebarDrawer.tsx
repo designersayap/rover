@@ -14,7 +14,6 @@ export interface MobileSidebarDrawerProps {
   container?: HTMLElement | null;
   style?: React.CSSProperties;
   'aria-label'?: string;
-  showGrabHandle?: boolean;
 }
 
 export const MobileSidebarDrawer: React.FC<MobileSidebarDrawerProps> = ({
@@ -27,8 +26,7 @@ export const MobileSidebarDrawer: React.FC<MobileSidebarDrawerProps> = ({
   width,
   container,
   style,
-  'aria-label': ariaLabel = 'Mobile navigation menu',
-  showGrabHandle = true,
+  'aria-label': ariaLabel = 'Navigation drawer',
 }) => {
   const [mounted, setMounted] = useState(false);
 
@@ -68,15 +66,10 @@ export const MobileSidebarDrawer: React.FC<MobileSidebarDrawerProps> = ({
       aria-label={ariaLabel}
     >
       <div
-        className={`rv-mobileSidebarBottomSheet rv-mobileSidebarBottomSheetOpen ${drawerClassName}`.trim()}
+        className={`rv-mobileSidebarDrawer rv-mobileSidebarDrawerOpen ${drawerClassName}`.trim()}
         onClick={(e) => e.stopPropagation()}
         style={drawerStyle}
       >
-        {showGrabHandle && (
-          <div className="rv-sidepanelGrabHandleWrap" style={{ display: 'flex' }}>
-            <div className="rv-sidepanelGrabHandle" />
-          </div>
-        )}
         {children}
       </div>
     </div>,
