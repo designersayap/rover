@@ -885,7 +885,8 @@ input[type="number"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
+    position: relative;
     margin-left: var(--rv-space-xs);
 }
 
