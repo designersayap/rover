@@ -1158,8 +1158,18 @@ input[type="number"] {
     flex-direction: column;
 }
 
-.rv-mediaCardTile:hover {
+.rv-mediaCardTile:hover,
+.rv-mediaCardTile:has([data-state="open"]),
+.rv-mediaCardTile:has(.apl-menuOpen),
+.rv-mediaCardTile:has(.rv-menuOpen),
+.rv-mediaCardTile:has(.apl-promptDropdownMenu),
+.rv-mediaCardTile:has([aria-expanded="true"]),
+.rv-mediaCardTile.rv-mediaCardSelected,
+.rv-mediaCardTile:focus-within {
     border-color: var(--rv-neutral-200);
+}
+
+.rv-mediaCardTile:hover {
     transform: translateY(-1px);
 }
 
@@ -1206,7 +1216,11 @@ input[type="number"] {
 .rv-mediaCard:hover .rv-mediaCardOverlay,
 .rv-mediaCard:has([data-state="open"]) .rv-mediaCardOverlay,
 .rv-mediaCard:has(.apl-menuOpen) .rv-mediaCardOverlay,
-.rv-mediaCard:has(.rv-menuOpen) .rv-mediaCardOverlay {
+.rv-mediaCard:has(.rv-menuOpen) .rv-mediaCardOverlay,
+.rv-mediaCard:has(.apl-promptDropdownMenu) .rv-mediaCardOverlay,
+.rv-mediaCard:has([aria-expanded="true"]) .rv-mediaCardOverlay,
+.rv-mediaCard.rv-mediaCardSelected .rv-mediaCardOverlay,
+.rv-mediaCard:focus-within .rv-mediaCardOverlay {
     opacity: 1;
 }
 
