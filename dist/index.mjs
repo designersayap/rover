@@ -1519,15 +1519,58 @@ var ChipGroup = forwardRef(function ChipGroup2({ children, className = "", ...pr
   return /* @__PURE__ */ jsx14("div", { ref, className: `rv-chipGroup ${className}`.trim(), ...props, children });
 });
 
+// src/components/ui/Tabs.tsx
+import { forwardRef as forwardRef2 } from "react";
+import { jsx as jsx15, jsxs as jsxs9 } from "react/jsx-runtime";
+var Tab = forwardRef2(function Tab2({
+  active = false,
+  icon,
+  children,
+  className = "",
+  type = "button",
+  ...props
+}, ref) {
+  return /* @__PURE__ */ jsxs9(
+    "button",
+    {
+      ref,
+      type,
+      role: "tab",
+      "aria-selected": active,
+      className: `rv-tab ${active ? "rv-tabActive" : ""} ${className}`.trim(),
+      ...props,
+      children: [
+        icon && /* @__PURE__ */ jsx15("span", { className: "rv-tabIcon", children: icon }),
+        /* @__PURE__ */ jsx15("span", { className: "rv-tabLabel", children })
+      ]
+    }
+  );
+});
+var TabList = forwardRef2(function TabList2({ children, className = "", ...props }, ref) {
+  return /* @__PURE__ */ jsx15(
+    "div",
+    {
+      ref,
+      role: "tablist",
+      className: `rv-tabList ${className}`.trim(),
+      ...props,
+      children
+    }
+  );
+});
+var Tabs = forwardRef2(function Tabs2({ children, className = "", ...props }, ref) {
+  return /* @__PURE__ */ jsx15("div", { ref, className: `rv-tabs ${className}`.trim(), ...props, children });
+});
+
 // src/components/ui/Dropzone.tsx
 import {
-  forwardRef as forwardRef2,
+  forwardRef as forwardRef3,
   useState as useState7,
   useRef as useRef4,
   useImperativeHandle
 } from "react";
-import { Fragment as Fragment4, jsx as jsx15, jsxs as jsxs9 } from "react/jsx-runtime";
-var Dropzone = forwardRef2(function Dropzone2({
+import { Fragment as Fragment4, jsx as jsx16, jsxs as jsxs10 } from "react/jsx-runtime";
+var Dropzone = forwardRef3(function Dropzone2({
   onDropFiles,
   title = "Drag and drop media here",
   hint = "or click to browse files",
@@ -1582,7 +1625,7 @@ var Dropzone = forwardRef2(function Dropzone2({
       onDropFiles?.(e.target.files);
     }
   };
-  return /* @__PURE__ */ jsxs9(
+  return /* @__PURE__ */ jsxs10(
     "div",
     {
       onClick: () => {
@@ -1598,7 +1641,7 @@ var Dropzone = forwardRef2(function Dropzone2({
       tabIndex: 0,
       ...props,
       children: [
-        /* @__PURE__ */ jsx15(
+        /* @__PURE__ */ jsx16(
           "input",
           {
             ref: inputRef,
@@ -1610,7 +1653,7 @@ var Dropzone = forwardRef2(function Dropzone2({
             style: { display: "none" }
           }
         ),
-        previewUrl ? /* @__PURE__ */ jsxs9(
+        previewUrl ? /* @__PURE__ */ jsxs10(
           "div",
           {
             className: "rv-dropzoneCard",
@@ -1618,12 +1661,12 @@ var Dropzone = forwardRef2(function Dropzone2({
               e.stopPropagation();
             },
             children: [
-              /* @__PURE__ */ jsx15("img", { src: previewUrl, alt: previewTitle, className: "rv-dropzoneCardThumb" }),
-              /* @__PURE__ */ jsxs9("div", { className: "rv-dropzoneCardMeta", children: [
-                /* @__PURE__ */ jsx15("span", { className: "rv-dropzoneCardTitle", children: previewTitle }),
-                /* @__PURE__ */ jsx15("span", { className: "rv-dropzoneCardHint", children: previewHint })
+              /* @__PURE__ */ jsx16("img", { src: previewUrl, alt: previewTitle, className: "rv-dropzoneCardThumb" }),
+              /* @__PURE__ */ jsxs10("div", { className: "rv-dropzoneCardMeta", children: [
+                /* @__PURE__ */ jsx16("span", { className: "rv-dropzoneCardTitle", children: previewTitle }),
+                /* @__PURE__ */ jsx16("span", { className: "rv-dropzoneCardHint", children: previewHint })
               ] }),
-              /* @__PURE__ */ jsx15("div", { className: "rv-dropzoneCardActions", children: onRemove && /* @__PURE__ */ jsx15(
+              /* @__PURE__ */ jsx16("div", { className: "rv-dropzoneCardActions", children: onRemove && /* @__PURE__ */ jsx16(
                 "button",
                 {
                   type: "button",
@@ -1634,21 +1677,21 @@ var Dropzone = forwardRef2(function Dropzone2({
                     onRemove();
                   },
                   title: removeLabel || "Remove file",
-                  children: removeIcon || /* @__PURE__ */ jsxs9("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-                    /* @__PURE__ */ jsx15("path", { d: "M3 6h18" }),
-                    /* @__PURE__ */ jsx15("path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" }),
-                    /* @__PURE__ */ jsx15("path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" }),
-                    /* @__PURE__ */ jsx15("line", { x1: "10", x2: "10", y1: "11", y2: "17" }),
-                    /* @__PURE__ */ jsx15("line", { x1: "14", x2: "14", y1: "11", y2: "17" })
+                  children: removeIcon || /* @__PURE__ */ jsxs10("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
+                    /* @__PURE__ */ jsx16("path", { d: "M3 6h18" }),
+                    /* @__PURE__ */ jsx16("path", { d: "M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" }),
+                    /* @__PURE__ */ jsx16("path", { d: "M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" }),
+                    /* @__PURE__ */ jsx16("line", { x1: "10", x2: "10", y1: "11", y2: "17" }),
+                    /* @__PURE__ */ jsx16("line", { x1: "14", x2: "14", y1: "11", y2: "17" })
                   ] })
                 }
               ) })
             ]
           }
-        ) : children ? children : /* @__PURE__ */ jsxs9(Fragment4, { children: [
-          icon && /* @__PURE__ */ jsx15("div", { className: "rv-dropzoneIcon", children: icon }),
-          /* @__PURE__ */ jsx15("div", { className: "rv-dropzoneTitle", children: title }),
-          /* @__PURE__ */ jsx15("div", { className: "rv-dropzoneHint", children: hint })
+        ) : children ? children : /* @__PURE__ */ jsxs10(Fragment4, { children: [
+          icon && /* @__PURE__ */ jsx16("div", { className: "rv-dropzoneIcon", children: icon }),
+          /* @__PURE__ */ jsx16("div", { className: "rv-dropzoneTitle", children: title }),
+          /* @__PURE__ */ jsx16("div", { className: "rv-dropzoneHint", children: hint })
         ] })
       ]
     }
@@ -1656,9 +1699,9 @@ var Dropzone = forwardRef2(function Dropzone2({
 });
 
 // src/components/ui/MediaCard.tsx
-import { forwardRef as forwardRef3 } from "react";
-import { jsx as jsx16, jsxs as jsxs10 } from "react/jsx-runtime";
-var MediaCard = forwardRef3(function MediaCard2({
+import { forwardRef as forwardRef4 } from "react";
+import { jsx as jsx17, jsxs as jsxs11 } from "react/jsx-runtime";
+var MediaCard = forwardRef4(function MediaCard2({
   src,
   alt = "Media thumbnail",
   variant = "tile",
@@ -1677,7 +1720,7 @@ var MediaCard = forwardRef3(function MediaCard2({
 }, ref) {
   const isList = variant === "list";
   const computedAspectRatio = typeof aspectRatio === "string" && aspectRatio.includes(":") ? aspectRatio.replace(":", " / ") : aspectRatio;
-  return /* @__PURE__ */ jsxs10(
+  return /* @__PURE__ */ jsxs11(
     "div",
     {
       ref,
@@ -1690,24 +1733,24 @@ var MediaCard = forwardRef3(function MediaCard2({
       },
       ...props,
       children: [
-        /* @__PURE__ */ jsxs10(
+        /* @__PURE__ */ jsxs11(
           "div",
           {
             className: "rv-mediaCardThumbWrapper",
             style: !isList && computedAspectRatio ? { aspectRatio: computedAspectRatio } : void 0,
             children: [
-              mediaContent ? mediaContent : src ? /* @__PURE__ */ jsx16("img", { src, alt, className: "rv-mediaCardThumb", loading: "lazy" }) : null,
-              badge && /* @__PURE__ */ jsx16("div", { className: "rv-mediaCardBadge", children: badge }),
-              !isList && (overlay || actions) && /* @__PURE__ */ jsxs10("div", { className: "rv-mediaCardOverlay", children: [
+              mediaContent ? mediaContent : src ? /* @__PURE__ */ jsx17("img", { src, alt, className: "rv-mediaCardThumb", loading: "lazy" }) : null,
+              badge && /* @__PURE__ */ jsx17("div", { className: "rv-mediaCardBadge", children: badge }),
+              !isList && (overlay || actions) && /* @__PURE__ */ jsxs11("div", { className: "rv-mediaCardOverlay", children: [
                 overlay,
-                actions && /* @__PURE__ */ jsx16("div", { className: "rv-mediaCardActions", children: actions })
+                actions && /* @__PURE__ */ jsx17("div", { className: "rv-mediaCardActions", children: actions })
               ] })
             ]
           }
         ),
-        (title || subtitle || children) && /* @__PURE__ */ jsxs10("div", { className: "rv-mediaCardContent", children: [
-          title && /* @__PURE__ */ jsx16("div", { className: "rv-mediaCardTitle", children: title }),
-          subtitle && /* @__PURE__ */ jsx16("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
+        (title || subtitle || children) && /* @__PURE__ */ jsxs11("div", { className: "rv-mediaCardContent", children: [
+          title && /* @__PURE__ */ jsx17("div", { className: "rv-mediaCardTitle", children: title }),
+          subtitle && /* @__PURE__ */ jsx17("div", { className: "rv-mediaCardSubtitle", children: subtitle }),
           children
         ] })
       ]
@@ -1717,7 +1760,7 @@ var MediaCard = forwardRef3(function MediaCard2({
 
 // src/components/ui/MasonryGrid.tsx
 import { useEffect as useEffect7, useMemo, useRef as useRef5, useState as useState8 } from "react";
-import { Fragment as Fragment5, jsx as jsx17 } from "react/jsx-runtime";
+import { Fragment as Fragment5, jsx as jsx18 } from "react/jsx-runtime";
 function MasonryGrid({
   items,
   renderItem,
@@ -1779,9 +1822,9 @@ function MasonryGrid({
     return bins;
   }, [items, columnCount]);
   if (items.length === 0 && emptyState) {
-    return /* @__PURE__ */ jsx17(Fragment5, { children: emptyState });
+    return /* @__PURE__ */ jsx18(Fragment5, { children: emptyState });
   }
-  return /* @__PURE__ */ jsx17(
+  return /* @__PURE__ */ jsx18(
     "div",
     {
       ref: containerRef,
@@ -1792,14 +1835,14 @@ function MasonryGrid({
         ...style
       },
       ...props,
-      children: columnBins.map((col, colIdx) => /* @__PURE__ */ jsx17(
+      children: columnBins.map((col, colIdx) => /* @__PURE__ */ jsx18(
         "div",
         {
           className: "rv-masonryCol",
           style: {
             gap: gap !== void 0 ? typeof gap === "number" ? `${gap}px` : gap : void 0
           },
-          children: col.map(({ item, originalIndex }) => /* @__PURE__ */ jsx17("div", { className: "rv-masonryItem", children: renderItem(item, originalIndex) }, keyExtractor(item, originalIndex)))
+          children: col.map(({ item, originalIndex }) => /* @__PURE__ */ jsx18("div", { className: "rv-masonryItem", children: renderItem(item, originalIndex) }, keyExtractor(item, originalIndex)))
         },
         colIdx
       ))
@@ -1808,8 +1851,8 @@ function MasonryGrid({
 }
 
 // src/components/ui/SplitButton.tsx
-import React17, { forwardRef as forwardRef4 } from "react";
-import { Fragment as Fragment6, jsx as jsx18, jsxs as jsxs11 } from "react/jsx-runtime";
+import React18, { forwardRef as forwardRef5 } from "react";
+import { Fragment as Fragment6, jsx as jsx19, jsxs as jsxs12 } from "react/jsx-runtime";
 var VARIANT_CLASS_MAP = {
   primary: "rv-btnPrimary",
   secondary: "rv-btnSecondary",
@@ -1817,7 +1860,7 @@ var VARIANT_CLASS_MAP = {
   danger: "rv-btnDanger",
   ghost: "rv-btnGhost"
 };
-var DefaultChevronDown = () => /* @__PURE__ */ jsx18(
+var DefaultChevronDown = () => /* @__PURE__ */ jsx19(
   "svg",
   {
     width: "14",
@@ -1829,13 +1872,13 @@ var DefaultChevronDown = () => /* @__PURE__ */ jsx18(
     strokeLinecap: "round",
     strokeLinejoin: "round",
     style: { display: "block" },
-    children: /* @__PURE__ */ jsx18("path", { d: "m6 9 6 6 6-6" })
+    children: /* @__PURE__ */ jsx19("path", { d: "m6 9 6 6 6-6" })
   }
 );
-var SplitButtonMain = forwardRef4(
+var SplitButtonMain = forwardRef5(
   function SplitButtonMain2({ variant = "primary", className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ jsx18(
+    return /* @__PURE__ */ jsx19(
       "button",
       {
         ref,
@@ -1847,22 +1890,22 @@ var SplitButtonMain = forwardRef4(
     );
   }
 );
-var SplitButtonToggle = forwardRef4(
+var SplitButtonToggle = forwardRef5(
   function SplitButtonToggle2({ variant = "primary", isActive = false, className = "", children, ...props }, ref) {
     const variantClass = VARIANT_CLASS_MAP[variant] || "rv-btnPrimary";
-    return /* @__PURE__ */ jsx18(
+    return /* @__PURE__ */ jsx19(
       "button",
       {
         ref,
         type: "button",
         className: `rv-btn rv-btnIcon ${variantClass} rv-splitBtnToggle ${isActive ? "rv-btnActive" : ""} ${className}`.trim(),
         ...props,
-        children: children || /* @__PURE__ */ jsx18(DefaultChevronDown, {})
+        children: children || /* @__PURE__ */ jsx19(DefaultChevronDown, {})
       }
     );
   }
 );
-var SplitButton = forwardRef4(
+var SplitButton = forwardRef5(
   function SplitButton2({
     variant = "primary",
     disabled = false,
@@ -1877,15 +1920,15 @@ var SplitButton = forwardRef4(
     children,
     ...props
   }, ref) {
-    const isCustomChildren = React17.Children.count(children) > 1;
-    return /* @__PURE__ */ jsx18(
+    const isCustomChildren = React18.Children.count(children) > 1;
+    return /* @__PURE__ */ jsx19(
       "div",
       {
         ref,
         className: `rv-splitBtn ${className}`.trim(),
         ...props,
-        children: isCustomChildren ? children : /* @__PURE__ */ jsxs11(Fragment6, { children: [
-          /* @__PURE__ */ jsxs11(
+        children: isCustomChildren ? children : /* @__PURE__ */ jsxs12(Fragment6, { children: [
+          /* @__PURE__ */ jsxs12(
             SplitButtonMain,
             {
               variant,
@@ -1894,11 +1937,11 @@ var SplitButton = forwardRef4(
               "aria-label": actionAriaLabel,
               children: [
                 actionIcon,
-                children && /* @__PURE__ */ jsx18("span", { children })
+                children && /* @__PURE__ */ jsx19("span", { children })
               ]
             }
           ),
-          /* @__PURE__ */ jsx18(
+          /* @__PURE__ */ jsx19(
             SplitButtonToggle,
             {
               variant,
@@ -1917,7 +1960,7 @@ var SplitButton = forwardRef4(
 
 // src/components/overlays/Sidepanel.tsx
 import { useEffect as useEffect8 } from "react";
-import { Fragment as Fragment7, jsx as jsx19, jsxs as jsxs12 } from "react/jsx-runtime";
+import { Fragment as Fragment7, jsx as jsx20, jsxs as jsxs13 } from "react/jsx-runtime";
 function Sidepanel({
   open = true,
   onClose,
@@ -1943,8 +1986,8 @@ function Sidepanel({
   }, [open, onClose]);
   if (!open) return null;
   const style = width ? { "--rv-sidepanel-width": typeof width === "number" ? `${width}px` : width } : void 0;
-  return /* @__PURE__ */ jsxs12(Fragment7, { children: [
-    /* @__PURE__ */ jsx19(
+  return /* @__PURE__ */ jsxs13(Fragment7, { children: [
+    /* @__PURE__ */ jsx20(
       "div",
       {
         className: "rv-sidepanelBackdrop",
@@ -1952,24 +1995,24 @@ function Sidepanel({
         "aria-hidden": "true"
       }
     ),
-    /* @__PURE__ */ jsxs12(
+    /* @__PURE__ */ jsxs13(
       "aside",
       {
         className: `rv-sidepanel ${className}`.trim(),
         style,
         "aria-label": ariaLabel,
         children: [
-          /* @__PURE__ */ jsx19("div", { className: "rv-sidepanelGrabHandleWrap", children: /* @__PURE__ */ jsx19("div", { className: "rv-sidepanelGrabHandle" }) }),
-          customHeader ? customHeader : /* @__PURE__ */ jsxs12("div", { className: "rv-sidepanelHeader", children: [
-            /* @__PURE__ */ jsxs12("div", { className: "rv-sidepanelHeaderLeft", children: [
+          /* @__PURE__ */ jsx20("div", { className: "rv-sidepanelGrabHandleWrap", children: /* @__PURE__ */ jsx20("div", { className: "rv-sidepanelGrabHandle" }) }),
+          customHeader ? customHeader : /* @__PURE__ */ jsxs13("div", { className: "rv-sidepanelHeader", children: [
+            /* @__PURE__ */ jsxs13("div", { className: "rv-sidepanelHeaderLeft", children: [
               headerLeft,
-              (title || subtitle) && /* @__PURE__ */ jsxs12("div", { className: "rv-sidepanelTitleWrap", children: [
-                title && (typeof title === "string" ? /* @__PURE__ */ jsx19("h2", { className: "rv-sidepanelTitle", title, children: title }) : title),
-                subtitle && (typeof subtitle === "string" ? /* @__PURE__ */ jsx19("span", { className: "rv-sidepanelSubtitle", children: subtitle }) : subtitle)
+              (title || subtitle) && /* @__PURE__ */ jsxs13("div", { className: "rv-sidepanelTitleWrap", children: [
+                title && (typeof title === "string" ? /* @__PURE__ */ jsx20("h2", { className: "rv-sidepanelTitle", title, children: title }) : title),
+                subtitle && (typeof subtitle === "string" ? /* @__PURE__ */ jsx20("span", { className: "rv-sidepanelSubtitle", children: subtitle }) : subtitle)
               ] })
             ] }),
             headerRight,
-            onClose && /* @__PURE__ */ jsx19(
+            onClose && /* @__PURE__ */ jsx20(
               "button",
               {
                 type: "button",
@@ -1977,11 +2020,11 @@ function Sidepanel({
                 onClick: onClose,
                 "aria-label": "Close sidepanel",
                 title: "Close sidepanel",
-                children: /* @__PURE__ */ jsx19("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx19("path", { d: "M18 6L6 18M6 6l12 12" }) })
+                children: /* @__PURE__ */ jsx20("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: /* @__PURE__ */ jsx20("path", { d: "M18 6L6 18M6 6l12 12" }) })
               }
             )
           ] }),
-          /* @__PURE__ */ jsx19("div", { className: "rv-sidepanelBody", children })
+          /* @__PURE__ */ jsx20("div", { className: "rv-sidepanelBody", children })
         ]
       }
     )
@@ -1991,13 +2034,13 @@ function SidepanelHeader({
   className = "",
   children
 }) {
-  return /* @__PURE__ */ jsx19("div", { className: `rv-sidepanelHeader ${className}`.trim(), children });
+  return /* @__PURE__ */ jsx20("div", { className: `rv-sidepanelHeader ${className}`.trim(), children });
 }
 function SidepanelBody({
   className = "",
   children
 }) {
-  return /* @__PURE__ */ jsx19("div", { className: `rv-sidepanelBody ${className}`.trim(), children });
+  return /* @__PURE__ */ jsx20("div", { className: `rv-sidepanelBody ${className}`.trim(), children });
 }
 export {
   AppShell,
@@ -2043,6 +2086,9 @@ export {
   SplitButton,
   SplitButtonMain,
   SplitButtonToggle,
+  Tab,
+  TabList,
+  Tabs,
   Tooltip,
   Topbar,
   TopbarLeft,

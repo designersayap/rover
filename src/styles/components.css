@@ -1405,3 +1405,86 @@ input[type="number"] {
     align-items: center;
     gap: var(--rv-space-xs);
 }
+
+/* ==========================================================================
+   PURPOSE: Tab Navigation Component (Underline Style)
+   Clean single-row tab switcher with active underline indicator and horizontal scroll.
+   ========================================================================== */
+
+.rv-tabs {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.rv-tabList {
+    display: flex;
+    align-items: center;
+    gap: var(--rv-space-lg);
+    border-bottom: 1px solid var(--rv-bdr);
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    width: 100%;
+    padding: 0 2px;
+}
+
+.rv-tabList::-webkit-scrollbar {
+    display: none;
+}
+
+.rv-tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--rv-space-sm);
+    padding: var(--rv-space-sm) var(--rv-space-xs) calc(var(--rv-space-sm) + 2px) var(--rv-space-xs);
+    background: transparent;
+    border: none;
+    color: var(--rv-neutral-100);
+    font-family: var(--rv-font-family-default);
+    font-size: var(--rv-font-size-md);
+    font-weight: var(--rv-font-weight-medium);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+    user-select: none;
+    margin-bottom: -1px;
+}
+
+.rv-tab:hover {
+    color: var(--rv-white);
+}
+
+.rv-tabActive {
+    color: var(--rv-white);
+    font-weight: var(--rv-font-weight-bold);
+}
+
+.rv-tabActive::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--rv-brand-primary-light, var(--rv-brand-primary));
+    border-radius: var(--rv-radius-round);
+}
+
+.rv-tabIcon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rv-tabLabel {
+    display: inline-flex;
+    align-items: center;
+}

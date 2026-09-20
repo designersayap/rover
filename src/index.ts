@@ -167,6 +167,18 @@ export type {
 } from './components/ui/Chip';
 
 export {
+  Tabs,
+  TabList,
+  Tab,
+} from './components/ui/Tabs';
+
+export type {
+  TabsProps,
+  TabListProps,
+  TabProps,
+} from './components/ui/Tabs';
+
+export {
   Dropzone,
 } from './components/ui/Dropzone';
 

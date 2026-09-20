@@ -354,6 +354,21 @@ interface ChipGroupProps extends HTMLAttributes<HTMLDivElement> {
 }
 declare const ChipGroup: React.ForwardRefExoticComponent<ChipGroupProps & React.RefAttributes<HTMLDivElement>>;
 
+interface TabProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+    active?: boolean;
+    icon?: React.ReactNode;
+    children: React.ReactNode;
+}
+declare const Tab: React.ForwardRefExoticComponent<TabProps & React.RefAttributes<HTMLButtonElement>>;
+interface TabListProps extends HTMLAttributes<HTMLDivElement> {
+    children: React.ReactNode;
+}
+declare const TabList: React.ForwardRefExoticComponent<TabListProps & React.RefAttributes<HTMLDivElement>>;
+interface TabsProps extends HTMLAttributes<HTMLDivElement> {
+    children: React.ReactNode;
+}
+declare const Tabs: React.ForwardRefExoticComponent<TabsProps & React.RefAttributes<HTMLDivElement>>;
+
 interface DropzoneRef {
     open: () => void;
 }
@@ -457,4 +472,4 @@ declare function SidepanelBody({ className, children, }: {
     children: React.ReactNode;
 }): React.JSX.Element;
 
-export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, type MasonryColumns, MasonryGrid, type MasonryGridProps, MediaCard, type MediaCardProps, Menu, MenuContent, type MenuContentProps, MenuItem, type MenuItemProps, type MenuProps, MenuTrigger, type MenuTriggerProps, MobileSidebarDrawer, type MobileSidebarDrawerProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, PopoverMenu, type PopoverMenuProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, PopoverTrigger, type PopoverTriggerProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SidebarToggle, type SidebarToggleProps, Sidepanel, SidepanelBody, SidepanelHeader, type SidepanelProps, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps, useMenu, usePopover };
+export { AppShell, type AppShellProps, Canvas, CanvasContent, type CanvasContentProps, CanvasInner, type CanvasInnerProps, type CanvasProps, CanvasScroll, type CanvasScrollProps, Chip, ChipGroup, type ChipGroupProps, type ChipProps, ComponentWrapper, type ComponentWrapperProps, Dialog, type DialogActionVariant, type DialogProps, Dropzone, type DropzoneProps, type DropzoneRef, EmptyState, type EmptyStateProps, MainContent, type MainContentProps, type MasonryColumns, MasonryGrid, type MasonryGridProps, MediaCard, type MediaCardProps, Menu, MenuContent, type MenuContentProps, MenuItem, type MenuItemProps, type MenuProps, MenuTrigger, type MenuTriggerProps, MobileSidebarDrawer, type MobileSidebarDrawerProps, Modal, ModalBody, type ModalBodyProps, ModalDescription, type ModalDescriptionProps, ModalFooter, type ModalFooterProps, ModalHeader, type ModalHeaderProps, type ModalProps, type ModalSize, ModalTitle, type ModalTitleProps, Popover, PopoverContent, type PopoverContentProps, PopoverHeader, type PopoverHeaderProps, PopoverMenu, type PopoverMenuProps, type PopoverProps, PopoverTitle, type PopoverTitleProps, PopoverTrigger, type PopoverTriggerProps, type RailItem, ResizeHandle, type ResizeHandleProps, Sidebar, SidebarBody, type SidebarBodyProps, SidebarPanel, type SidebarPanelProps, type SidebarProps, SidebarRail, type SidebarRailProps, type SidebarState, SidebarToggle, type SidebarToggleProps, Sidepanel, SidepanelBody, SidepanelHeader, type SidepanelProps, SplitButton, SplitButtonMain, type SplitButtonMainProps, type SplitButtonProps, SplitButtonToggle, type SplitButtonToggleProps, type SplitButtonVariant, Tab, TabList, type TabListProps, type TabProps, Tabs, type TabsProps, Tooltip, type TooltipPosition, type TooltipProps, Topbar, TopbarLeft, type TopbarLeftProps, TopbarLogo, type TopbarLogoProps, type TopbarProps, TopbarRight, type TopbarRightProps, useMenu, usePopover };
