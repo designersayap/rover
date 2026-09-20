@@ -2,6 +2,81 @@
    Rover Design System: Table & Data Grid Styles
    ========================================================================== */
 
+/* Table & View Action Toolbar */
+.rv-tableToolbar,
+.rv-viewToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--rv-space-md, 12px);
+  margin-bottom: var(--rv-space-lg, 16px);
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.rv-toolbarLeft,
+.rv-toolbarGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--rv-space-sm, 8px);
+  flex: 1;
+  min-width: 280px;
+  flex-wrap: wrap;
+}
+
+.rv-toolbarRight,
+.rv-toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--rv-space-sm, 8px);
+  flex-shrink: 0;
+}
+
+/* Standard Toolbar Search Wrapper */
+.rv-searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 240px;
+  max-width: 380px;
+  flex: 1;
+}
+
+.rv-searchWrap .rv-formInput {
+  width: 100%;
+  padding-left: 36px;
+  padding-right: 32px;
+}
+
+.rv-searchIcon {
+  position: absolute;
+  left: 12px;
+  color: var(--rv-neutral-100);
+  pointer-events: none;
+  width: 16px;
+  height: 16px;
+}
+
+.rv-searchClearBtn {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--rv-neutral-100);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--rv-radius-xs, 3px);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.rv-searchClearBtn:hover {
+  color: var(--rv-white);
+  background: var(--rv-neutral-400);
+}
+
 /* Outer responsive table container */
 .rv-tableContainer {
   width: 100%;
