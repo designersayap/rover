@@ -222,14 +222,25 @@ img.rv-brandLogo {
   white-space: nowrap;
 }
 
-/* Avatar & Thumbnail Overlapping Group */
+/* ==========================================================================
+   Thumbnails, Avatars & Overlapping Cluster Groups
+   ========================================================================== */
+
+/* Overlapping cluster row (Avatars, Product Thumbs, Color Swatches) */
+.rv-thumbGroup,
+.rv-thumbnailGroup,
 .rv-avatarGroup {
   display: inline-flex;
   align-items: center;
   flex-direction: row;
 }
 
-.rv-avatarSm {
+/* Base item sizing for all clustered icons/thumbnails */
+.rv-avatar,
+.rv-avatarSm,
+.rv-thumb,
+.rv-thumbnail,
+.rv-colorSwatch {
   width: 28px !important;
   height: 28px !important;
   min-width: 28px !important;
@@ -237,26 +248,21 @@ img.rv-brandLogo {
   max-width: 28px !important;
   max-height: 28px !important;
   box-sizing: border-box !important;
-  border-radius: 9999px;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
-.rv-avatarSquare,
-.rv-avatarGroup .rv-avatarSquare {
-  border-radius: 6px !important;
-}
-
-.rv-avatarGroup .rv-avatar,
-.rv-avatarGroup .rv-avatarSm,
-.rv-avatarGroup .rv-colorSwatch,
-.rv-avatarGroup .rv-avatarGroupMore {
+/* Cluster overlap and stacking */
+.rv-thumbGroup > *,
+.rv-thumbnailGroup > *,
+.rv-avatarGroup > * {
+  box-sizing: border-box !important;
   width: 28px !important;
   height: 28px !important;
   min-width: 28px !important;
   min-height: 28px !important;
   max-width: 28px !important;
   max-height: 28px !important;
-  box-sizing: border-box !important;
   border: 2px solid var(--rv-bg-surface-1);
   margin-left: -8px;
   transition: transform 0.15s ease, z-index 0.15s ease;
@@ -269,28 +275,54 @@ img.rv-brandLogo {
   flex-shrink: 0;
 }
 
-.rv-avatarGroup .rv-avatar:first-child,
-.rv-avatarGroup .rv-avatarSm:first-child,
-.rv-avatarGroup .rv-colorSwatch:first-child {
+.rv-thumbGroup > *:first-child,
+.rv-thumbnailGroup > *:first-child,
+.rv-avatarGroup > *:first-child {
   margin-left: 0;
 }
 
-.rv-avatarGroup .rv-avatar:hover,
-.rv-avatarGroup .rv-avatarSm:hover,
-.rv-avatarGroup .rv-colorSwatch:hover,
-.rv-avatarGroup .rv-avatarGroupMore:hover {
+.rv-thumbGroup > *:hover,
+.rv-thumbnailGroup > *:hover,
+.rv-avatarGroup > *:hover {
   transform: translateY(-2px);
   z-index: 10;
 }
 
+/* Shape variants: Circles for user avatars, Squares for assets/products/colors */
+.rv-avatar,
+.rv-avatarSm,
+.rv-avatarCircle,
+.rv-thumbCircle {
+  border-radius: var(--rv-radius-full, 9999px) !important;
+}
+
+.rv-thumb,
+.rv-thumbnail,
+.rv-thumbSquare,
+.rv-avatarSquare,
+.rv-colorSwatch {
+  border-radius: var(--rv-radius-sm, 6px) !important;
+}
+
+/* Cluster Overflow Counter (+N badge) */
+.rv-thumbGroupMore,
 .rv-avatarGroupMore {
   border-radius: var(--rv-radius-full, 9999px);
   background: var(--rv-bg-surface-3, rgba(255, 255, 255, 0.12));
   color: var(--rv-text-secondary);
   font-size: 10px;
   font-weight: 600;
+  user-select: none;
 }
 
+.rv-thumbGroupMore.rv-thumbSquare,
+.rv-avatarGroupMore.rv-avatarSquare,
+.rv-thumbGroupMore.rv-thumb,
+.rv-avatarGroupMore.rv-thumb {
+  border-radius: var(--rv-radius-sm, 6px) !important;
+}
+
+.rv-thumbGroupMore:hover,
 .rv-avatarGroupMore:hover {
   background: var(--rv-bg-surface-active, rgba(255, 255, 255, 0.2));
   color: var(--rv-text-primary);
@@ -358,32 +390,7 @@ img.rv-brandLogo {
   background: var(--rv-danger, #ef4444);
 }
 
-/* Brand Color Palette Swatches & Overlapping Group */
-.rv-avatarGroup .rv-colorSwatch {
-  width: 28px !important;
-  height: 28px !important;
-  min-width: 28px !important;
-  min-height: 28px !important;
-  border-radius: 6px !important;
-  border: 2px solid var(--rv-bg-surface-1);
-  margin-left: -8px;
-  cursor: pointer;
-  transition: transform 0.15s ease, z-index 0.15s ease, box-shadow 0.15s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 0;
-  display: inline-block;
-}
-
-.rv-avatarGroup .rv-colorSwatch:first-child {
-  margin-left: 0;
-}
-
-.rv-avatarGroup .rv-colorSwatch:hover {
-  transform: translateY(-2px);
-  z-index: 10;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-}
-
+/* Color Swatches Standalone */
 .rv-colorPaletteRow {
   display: inline-flex;
   align-items: center;
@@ -391,17 +398,12 @@ img.rv-brandLogo {
 }
 
 .rv-colorSwatch {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  min-height: 28px;
-  border-radius: 6px !important;
   border: 2px solid var(--rv-bg-surface-1);
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   padding: 0;
   display: inline-block;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .rv-colorSwatch:hover {

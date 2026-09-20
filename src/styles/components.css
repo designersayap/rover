@@ -721,11 +721,13 @@ input[type="number"] {
     font-weight: 600;
 }
 
-/* Avatars */
-.rv-avatar {
+/* Avatars & Thumbnails */
+.rv-avatar,
+.rv-thumb,
+.rv-thumbnail {
     width: 28px;
     height: 28px;
-    border-radius: var(--rv-radius-round);
+    box-sizing: border-box;
     object-fit: cover;
     flex-shrink: 0;
     display: inline-flex;
@@ -737,6 +739,19 @@ input[type="number"] {
     font-weight: var(--rv-font-weight-bold);
     font-size: var(--rv-font-size-xs);
     user-select: none;
+}
+
+.rv-avatar,
+.rv-avatarCircle,
+.rv-thumbCircle {
+    border-radius: var(--rv-radius-round);
+}
+
+.rv-thumb,
+.rv-thumbnail,
+.rv-thumbSquare,
+.rv-avatarSquare {
+    border-radius: var(--rv-radius-sm, 6px) !important;
 }
 
 .rv-btnAvatar {
