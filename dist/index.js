@@ -266,7 +266,8 @@ var MobileSidebarDrawer = ({
   width,
   container,
   style,
-  "aria-label": ariaLabel = "Mobile navigation drawer"
+  "aria-label": ariaLabel = "Mobile navigation menu",
+  showGrabHandle = true
 }) => {
   const [mounted, setMounted] = (0, import_react4.useState)(false);
   (0, import_react4.useEffect)(() => {
@@ -293,18 +294,21 @@ var MobileSidebarDrawer = ({
     /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
       "div",
       {
-        className: `rv-mobileSidebarSideOverlay rv-mobileSidebarOpen ${overlayClassName} ${className}`.trim(),
+        className: `rv-mobileSidebarOverlay rv-mobileSidebarOpen ${overlayClassName} ${className}`.trim(),
         onClick: onClose,
         role: "dialog",
         "aria-modal": "true",
         "aria-label": ariaLabel,
-        children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
+        children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
           "div",
           {
-            className: `rv-mobileSidebarSideDrawer rv-mobileSidebarSideDrawerOpen ${drawerClassName}`.trim(),
+            className: `rv-mobileSidebarBottomSheet rv-mobileSidebarBottomSheetOpen ${drawerClassName}`.trim(),
             onClick: (e) => e.stopPropagation(),
             style: drawerStyle,
-            children
+            children: [
+              showGrabHandle && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rv-sidepanelGrabHandleWrap", style: { display: "flex" }, children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)("div", { className: "rv-sidepanelGrabHandle" }) }),
+              children
+            ]
           }
         )
       }

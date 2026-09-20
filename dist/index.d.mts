@@ -58,6 +58,7 @@ interface MobileSidebarDrawerProps {
     container?: HTMLElement | null;
     style?: React.CSSProperties;
     'aria-label'?: string;
+    showGrabHandle?: boolean;
 }
 declare const MobileSidebarDrawer: React.FC<MobileSidebarDrawerProps>;
 

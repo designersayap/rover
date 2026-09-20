@@ -10,6 +10,7 @@
     align-items: center;
     height: var(--rv-h-topbar);
     position: relative;
+    z-index: 1000;
 }
 
 /* ==========================================================================
