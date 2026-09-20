@@ -642,12 +642,12 @@ input[type="number"] {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    min-height: 48px;
-    padding: 10px 14px;
-    background: var(--rv-neutral-400);
-    border: 1px solid var(--rv-border-color);
+    min-height: 44px;
+    padding: 8px 10px;
+    background: transparent;
+    border: 1px solid transparent;
     border-radius: var(--rv-radius-md);
-    transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: background 0.15s ease, border-color 0.15s ease;
     box-sizing: border-box;
     user-select: none;
 }
@@ -658,8 +658,7 @@ input[type="number"] {
 .rv-cardRow:has(.apl-menuOpen),
 .rv-cardRow:has([aria-expanded="true"]),
 .rv-cardRow.rv-cardRowSelected {
-    background: var(--rv-neutral-300);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .rv-cardRowLeft {
