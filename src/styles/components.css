@@ -1212,8 +1212,8 @@ input[type="number"] {
 
 .rv-mediaCardActions {
     position: absolute;
-    top: var(--rv-space-xs);
-    right: var(--rv-space-xs);
+    top: var(--rv-space-sm);
+    right: var(--rv-space-sm);
     display: flex;
     align-items: center;
     gap: var(--rv-space-xs);
