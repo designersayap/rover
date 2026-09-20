@@ -258,9 +258,9 @@ import {
   - `resizable?: boolean` (renders an interactive `ResizeHandle` on the edge)
   - `onResize?: (deltaX: number) => void`
   - `dataBuilderUi?: boolean` (default `true`)
-  - `mobileOpen?: boolean` (controls mobile off-canvas side drawer visibility)
-  - `onCloseMobile?: () => void` (triggered on backdrop click or `Escape` key)
-  - `mobileContent?: React.ReactNode` (custom mobile menu; defaults to rendering desktop sidebar children inside the drawer)
+  - `mobileOpen?: boolean` (controls mobile touch-friendly bottom sheet navigation visibility)
+  - `onCloseMobile?: () => void` (triggered on backdrop click, Topbar toggle, or `Escape` key)
+  - `mobileContent?: React.ReactNode` (custom mobile menu content; rendered inside the touch bottom sheet)
   - `mobileDrawerWidth?: string | number`
   - `mobileDrawerClassName?: string`
   - Extends: `React.HTMLAttributes<HTMLElement>`
@@ -268,6 +268,7 @@ import {
   - `isOpen: boolean`
   - `onClose: () => void`
   - `children?: React.ReactNode`
+  - `showGrabHandle?: boolean` (default `true`)
   - `width?: string | number`
 - `SidebarRail`:
   - `items: RailItem[]` (`{ id: string; label: string; icon?: React.ReactNode }`)
