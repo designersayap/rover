@@ -280,8 +280,16 @@ img.rv-brandLogo {
 
 /* Cluster overlap and stacking */
 .rv-thumbGroup > *,
+.rv-thumbGroup .rv-thumb,
+.rv-thumbGroup .rv-avatar,
+.rv-thumbGroup .rv-colorSwatch,
+.rv-thumbGroup .rv-thumbMore,
+.rv-thumbGroup .rv-avatarMore,
 .rv-thumbnailGroup > *,
-.rv-avatarGroup > * {
+.rv-thumbnailGroup .rv-thumb,
+.rv-avatarGroup > *,
+.rv-avatarGroup .rv-avatar,
+.rv-avatarGroup .rv-avatarMore {
   box-sizing: border-box !important;
   width: 28px !important;
   height: 28px !important;
@@ -291,18 +299,27 @@ img.rv-brandLogo {
   max-height: 28px !important;
   border: 2px solid var(--rv-bg-surface-1);
   margin-left: -8px;
+  position: relative;
   transition: transform 0.15s ease, z-index 0.15s ease;
 }
 
 .rv-thumbGroup > *:first-child,
+.rv-thumbGroup > *:first-child .rv-thumb,
+.rv-thumbGroup > *:first-child .rv-avatar,
+.rv-thumbGroup > *:first-child .rv-colorSwatch,
 .rv-thumbnailGroup > *:first-child,
-.rv-avatarGroup > *:first-child {
+.rv-thumbnailGroup > *:first-child .rv-thumb,
+.rv-avatarGroup > *:first-child,
+.rv-avatarGroup > *:first-child .rv-avatar {
   margin-left: 0;
 }
 
-.rv-thumbGroup > *:hover,
-.rv-thumbnailGroup > *:hover,
-.rv-avatarGroup > *:hover {
+/* Hover lift on image and color thumbnails ONLY */
+.rv-thumbGroup .rv-thumb:not(.rv-thumbMore):hover,
+.rv-thumbGroup .rv-avatar:not(.rv-avatarMore):hover,
+.rv-thumbGroup .rv-colorSwatch:hover,
+.rv-thumbnailGroup .rv-thumb:not(.rv-thumbMore):hover,
+.rv-avatarGroup .rv-avatar:not(.rv-avatarMore):hover {
   transform: translateY(-2px);
   z-index: 10;
 }
@@ -325,7 +342,7 @@ img.rv-brandLogo {
   border-radius: var(--rv-radius-sm, 6px) !important;
 }
 
-/* +N Overflow Badge background & text styling */
+/* +N Overflow Badge: Stays stationary (does NOT move on hover) */
 .rv-thumbMore,
 .rv-avatarMore,
 .rv-thumbGroupMore,
@@ -335,12 +352,16 @@ img.rv-brandLogo {
   font-size: 11px;
   font-weight: 600;
   text-align: center;
+  transform: none !important;
+  z-index: 1;
 }
 
 .rv-thumbMore:hover,
 .rv-avatarMore:hover,
 .rv-thumbGroupMore:hover,
 .rv-avatarGroupMore:hover {
+  transform: none !important;
+  z-index: 1;
   background: var(--rv-bg-surface-active, rgba(255, 255, 255, 0.2));
   color: var(--rv-text-primary);
 }

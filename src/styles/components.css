@@ -489,12 +489,15 @@ input[type="number"] {
     border-radius: 6px !important;
     cursor: pointer;
     border: 2px solid transparent;
-    transition: transform 0.1s, border-color 0.1s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s ease, border-color 0.15s ease, z-index 0.15s ease;
 }
 
-.rv-colorSwatch:hover {
-    transform: scale(1.15);
-    border-color: rgba(255, 255, 255, 0.5);
+.rv-thumbGroup .rv-colorSwatch:hover {
+    transform: translateY(-2px);
+    z-index: 10;
 }
 
 .rv-colorSwatchActive {
