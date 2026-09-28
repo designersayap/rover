@@ -537,6 +537,10 @@ var Popover = React8.forwardRef(
     const togglePopover = useCallback2(() => {
       setIsOpen((prev) => !prev);
     }, [setIsOpen]);
+    const [mounted, setMounted] = useState3(false);
+    useEffect3(() => {
+      setMounted(true);
+    }, []);
     const contextValue = {
       isOpen,
       setIsOpen,
@@ -552,50 +556,45 @@ var Popover = React8.forwardRef(
     }
     if (!isOpen) return null;
     const isMenuVariant = variant === "menu";
-    let popoverStyle = centerByDefault ? {
+    const windowWidth = typeof window !== "undefined" ? Math.min(window.innerWidth, document.documentElement.clientWidth) : 1024;
+    const windowHeight = typeof window !== "undefined" ? Math.min(window.innerHeight, document.documentElement.clientHeight) : 768;
+    const padding = 12;
+    let popoverStyle = {
       position: "fixed",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
+      zIndex: 10002,
       margin: 0,
       pointerEvents: "auto",
+      maxWidth: `calc(100vw - ${padding * 2}px)`,
+      maxHeight: `calc(100dvh - ${padding * 2}px)`,
       ...style
-    } : { ...style };
+    };
     if (position && typeof window !== "undefined") {
-      const padding = 8;
-      const windowWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
-      const isRightHalf = position.left > windowWidth / 2;
-      if (isRightHalf) {
-        let idealRight = windowWidth - (position.left + width / 2);
-        idealRight = Math.max(padding, idealRight);
-        popoverStyle = {
-          position: "fixed",
-          top: `${position.top}px`,
-          right: `${idealRight}px`,
-          left: "auto",
-          margin: 0,
-          pointerEvents: "auto",
-          width,
-          maxWidth: `calc(100vw - ${padding * 2}px)`,
-          ...style
-        };
-      } else {
-        let idealLeft = position.left - width / 2;
-        idealLeft = Math.max(padding, idealLeft);
-        popoverStyle = {
-          position: "fixed",
-          top: `${position.top}px`,
-          left: `${idealLeft}px`,
-          right: "auto",
-          margin: 0,
-          pointerEvents: "auto",
-          width,
-          maxWidth: `calc(100vw - ${padding * 2}px)`,
-          ...style
-        };
-      }
+      const popWidth = typeof width === "number" ? width : 340;
+      let idealLeft = position.left - popWidth / 2;
+      idealLeft = Math.max(padding, Math.min(idealLeft, windowWidth - popWidth - padding));
+      let idealTop = position.top;
+      idealTop = Math.max(padding, Math.min(idealTop, windowHeight - 120));
+      popoverStyle = {
+        ...popoverStyle,
+        top: `${idealTop}px`,
+        left: `${idealLeft}px`,
+        right: "auto",
+        bottom: "auto",
+        transform: "none",
+        width: typeof width === "number" ? Math.min(width, windowWidth - padding * 2) : width
+      };
+    } else if (centerByDefault) {
+      popoverStyle = {
+        ...popoverStyle,
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        transform: "translate(-50%, -50%)",
+        width: typeof width === "number" ? Math.min(width, windowWidth - padding * 2) : "90%"
+      };
     }
-    return /* @__PURE__ */ jsxs4(PopoverContext.Provider, { value: contextValue, children: [
+    const contentNode = /* @__PURE__ */ jsxs4(PopoverContext.Provider, { value: contextValue, children: [
       /* @__PURE__ */ jsx9(
         "div",
         {
@@ -620,6 +619,10 @@ var Popover = React8.forwardRef(
         }
       )
     ] });
+    if (mounted && typeof document !== "undefined") {
+      return createPortal2(contentNode, document.body);
+    }
+    return contentNode;
   }
 );
 Popover.displayName = "Popover";

@@ -6,6 +6,7 @@
 .rv-popoverOverlay {
     position: fixed;
     inset: 0;
+    z-index: 10001;
 }
 
 /* ==========================================================================
@@ -62,6 +63,7 @@
     box-shadow: var(--rv-shd-pop);
     overflow: visible;
     line-height: var(--rv-lh-md);
+    z-index: 10002;
     animation: popoverIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -177,7 +179,7 @@
     top: 40px;
     right: var(--rv-space-lg);
     margin: 0;
-    z-index: 10001;
+    z-index: 10002;
 }
 
 

@@ -109,6 +109,11 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
       setIsOpen((prev) => !prev);
     }, [setIsOpen]);
 
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => {
+      setMounted(true);
+    }, []);
+
     // Context for child compound components
     const contextValue: PopoverContextValue = {
       isOpen,
@@ -135,57 +140,53 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
 
     const isMenuVariant = variant === 'menu';
 
-    let popoverStyle: React.CSSProperties = centerByDefault
-      ? {
-          position: 'fixed',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          margin: 0,
-          pointerEvents: 'auto',
-          ...style,
-        }
-      : { ...style };
+    const windowWidth = typeof window !== 'undefined' ? Math.min(window.innerWidth, document.documentElement.clientWidth) : 1024;
+    const windowHeight = typeof window !== 'undefined' ? Math.min(window.innerHeight, document.documentElement.clientHeight) : 768;
+    const padding = 12;
+
+    let popoverStyle: React.CSSProperties = {
+      position: 'fixed',
+      zIndex: 10002,
+      margin: 0,
+      pointerEvents: 'auto',
+      maxWidth: `calc(100vw - ${padding * 2}px)`,
+      maxHeight: `calc(100dvh - ${padding * 2}px)`,
+      ...style,
+    };
 
     if (position && typeof window !== 'undefined') {
-      const padding = 8;
-      const windowWidth = Math.min(window.innerWidth, document.documentElement.clientWidth);
-      const isRightHalf = position.left > windowWidth / 2;
+      const popWidth = typeof width === 'number' ? width : 340;
+      
+      // Calculate clamped horizontal position (keep strictly on screen)
+      let idealLeft = position.left - popWidth / 2;
+      idealLeft = Math.max(padding, Math.min(idealLeft, windowWidth - popWidth - padding));
 
-      if (isRightHalf) {
-        let idealRight = windowWidth - (position.left + width / 2);
-        idealRight = Math.max(padding, idealRight);
+      // Calculate clamped vertical position (keep strictly on screen)
+      let idealTop = position.top;
+      idealTop = Math.max(padding, Math.min(idealTop, windowHeight - 120));
 
-        popoverStyle = {
-          position: 'fixed',
-          top: `${position.top}px`,
-          right: `${idealRight}px`,
-          left: 'auto',
-          margin: 0,
-          pointerEvents: 'auto',
-          width: width,
-          maxWidth: `calc(100vw - ${padding * 2}px)`,
-          ...style,
-        };
-      } else {
-        let idealLeft = position.left - width / 2;
-        idealLeft = Math.max(padding, idealLeft);
-
-        popoverStyle = {
-          position: 'fixed',
-          top: `${position.top}px`,
-          left: `${idealLeft}px`,
-          right: 'auto',
-          margin: 0,
-          pointerEvents: 'auto',
-          width: width,
-          maxWidth: `calc(100vw - ${padding * 2}px)`,
-          ...style,
-        };
-      }
+      popoverStyle = {
+        ...popoverStyle,
+        top: `${idealTop}px`,
+        left: `${idealLeft}px`,
+        right: 'auto',
+        bottom: 'auto',
+        transform: 'none',
+        width: typeof width === 'number' ? Math.min(width, windowWidth - padding * 2) : width,
+      };
+    } else if (centerByDefault) {
+      popoverStyle = {
+        ...popoverStyle,
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        transform: 'translate(-50%, -50%)',
+        width: typeof width === 'number' ? Math.min(width, windowWidth - padding * 2) : '90%',
+      };
     }
 
-    return (
+    const contentNode = (
       <PopoverContext.Provider value={contextValue}>
         <div
           className={`rv-popoverOverlay ${overlayClassName}`.trim()}
@@ -207,6 +208,12 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
         </div>
       </PopoverContext.Provider>
     );
+
+    if (mounted && typeof document !== 'undefined') {
+      return createPortal(contentNode, document.body);
+    }
+
+    return contentNode;
   }
 );
 

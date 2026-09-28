@@ -492,7 +492,11 @@
 
 /* Responsive Mobile Floating Overlay (≤ 1023px, No Scrim) */
 @media (max-width: 1023px) {
-    .rv-sidebarShell {
+    .rv-mainContent > .rv-sidebarShell {
+        display: none !important;
+    }
+
+    .rv-sidebarShell:not(.rv-mobileSidebar) {
         position: fixed !important;
         top: var(--rv-h-topbar, 64px) !important;
         left: var(--rv-space-md, 12px) !important;
@@ -504,24 +508,24 @@
                     opacity 0.2s ease !important;
     }
 
-    .rv-sidebarShell .rv-sidebar {
+    .rv-sidebarShell:not(.rv-mobileSidebar) .rv-sidebar {
         margin: 0 !important;
         height: 100% !important;
     }
 
-    .rv-sidebarShell.rv-sidebarCollapsed {
+    .rv-sidebarShell:not(.rv-mobileSidebar).rv-sidebarCollapsed {
         transform: translateX(calc(-100% - 24px)) !important;
         opacity: 0 !important;
         pointer-events: none !important;
         width: 0 !important;
     }
 
-    .rv-sidebarShell:not(.rv-sidebarCollapsed) {
+    .rv-sidebarShell:not(.rv-mobileSidebar):not(.rv-sidebarCollapsed) {
         transform: translateX(0) !important;
         opacity: 1 !important;
     }
 
-    .rv-sidebarShell.rv-sidebarRailOnly {
+    .rv-sidebarShell:not(.rv-mobileSidebar).rv-sidebarRailOnly {
         width: var(--rv-w-sidebar-rail, 92px) !important;
     }
 }
