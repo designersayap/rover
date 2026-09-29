@@ -633,6 +633,7 @@ input[type="number"] {
     height: 22px;
     min-height: 22px;
     padding: 0;
+    border-radius: var(--rv-radius-xs, 4px);
 }
 
 /* ==========================================================================
