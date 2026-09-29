@@ -6,7 +6,7 @@
 .rv-popoverOverlay {
     position: fixed;
     inset: 0;
-    z-index: 10001;
+    z-index: var(--rv-z-popover-backdrop, 10004);
 }
 
 /* ==========================================================================
@@ -29,7 +29,7 @@
     text-align: center;
     box-shadow: var(--rv-shadow-md);
     pointer-events: none;
-    z-index: 10000;
+    z-index: var(--rv-z-tooltip, 10030);
     animation: fadeIn 0.15s ease-out;
 }
 
@@ -63,7 +63,7 @@
     box-shadow: var(--rv-shd-pop);
     overflow: visible;
     line-height: var(--rv-lh-md);
-    z-index: 10002;
+    z-index: var(--rv-z-popover, 10005);
     animation: popoverIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -74,6 +74,7 @@
     flex-direction: column;
     gap: 0;
     box-sizing: border-box;
+    z-index: var(--rv-z-menu, 10020);
 }
 
 .rv-popoverMenu .rv-listItem {
@@ -179,7 +180,7 @@
     top: 40px;
     right: var(--rv-space-lg);
     margin: 0;
-    z-index: 10002;
+    z-index: var(--rv-z-popover, 10005);
 }
 
 

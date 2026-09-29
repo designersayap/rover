@@ -44,6 +44,7 @@ export interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'menu';
   className?: string;
   overlayClassName?: string;
+  zIndex?: number;
   dataBuilderUi?: boolean;
   children?: React.ReactNode;
 }
@@ -65,6 +66,7 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
       variant = 'default',
       className = '',
       overlayClassName = '',
+      zIndex = 10005,
       dataBuilderUi = true,
       children,
       style,
@@ -146,7 +148,7 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
 
     let popoverStyle: React.CSSProperties = {
       position: 'fixed',
-      zIndex: 10002,
+      zIndex,
       margin: 0,
       pointerEvents: 'auto',
       maxWidth: `calc(100vw - ${padding * 2}px)`,
@@ -186,12 +188,14 @@ export const Popover = React.forwardRef<HTMLDivElement, PopoverProps>(
       };
     }
 
+    const backdropZIndex = Math.max(10001, zIndex - 1);
+
     const contentNode = (
       <PopoverContext.Provider value={contextValue}>
         <div
           className={`rv-popoverOverlay ${overlayClassName}`.trim()}
           onClick={onClose}
-          style={{ pointerEvents: onClose ? 'auto' : 'none' }}
+          style={{ pointerEvents: onClose ? 'auto' : 'none', zIndex: backdropZIndex }}
           aria-hidden="true"
         />
         <div
@@ -299,6 +303,7 @@ export interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement
   width?: number | string;
   portal?: boolean;
   className?: string;
+  zIndex?: number;
   children?: React.ReactNode;
 }
 
@@ -311,6 +316,7 @@ export const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentPro
       width = 'auto',
       portal = true,
       className = '',
+      zIndex = 10005,
       style,
       children,
       ...props
@@ -361,7 +367,7 @@ export const PopoverContent = React.forwardRef<HTMLDivElement, PopoverContentPro
 
       let calculatedStyle: React.CSSProperties = {
         position: 'fixed',
-        zIndex: 10000,
+        zIndex,
         margin: 0,
         width: typeof width === 'number' ? `${width}px` : width,
         maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,

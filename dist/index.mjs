@@ -506,6 +506,7 @@ var Popover = React8.forwardRef(
     variant = "default",
     className = "",
     overlayClassName = "",
+    zIndex = 10005,
     dataBuilderUi = true,
     children,
     style,
@@ -561,7 +562,7 @@ var Popover = React8.forwardRef(
     const padding = 12;
     let popoverStyle = {
       position: "fixed",
-      zIndex: 10002,
+      zIndex,
       margin: 0,
       pointerEvents: "auto",
       maxWidth: `calc(100vw - ${padding * 2}px)`,
@@ -594,13 +595,14 @@ var Popover = React8.forwardRef(
         width: typeof width === "number" ? Math.min(width, windowWidth - padding * 2) : "90%"
       };
     }
+    const backdropZIndex = Math.max(10001, zIndex - 1);
     const contentNode = /* @__PURE__ */ jsxs4(PopoverContext.Provider, { value: contextValue, children: [
       /* @__PURE__ */ jsx9(
         "div",
         {
           className: `rv-popoverOverlay ${overlayClassName}`.trim(),
           onClick: onClose,
-          style: { pointerEvents: onClose ? "auto" : "none" },
+          style: { pointerEvents: onClose ? "auto" : "none", zIndex: backdropZIndex },
           "aria-hidden": "true"
         }
       ),
@@ -695,6 +697,7 @@ var PopoverContent = React8.forwardRef(
     width = "auto",
     portal = true,
     className = "",
+    zIndex = 10005,
     style,
     children,
     ...props
@@ -735,7 +738,7 @@ var PopoverContent = React8.forwardRef(
       }
       let calculatedStyle = {
         position: "fixed",
-        zIndex: 1e4,
+        zIndex,
         margin: 0,
         width: typeof width === "number" ? `${width}px` : width,
         maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,
@@ -867,7 +870,7 @@ var Tooltip = ({
   position = "top",
   delay = 500,
   className = "",
-  zIndex = 9999
+  zIndex = 10030
 }) => {
   const [isVisible, setIsVisible] = useState4(false);
   const [tooltipStyle, setTooltipStyle] = useState4({
@@ -1325,6 +1328,7 @@ var MenuContent = React12.forwardRef(
     width = "auto",
     portal = true,
     className = "",
+    zIndex = 10020,
     style,
     children,
     ...props
@@ -1363,7 +1367,7 @@ var MenuContent = React12.forwardRef(
       const isRightHalf = left > windowWidth / 2;
       let calculatedStyle = {
         position: "fixed",
-        zIndex: 1e4,
+        zIndex,
         margin: 0,
         width: typeof width === "number" ? `${width}px` : width,
         maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,

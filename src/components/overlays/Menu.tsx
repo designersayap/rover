@@ -162,6 +162,7 @@ export interface MenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: number | string;
   portal?: boolean;
   className?: string;
+  zIndex?: number;
   children?: React.ReactNode;
 }
 
@@ -174,6 +175,7 @@ export const MenuContent = React.forwardRef<HTMLDivElement, MenuContentProps>(
       width = 'auto',
       portal = true,
       className = '',
+      zIndex = 10020,
       style,
       children,
       ...props
@@ -224,7 +226,7 @@ export const MenuContent = React.forwardRef<HTMLDivElement, MenuContentProps>(
 
       let calculatedStyle: React.CSSProperties = {
         position: 'fixed',
-        zIndex: 10000,
+        zIndex,
         margin: 0,
         width: typeof width === 'number' ? `${width}px` : width,
         maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,

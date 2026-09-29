@@ -62,11 +62,29 @@
 .rv-right0 { right: 0; }
 .rv-bottom0 { bottom: 0; }
 
-/* Z-Index Scale */
-.rv-z0 { z-index: 0; }
-.rv-zSticky { z-index: 100; }
-.rv-zOverlay { z-index: 1000; }
-.rv-zModal { z-index: 10000; }
+/* Z-Index Design Tokens & Scale */
+:root {
+    --rv-z-base: 0;
+    --rv-z-sticky: 100;
+    --rv-z-sidepanel: 998;
+    --rv-z-sidepanel-float: 999;
+    --rv-z-topbar: 1000;
+    --rv-z-modal: 10000;
+    --rv-z-popover-backdrop: 10004;
+    --rv-z-popover: 10005;
+    --rv-z-menu: 10020;
+    --rv-z-tooltip: 10030;
+    --rv-z-toast: 999999;
+}
+
+.rv-z0 { z-index: var(--rv-z-base); }
+.rv-zSticky { z-index: var(--rv-z-sticky); }
+.rv-zOverlay { z-index: var(--rv-z-topbar); }
+.rv-zModal { z-index: var(--rv-z-modal); }
+.rv-zPopover { z-index: var(--rv-z-popover); }
+.rv-zMenu { z-index: var(--rv-z-menu); }
+.rv-zTooltip { z-index: var(--rv-z-tooltip); }
+.rv-zToast { z-index: var(--rv-z-toast); }
 
 .rv-overlayFixed {
     position: fixed;

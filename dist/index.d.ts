@@ -176,6 +176,7 @@ interface PopoverProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: 'default' | 'menu';
     className?: string;
     overlayClassName?: string;
+    zIndex?: number;
     dataBuilderUi?: boolean;
     children?: React.ReactNode;
 }
@@ -192,6 +193,7 @@ interface PopoverContentProps extends React.HTMLAttributes<HTMLDivElement> {
     width?: number | string;
     portal?: boolean;
     className?: string;
+    zIndex?: number;
     children?: React.ReactNode;
 }
 declare const PopoverContent: React.ForwardRefExoticComponent<PopoverContentProps & React.RefAttributes<HTMLDivElement>>;
@@ -333,6 +335,7 @@ interface MenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
     width?: number | string;
     portal?: boolean;
     className?: string;
+    zIndex?: number;
     children?: React.ReactNode;
 }
 declare const MenuContent: React.ForwardRefExoticComponent<MenuContentProps & React.RefAttributes<HTMLDivElement>>;

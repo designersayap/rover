@@ -585,6 +585,7 @@ var Popover = import_react8.default.forwardRef(
     variant = "default",
     className = "",
     overlayClassName = "",
+    zIndex = 10005,
     dataBuilderUi = true,
     children,
     style,
@@ -640,7 +641,7 @@ var Popover = import_react8.default.forwardRef(
     const padding = 12;
     let popoverStyle = {
       position: "fixed",
-      zIndex: 10002,
+      zIndex,
       margin: 0,
       pointerEvents: "auto",
       maxWidth: `calc(100vw - ${padding * 2}px)`,
@@ -673,13 +674,14 @@ var Popover = import_react8.default.forwardRef(
         width: typeof width === "number" ? Math.min(width, windowWidth - padding * 2) : "90%"
       };
     }
+    const backdropZIndex = Math.max(10001, zIndex - 1);
     const contentNode = /* @__PURE__ */ (0, import_jsx_runtime9.jsxs)(PopoverContext.Provider, { value: contextValue, children: [
       /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
         "div",
         {
           className: `rv-popoverOverlay ${overlayClassName}`.trim(),
           onClick: onClose,
-          style: { pointerEvents: onClose ? "auto" : "none" },
+          style: { pointerEvents: onClose ? "auto" : "none", zIndex: backdropZIndex },
           "aria-hidden": "true"
         }
       ),
@@ -774,6 +776,7 @@ var PopoverContent = import_react8.default.forwardRef(
     width = "auto",
     portal = true,
     className = "",
+    zIndex = 10005,
     style,
     children,
     ...props
@@ -814,7 +817,7 @@ var PopoverContent = import_react8.default.forwardRef(
       }
       let calculatedStyle = {
         position: "fixed",
-        zIndex: 1e4,
+        zIndex,
         margin: 0,
         width: typeof width === "number" ? `${width}px` : width,
         maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,
@@ -946,7 +949,7 @@ var Tooltip = ({
   position = "top",
   delay = 500,
   className = "",
-  zIndex = 9999
+  zIndex = 10030
 }) => {
   const [isVisible, setIsVisible] = (0, import_react9.useState)(false);
   const [tooltipStyle, setTooltipStyle] = (0, import_react9.useState)({
@@ -1396,6 +1399,7 @@ var MenuContent = import_react12.default.forwardRef(
     width = "auto",
     portal = true,
     className = "",
+    zIndex = 10020,
     style,
     children,
     ...props
@@ -1434,7 +1438,7 @@ var MenuContent = import_react12.default.forwardRef(
       const isRightHalf = left > windowWidth / 2;
       let calculatedStyle = {
         position: "fixed",
-        zIndex: 1e4,
+        zIndex,
         margin: 0,
         width: typeof width === "number" ? `${width}px` : width,
         maxWidth: `calc(100vw - ${viewportPadding * 2}px)`,
