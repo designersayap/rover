@@ -636,6 +636,21 @@ input[type="number"] {
     border-radius: var(--rv-radius-xs, 4px);
 }
 
+.rv-listItemAction.rv-isActionActive,
+.rv-listItemAction.apl-listItemActionActive {
+    opacity: 1;
+    width: auto;
+    margin-left: var(--rv-space-sm);
+}
+
+.rv-listItemCheckmark,
+.apl-promptCheckIcon {
+    width: 14px;
+    height: 14px;
+    color: var(--rv-white);
+    flex-shrink: 0;
+}
+
 /* ==========================================================================
    PURPOSE: Card Rows (Sidepanels, Directories, Resource Lists)
    Elevated card item with left asset, flexible info, and slide-in actions.

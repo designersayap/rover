@@ -341,6 +341,7 @@ interface MenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
 declare const MenuContent: React.ForwardRefExoticComponent<MenuContentProps & React.RefAttributes<HTMLDivElement>>;
 interface MenuItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     preventClose?: boolean;
+    selected?: boolean;
     className?: string;
     children: React.ReactNode;
 }

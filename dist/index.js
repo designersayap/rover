@@ -1542,7 +1542,15 @@ var MenuContent = import_react12.default.forwardRef(
 );
 MenuContent.displayName = "MenuContent";
 var MenuItem = import_react12.default.forwardRef(
-  ({ preventClose = false, className = "", children, onClick, disabled, ...props }, ref) => {
+  ({
+    preventClose = false,
+    selected = false,
+    className = "",
+    children,
+    onClick,
+    disabled,
+    ...props
+  }, ref) => {
     const { closeMenu } = useMenu();
     const handleClick = (e) => {
       if (disabled) return;
@@ -1551,17 +1559,37 @@ var MenuItem = import_react12.default.forwardRef(
         closeMenu();
       }
     };
-    return /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+    const activeClass = selected ? "rv-listItemActive" : "";
+    const combinedClassName = `rv-listItem ${activeClass} ${className}`.trim();
+    return /* @__PURE__ */ (0, import_jsx_runtime13.jsxs)(
       "button",
       {
         ref,
         type: "button",
-        role: "menuitem",
+        role: selected !== void 0 ? "menuitemcheckbox" : "menuitem",
+        "aria-checked": selected ? "true" : void 0,
         disabled,
-        className: `rv-listItem ${className}`.trim(),
+        className: combinedClassName,
         onClick: handleClick,
         ...props,
-        children
+        children: [
+          children,
+          selected && /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("div", { className: "rv-listItemAction rv-isActionActive", "aria-hidden": "true", children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)(
+            "svg",
+            {
+              className: "rv-listItemCheckmark",
+              viewBox: "0 0 24 24",
+              width: "14",
+              height: "14",
+              stroke: "currentColor",
+              strokeWidth: "2.5",
+              fill: "none",
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              children: /* @__PURE__ */ (0, import_jsx_runtime13.jsx)("polyline", { points: "20 6 9 17 4 12" })
+            }
+          ) })
+        ]
       }
     );
   }

@@ -349,12 +349,24 @@ MenuContent.displayName = 'MenuContent';
 
 export interface MenuItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   preventClose?: boolean;
+  selected?: boolean;
   className?: string;
   children: React.ReactNode;
 }
 
 export const MenuItem = React.forwardRef<HTMLButtonElement, MenuItemProps>(
-  ({ preventClose = false, className = '', children, onClick, disabled, ...props }, ref) => {
+  (
+    {
+      preventClose = false,
+      selected = false,
+      className = '',
+      children,
+      onClick,
+      disabled,
+      ...props
+    },
+    ref
+  ) => {
     const { closeMenu } = useMenu();
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -365,17 +377,38 @@ export const MenuItem = React.forwardRef<HTMLButtonElement, MenuItemProps>(
       }
     };
 
+    const activeClass = selected ? 'rv-listItemActive' : '';
+    const combinedClassName = `rv-listItem ${activeClass} ${className}`.trim();
+
     return (
       <button
         ref={ref}
         type="button"
-        role="menuitem"
+        role={selected !== undefined ? 'menuitemcheckbox' : 'menuitem'}
+        aria-checked={selected ? 'true' : undefined}
         disabled={disabled}
-        className={`rv-listItem ${className}`.trim()}
+        className={combinedClassName}
         onClick={handleClick}
         {...props}
       >
         {children}
+        {selected && (
+          <div className="rv-listItemAction rv-isActionActive" aria-hidden="true">
+            <svg
+              className="rv-listItemCheckmark"
+              viewBox="0 0 24 24"
+              width="14"
+              height="14"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+        )}
       </button>
     );
   }
