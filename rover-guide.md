@@ -126,6 +126,19 @@ When generating custom CSS or inline styles, **always** prefer these tokens over
 - `--rv-w-sidebar-rail`: `92px` (Sidebar navigation rail width)
 - `--rv-w-pop`: `362px` (Standard popover width)
 
+#### G. Z-Index Hierarchy Scale
+- `--rv-z-base`: `0` (`.rv-z0`)
+- `--rv-z-sticky`: `100` (`.rv-zSticky`)
+- `--rv-z-sidepanel`: `998`
+- `--rv-z-sidepanel-float`: `999`
+- `--rv-z-topbar`: `1000` (`.rv-zOverlay`)
+- `--rv-z-modal`: `10000` (`.rv-zModal`)
+- `--rv-z-popover-backdrop`: `10004`
+- `--rv-z-popover`: `10005` (`.rv-zPopover`)
+- `--rv-z-menu`: `10020` (`.rv-zMenu`)
+- `--rv-z-tooltip`: `10030` (`.rv-zTooltip`)
+- `--rv-z-toast`: `999999` (`.rv-zToast`)
+
 ---
 
 ## 3. React Components API Reference
@@ -408,7 +421,7 @@ import { Tooltip } from 'rover';
 - `children: React.ReactNode`: Trigger element.
 - `position?: 'top' | 'bottom' | 'left' | 'right'` (default `'top'`).
 - `delay?: number` (ms before showing, default `500`).
-- `zIndex?: number` (default `9999`).
+- `zIndex?: number` (default `10030` via `var(--rv-z-tooltip)`).
 
 #### Modal
 Portaled, accessible modal dialog with backdrop blur, keyboard Escape closing, body scroll locking, and predefined sizes.
