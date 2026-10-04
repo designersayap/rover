@@ -354,10 +354,21 @@ import {
       <MoreHorizontal className="rv-iconSm" />
     </button>
   </MenuTrigger>
-  <MenuContent align="end" side="bottom" width={140}>
+  <MenuContent align="end" side="bottom" width={180}>
     <MenuItem onClick={handleRename}>
       <Pencil className="rv-iconXs" />
       <span>Rename</span>
+    </MenuItem>
+    {/* Selectable / Two-line menu item with built-in selection state */}
+    <MenuItem
+      onClick={() => setFilter('active')}
+      selected={filter === 'active'}
+      className="rv-isTwoLine"
+    >
+      <div className="rv-listItemContent">
+        <span className="rv-listItemTitle">Active Projects</span>
+        <span className="rv-listItemDesc">Currently running tasks</span>
+      </div>
     </MenuItem>
     <MenuItem onClick={handleDelete} className="rv-textDanger">
       <Trash2 className="rv-iconXs" />
@@ -366,6 +377,13 @@ import {
   </MenuContent>
 </Menu>
 ```
+
+#### Props: `MenuItem`
+- `selected?: boolean`: Toggles selection state (`rv-listItemActive`, `role="menuitemcheckbox"`, `aria-checked="true"`, and standard 14px checkmark icon).
+- `preventClose?: boolean`: Prevents auto-closing the menu on click (default `false`).
+- `disabled?: boolean`: Disables click interactions.
+- `className?: string`: Additional styling (e.g. `rv-isTwoLine` for title + subtitle items).
+
 
 #### Popover (Rich Form & Dialog Overlays)
 Standardized compound floating container for interactive forms, inputs, and rich widgets with automatic anchor positioning, smart screen edge clamping, and outside-click dismissal.
