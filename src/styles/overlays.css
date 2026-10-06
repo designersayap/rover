@@ -343,14 +343,12 @@
 .rv-toolbar {
     display: flex;
     align-items: center;
-    background: rgba(30, 30, 30, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--rv-radius-md);
+    background: var(--rv-neutral-500);
+    border: 1px solid var(--rv-bdr);
+    border-radius: var(--rv-radius-lg);
     padding: var(--rv-space-xs);
     gap: 2px;
-    box-shadow: var(--rv-shd-lg);
+    box-shadow: var(--rv-shd-pop);
     z-index: 10000;
     pointer-events: auto;
     user-select: none;
