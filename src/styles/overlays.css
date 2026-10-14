@@ -27,7 +27,6 @@
     white-space: normal;
     max-width: 240px;
     text-align: center;
-    box-shadow: var(--rv-shadow-md);
     pointer-events: none;
     z-index: var(--rv-z-tooltip, 10030);
     animation: fadeIn 0.15s ease-out;
